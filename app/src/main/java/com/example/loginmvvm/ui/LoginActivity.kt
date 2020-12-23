@@ -9,6 +9,7 @@ import com.example.loginmvvm.data.models.LoginRequest
 import kotlinx.android.synthetic.main.activity_main.*
 
 class LoginActivity : BaseActivity() {
+
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,14 +20,14 @@ class LoginActivity : BaseActivity() {
 
         viewModel.toast.observe(this, { str ->
             Toast.makeText(baseContext, "$str", Toast.LENGTH_SHORT).show()
-
         })
 
         viewModel.login.observe(this, { b ->
             if (b) {
                 Toast.makeText(baseContext, "ผ่าน", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(baseContext, "ตรวจสอบอีกครั้ง", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "ตรวจสอบอีกครั้ง", Toast.LENGTH_SHORT)
+                        .show()
             }
         })
 
@@ -36,5 +37,7 @@ class LoginActivity : BaseActivity() {
             val Login = LoginRequest(Username, Password)
             viewModel.login(Login)
         }
+
     }
+
 }
