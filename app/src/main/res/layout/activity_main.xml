@@ -1,49 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="30dp"
-    tools:context=".LoginActivity">
+    android:background="@drawable/call"
+    tools:context=".ui.main.MainActivity">
 
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@drawable/main" />
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigationv">
 
-    <EditText
-        android:id="@+id/etUsername"
+    </FrameLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigationv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="textEmailAddress" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:background="#FFFF"
+        app:menu="@menu/bottom_navigation" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btlogin"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:hint="Login"
-        android:textColorHint="#000000"
-        app:backgroundTint="#8BC34A" />
-
-    <Button
-        android:id="@+id/Singup"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:hint="Sing up"
-        android:textColorHint="#000000"
-        app:backgroundTint="#8BC34A" />
-
-
-</LinearLayout>
+</RelativeLayout>

@@ -16,9 +16,11 @@ object DataSource {
 
             User.select {
                 User.username eq request.username
-            }.andWhere { User.password eq request.password }
-                    .count()
-                    .toInt()
+            }
+                .andWhere { User.password eq request.password }
+                .count()
+                .toInt()
+
         }
 
         if (result == 1) {
@@ -27,4 +29,5 @@ object DataSource {
             return false
         }
     }
+
 }

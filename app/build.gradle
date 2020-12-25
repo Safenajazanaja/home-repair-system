@@ -55,4 +55,7 @@ dependencies {
     implementation 'org.jetbrains.exposed:exposed-jodatime:0.24.1'
     // mysql
     implementation "mysql:mysql-connector-java:5.1.48"
+
+    //RecyclerView
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 }

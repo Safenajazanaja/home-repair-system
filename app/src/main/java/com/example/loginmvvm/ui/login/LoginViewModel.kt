@@ -1,4 +1,4 @@
-package com.example.loginmvvm.ui
+package com.example.loginmvvm.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +20,8 @@ class LoginViewModel : ViewModel() {
         when {
             request.username.isBlank() -> _toast.value = "Username blank"
             request.password.isBlank() -> _toast.value = "Password blank"
+            request.username.length < 4 -> _toast.value = "Username <4"
+            request.password.length < 4 -> _toast.value = "Password <4"
             else -> {
                 val result = DataSource.login(request)
 

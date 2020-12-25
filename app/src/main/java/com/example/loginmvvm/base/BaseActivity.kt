@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.Database
 
 abstract class BaseActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
@@ -16,10 +15,10 @@ abstract class BaseActivity : AppCompatActivity() {
         val databaseName = "callm"
         val url = "jdbc:mysql://$host:3306/$databaseName?useUnicode=true&characterEncoding=utf-8"
         Database.connect(
-                url = url,
-                driver = "com.mysql.jdbc.Driver",
-                user = "drusp",
-                password = "drusp",
+            url = url,
+            driver = "com.mysql.jdbc.Driver",
+            user = "drusp",
+            password = "drusp",
         )
     }
 
