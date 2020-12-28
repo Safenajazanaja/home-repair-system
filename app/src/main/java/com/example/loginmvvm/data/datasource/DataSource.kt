@@ -1,7 +1,7 @@
 package com.example.loginmvvm.data.datasource
 
 import com.example.loginmvvm.data.database.User
-import com.example.loginmvvm.data.models.LoginRequest
+import com.example.loginmvvm.data.request.LoginRequest
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.andWhere

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
-import com.example.loginmvvm.data.models.LoginRequest
+import com.example.loginmvvm.data.request.LoginRequest
 
 class LoginViewModel : ViewModel() {
 

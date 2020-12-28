@@ -1,4 +1,4 @@
-package com.example.loginmvvm.data.models
+package com.example.loginmvvm.data.request
 
 data class LoginRequest(
     val username: String,

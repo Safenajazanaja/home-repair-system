@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
-import com.example.loginmvvm.data.models.LoginRequest
+import com.example.loginmvvm.data.request.LoginRequest
 import kotlinx.android.synthetic.main.activity_login.*
 
 
