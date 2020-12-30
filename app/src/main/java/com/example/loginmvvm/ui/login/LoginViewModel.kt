@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.request.LoginRequest
+import com.example.loginmvvm.data.response.LoginResponse
 
 class LoginViewModel : ViewModel() {
+
+    private lateinit var viewModelRes: LoginResponse
 
     private var _toast = MutableLiveData<String>()
     val toast: LiveData<String>
@@ -25,7 +28,7 @@ class LoginViewModel : ViewModel() {
             else -> {
                 val result = DataSource.login(request)
 
-                _login.value = result
+                _login.value = viewModelRes.sessec
             }
 
         }
