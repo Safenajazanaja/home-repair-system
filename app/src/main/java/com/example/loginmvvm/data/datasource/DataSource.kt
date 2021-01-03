@@ -33,6 +33,7 @@ object DataSource {
 //    }
 
     fun login(request: LoginRequest): LoginResponse {
+        val response = LoginResponse()
         val result = transaction {
             addLogger(StdOutSqlLogger)
 
@@ -44,6 +45,11 @@ object DataSource {
                     .toInt()
 
         }
+//        if (result == 1) {
+//            return true
+//        } else {
+//            return false
+//        }
 
         if (result == 1) {
             val userId = transaction {
@@ -53,10 +59,13 @@ object DataSource {
                         .map { it[User.user_id] }
                         .single()
             }
-            return LoginResponse(userId = userId, sessec = true)
-        } else {
-            return LoginResponse(null, sessec = false)
+            response.userId = userId
+            response.success = true
         }
+        else {
+            response.success = false
+        }
+        return response
     }
 
 }

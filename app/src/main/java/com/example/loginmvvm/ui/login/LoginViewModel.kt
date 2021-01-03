@@ -28,7 +28,7 @@ class LoginViewModel : ViewModel() {
             else -> {
                 val result = DataSource.login(request)
 
-                _login.value = viewModelRes.sessec
+                _login.value = result.success
             }
 
         }
