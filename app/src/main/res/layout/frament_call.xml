@@ -45,11 +45,12 @@
             android:layout_height="wrap_content"
             android:text="จ่ายเงินแบบ" />
 
+
         <Spinner
             android:id="@+id/spinnerpay"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:textAlignment="center" />
 
 
     </LinearLayout>

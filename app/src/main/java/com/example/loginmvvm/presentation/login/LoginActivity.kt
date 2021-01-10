@@ -1,11 +1,18 @@
-package com.example.loginmvvm.ui.login
+package com.example.loginmvvm.presentation.login
 
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.LoginRequest
+import com.example.loginmvvm.data.response.LoginResponse
+import com.example.loginmvvm.presentation.main.MainActivity
+import com.example.loginmvvm.presentation.sing_up.Sing_UpActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -17,6 +24,8 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         viewModel.toast.observe(this, { str ->
@@ -25,7 +34,16 @@ class LoginActivity : BaseActivity() {
 
         viewModel.login.observe(this, { b ->
             if (b) {
-                Toast.makeText(baseContext, "ผ่าน", Toast.LENGTH_SHORT).show()
+//                viewModel.login2.observe(this,{a ->
+//                    Log.d(ContentValues.TAG, "onActivityCreated:$a ")
+                    Toast.makeText(baseContext, "ผ่าน", Toast.LENGTH_SHORT).show()
+                    val intent=Intent(baseContext,MainActivity::class.java)
+//                        .putExtra("uid",a)
+//                    .putExtra("ui",viewModel.login2.observe(this,$s))
+                    startActivity(intent)
+
+//                })
+
             } else {
                 Toast.makeText(baseContext, "ตรวจสอบอีกครั้ง", Toast.LENGTH_SHORT)
                     .show()
@@ -39,9 +57,10 @@ class LoginActivity : BaseActivity() {
             viewModel.login(Login)
         }
 
-//        btSingup.setOnClickListener {
-//            startActivity(R.layout.)
-//        }
+        btSingup.setOnClickListener {
+            val intent=Intent(baseContext,Sing_UpActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

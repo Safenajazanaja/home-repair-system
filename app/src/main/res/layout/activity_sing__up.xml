@@ -1,89 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
-    android:gravity="center">
+    android:padding="30dp"
+    android:layout_gravity="center"
+    android:background="@drawable/call">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="สมัครสมาชิก "
+        android:textSize="50dp"
+        android:id="@+id/titlesing"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <GridLayout
-            style="@style/MatchWrap"
-            android:layout_marginTop="@dimen/base_pow_four"
-            android:columnCount="2"
-            android:rowCount="3">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
 
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:src="@drawable/ic_baseline_email_24" />
-
-            <EditText
-                android:id="@+id/etUsername"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/base_zero"
-                android:hint="Username"
-                android:inputType="textEmailAddress" />
-
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:src="@drawable/ic_baseline_person_24" />
-
-            <EditText
-                android:id="@+id/etFullname"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsernameSing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fullname"
-                android:inputType="text" />
+                android:background="@drawable/custorm_input"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:hint="รหัสมาชิก"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:singleLine="true"
+                />
 
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:src="@drawable/ic_baseline_phone_iphone_24" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etPhone"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFullnameSing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
-                android:inputType="phone" />
+                android:background="@drawable/custorm_input"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:hint="ชื่อ-นามสกุล"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:singleLine="true"
+                />
 
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:src="@drawable/ic_baseline_vpn_key_24" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etPasswordSing"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhoneSing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
-                android:inputType="textPassword" />
+                android:background="@drawable/custorm_input"
+                android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
+                android:hint="เบอโทรศัพท์"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:singleLine="true"
+                />
 
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:src="@drawable/ic_baseline_vpn_key_24" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etRePasswordSing"
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
-                android:inputType="textPassword" />
-        </GridLayout>
+                android:background="@drawable/custorm_input"
+                android:drawableStart="@drawable/ic_baseline_vpn_key_24"
+                android:hint="รหัสผ่าน"
+                android:imeOptions="actionDone"
+                android:inputType="numberPassword"
+                android:singleLine="true"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custorm_input"
+                android:drawableStart="@drawable/ic_baseline_vpn_key_24"
+                android:hint="รหัสผ่าน"
+                android:imeOptions="actionDone"
+                android:inputType="numberPassword"
+                android:singleLine="true"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/Singup"
+
+            android:id="@+id/Sing_up"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:hint="Sing up" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

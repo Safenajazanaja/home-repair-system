@@ -20,6 +20,9 @@
             style="@style/ImageViewPhoto" />
 
 
+
+
+
         <GridLayout
             style="@style/MatchWrap"
             android:layout_marginTop="@dimen/base_pow_four"
@@ -32,7 +35,7 @@
                 android:background="@drawable/ic_baseline_email_24" />
 
             <TextView
-                android:id="@+id/tv_member"
+                android:id="@+id/tv_username"
                 style="@style/TextViewLargeApplicationSub"
                 android:layout_marginTop="@dimen/base_zero"
                 android:text="รหัสสมาชิก" />
