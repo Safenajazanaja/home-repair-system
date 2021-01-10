@@ -1,13 +1,28 @@
 package com.example.loginmvvm.presentation.profile
 
-import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
-import com.example.loginmvvm.data.response.LoginResponse
+import com.example.loginmvvm.data.models.ProfileModel
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel : ViewModel() {
 
+    private val _profileModel = MutableLiveData<ProfileModel>()
+    val profileModel: LiveData<ProfileModel>
+        get() = _profileModel
+
+    fun profile(userId: Int?) {
+//        if (userId!=null){
+//            DataSource.profile(userId)
+//        }else{
+//
+//        }
+
+        userId?.let {
+            _profileModel.value = DataSource.profile(it)
+        }
+
+    }
 
 }

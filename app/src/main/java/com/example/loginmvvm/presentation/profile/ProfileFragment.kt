@@ -1,33 +1,31 @@
 package com.example.loginmvvm.presentation.profile
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.data.response.LoginResponse
-import com.example.loginmvvm.presentation.login.LoginViewModel
-
-import com.srisuk.computerrepair.ui.BaseFragment
+import com.example.loginmvvm.base.BaseFragment
+import com.example.loginmvvm.presentation.main.MainActivity
 import kotlinx.android.synthetic.main.frament_profile.*
 
-class ProfileFragment:BaseFragment(R.layout.frament_profile) {
+
+class ProfileFragment : BaseFragment(R.layout.frament_profile) {
     private lateinit var viewModel: ProfileViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val userId =LoginResponse()
-        val id=userId.userId
 
-//        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-//        viewModel.profile(userId)
+        val  userId=context?.getSharedPreferences("file",
+        AppCompatActivity.MODE_PRIVATE)?.getInt("id",0)
 
-        Log.d(ContentValues.TAG, "onActivityCreated:$id ")
-        val profile= id?.let { dataSource.profile(it) }
-        tv_username.text=profile?.username.toString()
-        tv_full_name.text=profile?.name.toString()
-        tv_phone.text=profile?.telephone.toString()
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        viewModel.profile(userId)
 
+        viewModel.profileModel.observe(this, { profile ->
+            tv_username.text = profile.name.toString()
+            tv_full_name.text = profile?.name.toString()
+            tv_phone.text = profile?.telephone.toString()
+        })
 
     }
 

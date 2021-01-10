@@ -11,10 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginMVVM">
-        <activity android:name=".presentation.sing_up.Sing_UpActivity"></activity>
+        <activity android:name=".presentation.sing_up.Sing_UpActivity" />
         <activity android:name=".presentation.main.MainActivity" />
-        <activity android:name=".presentation.sing_up.SingActivity" />
-        <activity android:name=".bottom_navigation" />
         <activity android:name=".presentation.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -17,8 +17,8 @@ abstract class BaseActivity : AppCompatActivity() {
         Database.connect(
             url = url,
             driver = "com.mysql.jdbc.Driver",
-            user = "drusp",
-            password = "drusp",
+            user = "computerrepair",
+            password = "1234",
         )
     }
 

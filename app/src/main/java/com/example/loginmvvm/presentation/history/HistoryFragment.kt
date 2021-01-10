@@ -1,7 +1,7 @@
 package com.example.loginmvvm.presentation.history
 
 import com.example.loginmvvm.R
-import com.srisuk.computerrepair.ui.BaseFragment
+import com.example.loginmvvm.base.BaseFragment
 
-class HistoryFragment:BaseFragment(R.layout.frament_history) {
+class HistoryFragment: BaseFragment(R.layout.frament_history) {
 }

@@ -34,15 +34,15 @@ class LoginActivity : BaseActivity() {
 
         viewModel.login.observe(this, { b ->
             if (b) {
-//                viewModel.login2.observe(this,{a ->
-//                    Log.d(ContentValues.TAG, "onActivityCreated:$a ")
+                viewModel.id.observe(this,{a ->
+
+                    val preferences = getSharedPreferences("file", Context.MODE_PRIVATE)
+                    viewModel.id.let { preferences.edit().putInt("id",a).apply() }
                     Toast.makeText(baseContext, "ผ่าน", Toast.LENGTH_SHORT).show()
-                    val intent=Intent(baseContext,MainActivity::class.java)
-//                        .putExtra("uid",a)
-//                    .putExtra("ui",viewModel.login2.observe(this,$s))
+                    val intent=Intent(baseContext,MainActivity::class.java).putExtra("id",a)
                     startActivity(intent)
 
-//                })
+                })
 
             } else {
                 Toast.makeText(baseContext, "ตรวจสอบอีกครั้ง", Toast.LENGTH_SHORT)
@@ -55,6 +55,7 @@ class LoginActivity : BaseActivity() {
             val Password = etPassword.text.toString().trim()
             val Login = LoginRequest(Username, Password)
             viewModel.login(Login)
+
         }
 
         btSingup.setOnClickListener {
