@@ -3,64 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
-    android:gravity="center">
+    android:padding="25dp"
+    android:layout_gravity="center">
 
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:id="@+id/iv_photo"
-            style="@style/ImageViewPhoto" />
-
-
-
-
-
-        <GridLayout
-            style="@style/MatchWrap"
-            android:layout_marginTop="@dimen/base_pow_four"
-            android:columnCount="2"
-            android:rowCount="3">
-
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:layout_marginTop="@dimen/base_zero"
-                android:background="@drawable/ic_baseline_email_24" />
-
-            <TextView
-                android:id="@+id/tv_username"
-                style="@style/TextViewLargeApplicationSub"
-                android:layout_marginTop="@dimen/base_zero"
-                android:text="รหัสสมาชิก" />
-
-            <ImageView
-                style="@style/ImageViewIcon"
-                android:background="@drawable/ic_baseline_person_24" />
-
-            <TextView
-                android:id="@+id/tv_full_name"
-                style="@style/TextViewLargeApplicationSub"
-                android:text="ชื่อ-นาสกุล" />
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:contentPadding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <ImageView
-                style="@style/ImageViewIcon"
-                android:background="@drawable/ic_baseline_phone_iphone_24" />
+                android:id="@+id/iv_photo"
+                style="@style/ImageViewPhoto" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_phone"
-                style="@style/TextViewLargeApplicationSub"
-                android:text="เบอร์" />
+                <TextView
+                    style="@style/TextViewLargeApplicationSub"
+                    android:drawableStart="@drawable/ic_baseline_email_24"
+                    android:text="รหัสสมาชิก" />
 
-        </GridLayout>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_username"
+                    style="@style/TextViewLargeApplicationSub"
+                    android:layout_marginTop="@dimen/base_zero"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextViewLargeApplicationSub"
+                    android:drawableStart="@drawable/ic_baseline_person_24"
+                    android:text="ชื่อ-นาสกุล" />
+
+                <TextView
+                    android:id="@+id/tv_full_name"
+                    style="@style/TextViewLargeApplicationSub" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextViewLargeApplicationSub"
+                    android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
+                    android:text="เบอร์" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/TextViewLargeApplicationSub" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>
