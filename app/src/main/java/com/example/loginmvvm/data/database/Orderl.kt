@@ -13,6 +13,7 @@ object Orderl: Table("orderl"){
     val repair_list= varchar("repair_list",50)
     val pay_type= integer("pay_type")
     val date=date("date")
+    val dateLong=long("date_long")
     val price=integer("pricem")
 //    val employee_id=integer("employee_id")
 
