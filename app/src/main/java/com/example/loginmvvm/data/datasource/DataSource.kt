@@ -1,14 +1,14 @@
 package com.example.loginmvvm.data.datasource
 
 
-import android.content.ContentValues
-import android.util.Log
 import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.map.*
 import com.example.loginmvvm.data.models.*
 import com.example.loginmvvm.data.request.LoginRequest
+import com.example.loginmvvm.data.request.RepairRequest
 import com.example.loginmvvm.data.request.SingupRequest
 import com.example.loginmvvm.data.response.LoginResponse
+import com.example.loginmvvm.data.response.RepairResponse
 import com.example.loginmvvm.data.response.SingupResponse
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -68,7 +68,7 @@ object DataSource {
 
                 Users.insert {
                     it[username] = request.username
-                    it[name] = request.fullname
+                    it[fullname] = request.fullname
                     it[phone] = request.phone
                     it[password] = request.password
                 }
@@ -86,11 +86,27 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Users.slice(Users.username,Users.name,Users.phone)
+            Users.slice(Users.username,Users.fullname,Users.phone)
                 .select { Users.user_id eq userId }
                 .map { ProfileMap.toProfile(it) }
                 .single()
         }
 
+    }
+    fun repair(req:RepairRequest):RepairResponse{
+        val response =RepairResponse()
+        val statement =transaction {
+            addLogger(StdOutSqlLogger)
+            Orderl.insert {
+                it[user_id]=req.userid.toString().toInt()
+                it[abode]=req.abode.toString()
+                it[repair_list]=req.repair_list.toString()
+//                it[date]=req.date.toString()
+            }
+        }
+        val result = statement.resultedValues?.size == 1
+        response.success = result
+        response.message = "Insert success"
+        return response
     }
 }

@@ -6,7 +6,7 @@ object Users : Table("user") {
     val user_id = integer("user_id").autoIncrement()
     val username = varchar("username", 20)
     val password = varchar("password", 20)
-    val name = varchar("name", 30)
+    val fullname = varchar("fullname", 30)
     val phone = varchar("phone", 10)
 
 

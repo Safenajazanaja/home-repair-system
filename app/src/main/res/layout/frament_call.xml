@@ -2,84 +2,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="30dp">
-
-
-    <EditText
-        android:id="@+id/et_jobname"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="งานที่ต้องการให้ซ่อม" />
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:contentPadding="10dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30dp">
-
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="258dp"
-            android:layout_height="match_parent"
-            android:hint="วันที่ต้องการให้ช่างซ่อม " />
-
-        <Button
-            android:id="@+id/btCalendar"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="Calendar" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="จ่ายเงินแบบ" />
-
-
-        <Spinner
-            android:id="@+id/spinnerpay"
-            android:layout_height="40dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:textAlignment="center" />
-
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/et_abode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:hint="บ้านเลขที่" />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="30dp">
-
-
-        <Button
-            android:id="@+id/Bt_ok"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok" />
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
 
-        <Button
-            android:id="@+id/bt_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="cancel" />
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/re_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:hint="งานที่ต้องการให้ซ่อม" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left">
+
+
+                <TextView
+                    android:id="@+id/re_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="วันที่ต้องการให้ช่างซ่อม " />
+
+                <Button
+                    android:id="@+id/btCalendar"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Calendar" />
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/re_abode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:hint="ที่อยู่" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                >
+
+
+                <Button
+                    android:id="@+id/Bt_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ok" />
+
+                <Button
+                    android:id="@+id/bt_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cancel" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
 </LinearLayout>

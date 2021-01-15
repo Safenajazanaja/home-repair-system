@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.ResultRow
 object ProfileMap {
     fun toProfile(row: ResultRow) = ProfileModel(
         username = row[Users.username],
-        name = row[Users.name],
+        name = row[Users.fullname],
         telephone = row[Users.phone],
     )
 }

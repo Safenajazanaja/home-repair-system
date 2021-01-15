@@ -13,12 +13,6 @@ class ProfileViewModel : ViewModel() {
         get() = _profileModel
 
     fun profile(userId: Int?) {
-//        if (userId!=null){
-//            DataSource.profile(userId)
-//        }else{
-//
-//        }
-
         userId?.let {
             _profileModel.value = DataSource.profile(it)
         }
