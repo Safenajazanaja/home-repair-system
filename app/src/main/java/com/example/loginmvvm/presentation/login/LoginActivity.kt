@@ -12,6 +12,7 @@ import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.LoginRequest
 import com.example.loginmvvm.data.response.LoginResponse
 import com.example.loginmvvm.presentation.main.MainActivity
+import com.example.loginmvvm.presentation.repair.MapActivity
 import com.example.loginmvvm.presentation.sing_up.Sing_UpActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -59,7 +60,8 @@ class LoginActivity : BaseActivity() {
         }
 
         btSingup.setOnClickListener {
-            val intent=Intent(baseContext,Sing_UpActivity::class.java)
+//            val intent=Intent(baseContext,Sing_UpActivity::class.java)
+            val intent=Intent(baseContext,MapActivity::class.java)
             startActivity(intent)
         }
 

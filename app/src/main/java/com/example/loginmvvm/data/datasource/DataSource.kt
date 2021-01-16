@@ -100,8 +100,8 @@ object DataSource {
             Orderl.insert {
                 it[user_id]=req.userid.toString().toInt()
                 it[abode]=req.abode.toString()
-                it[repair_list]=req.repair_list.toString()
-//                it[date]=req.date.toString()
+                it[repair_list]=req.repair_list
+                it[dateLong]=req.date.toString().toLong()
             }
         }
         val result = statement.resultedValues?.size == 1

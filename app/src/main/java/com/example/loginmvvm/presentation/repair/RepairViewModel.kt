@@ -20,10 +20,9 @@ class RepairViewModel: ViewModel() {
         when {
             request.abode.isBlank() -> _toast.value = "กรุณากรอกที่อยู่"
             request.repair_list.isBlank() -> _toast.value = "กรุรากรอกงานที่ต้องการซ่อม"
-//            request.date==null  -> _toast.value = "กรุณาเลือกวันที่"
+            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
 
             else -> {
-
                 val result = DataSource.repair(request)
                 _repair.value=result.success
 

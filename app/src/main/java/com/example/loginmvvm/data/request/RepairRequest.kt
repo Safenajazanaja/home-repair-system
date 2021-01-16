@@ -4,9 +4,9 @@ import java.util.*
 
 
 data class RepairRequest(
-    val userid:Int,
+    val userid:Int?=null,
     val abode:String,
     val repair_list:String,
-    val date: Date,
+    val date: Long?=null,
 
     )

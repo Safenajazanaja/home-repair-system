@@ -2,6 +2,7 @@ package com.example.loginmvvm.data.database
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.jodatime.date
+import java.math.BigInteger
 
 
 object Orderl: Table("orderl"){

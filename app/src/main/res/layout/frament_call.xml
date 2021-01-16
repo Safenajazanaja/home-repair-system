@@ -28,7 +28,7 @@
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/re_job"
+                    android:id="@+id/re_joblist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
@@ -93,12 +93,19 @@
                     android:text="cancel" />
             </LinearLayout>
 
+            <fragment
+                android:id="@+id/maps"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
+
+
         </LinearLayout>
 
 
 
-
     </androidx.cardview.widget.CardView>
+
 
 
 

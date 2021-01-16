@@ -3,6 +3,8 @@
     package="com.example.loginmvvm">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginMVVM">
+        <activity android:name=".presentation.repair.MapActivity"></activity>
         <activity android:name=".presentation.sing_up.Sing_UpActivity" />
         <activity android:name=".presentation.main.MainActivity" />
         <activity android:name=".presentation.login.LoginActivity">
@@ -20,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDF0Klf93qAhTuY1GTQ-HpsqQWsQYMwhao" />
     </application>
 
 </manifest>
