@@ -1,19 +1,28 @@
 package com.example.loginmvvm.presentation.repair
 
 
+import android.Manifest
 import android.app.DatePickerDialog
-
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
-
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.data.request.RepairRequest
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -21,10 +30,16 @@ import kotlinx.android.synthetic.main.frament_call.*
 import java.util.*
 
 
-class RepairFragment : BaseFragment(R.layout.frament_call),OnMapReadyCallback{
+class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+    LocationListener {
 
     private lateinit var viewModel: RepairViewModel
-    private lateinit var map: GoogleMap
+
+    private var mGoogleApiClient: GoogleApiClient? = null
+    private var mLocationRequest: LocationRequest? = null
+    private var mGoogleMap: GoogleMap? = null
+    private var mMarker: Marker? = null
 
 
     //Calendar
@@ -48,8 +63,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call),OnMapReadyCallback{
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            calendar.add(Calendar.DATE,0)
-           val dateDialog= DatePickerDialog(
+            calendar.add(Calendar.DATE, 0)
+            val dateDialog = DatePickerDialog(
                 requireContext(),
                 { view, year, month, dayOfMonth ->
                     Toast.makeText(
@@ -68,33 +83,95 @@ class RepairFragment : BaseFragment(R.layout.frament_call),OnMapReadyCallback{
                 month,
                 day,
             )
-            calendar.add(Calendar.DATE,0)
-            dateDialog.datePicker.minDate=calendar.timeInMillis
+            calendar.add(Calendar.DATE, 0)
+            dateDialog.datePicker.minDate = calendar.timeInMillis
 //                .show()
             dateDialog.show()
 
         }
         Bt_ok.setOnClickListener {
-            val Abode=re_abode.text.toString()
-            val RepairList=re_joblist.text.toString()
-            val Repair=RepairRequest(userId,Abode,RepairList,mCalendar?.timeInMillis)
+            val Abode = re_abode.text.toString()
+            val RepairList = re_joblist.text.toString()
+            val Repair = RepairRequest(userId, Abode, RepairList, mCalendar?.timeInMillis)
             viewModel.repair(Repair)
 
 //            Toast.makeText(context, "${mCalendar?.timeInMillis}", Toast.LENGTH_SHORT).show()
         }
 
-
-
+        val mapFragment = this.childFragmentManager
+            .findFragmentById(R.id.maps) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+        mGoogleApiClient = GoogleApiClient.Builder(requireActivity())
+            .addApi(LocationServices.API)
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .build()
+        mGoogleApiClient?.connect()
+        mLocationRequest = LocationRequest()
+            .setInterval(2500)
+            .setFastestInterval(3000)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
     }
 
+    private fun startLocationUpdate() {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+            mGoogleApiClient,
+            mLocationRequest,
+            this
+        )
+    }
+
+    private fun stopLocationUpdate() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mGoogleApiClient?.connect()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (mGoogleApiClient?.isConnected == true) mGoogleApiClient!!.disconnect()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (mGoogleApiClient?.isConnected == true) startLocationUpdate()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (mGoogleApiClient?.isConnected == true) stopLocationUpdate()
+    }
+
+    override fun onLocationChanged(location: Location) {
+        val latLng = LatLng(location.latitude, location.longitude)
+        mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+        if (mMarker != null) {
+            mMarker!!.remove()
+        }
+        mMarker = mGoogleMap?.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title("Dru")
+                .snippet("Dru sp" + location.longitude + " " + location.latitude)
+        )
+    }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        map=googleMap
-        val  sydney=LatLng(-34.0,151.0)
-        val zoomLevel=15f
-        map.addMarker(MarkerOptions().position(sydney).title("testfds"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,zoomLevel))
-
+        mGoogleMap = googleMap
     }
+
+    override fun onConnected(bundle: Bundle?) {
+        startLocationUpdate()
+    }
+
+    override fun onConnectionSuspended(i: Int) {
+        mGoogleApiClient?.connect()
+    }
+
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {}
+
 
 }
