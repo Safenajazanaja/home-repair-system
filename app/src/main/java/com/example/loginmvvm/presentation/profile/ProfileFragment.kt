@@ -21,6 +21,12 @@ class ProfileFragment : BaseFragment(R.layout.frament_profile) {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.profile(userId)
 
+        viewModel.profileModel.observe(this, { profile ->
+            tv_username.text = profile.name.toString()
+            tv_full_name.text = profile?.name.toString()
+            tv_phone.text = profile?.telephone.toString()
+        })
+
 
 
     }

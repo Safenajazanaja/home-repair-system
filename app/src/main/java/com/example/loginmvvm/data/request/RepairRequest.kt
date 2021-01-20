@@ -8,5 +8,7 @@ data class RepairRequest(
     val abode:String,
     val repair_list:String,
     val date: Long?=null,
+    val latitudeval :Double?=null,
+    val longitude:Double?=null
 
     )

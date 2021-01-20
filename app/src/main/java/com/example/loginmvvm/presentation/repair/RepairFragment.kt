@@ -1,15 +1,11 @@
 package com.example.loginmvvm.presentation.repair
 
 
-import android.Manifest
 import android.app.DatePickerDialog
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
@@ -23,16 +19,16 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.frament_call.*
+import kotlinx.android.synthetic.main.item_map.*
 import java.util.*
 
 
 class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-    LocationListener {
+    LocationListener, GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener{
 
     private lateinit var viewModel: RepairViewModel
 
@@ -40,6 +36,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     private var mLocationRequest: LocationRequest? = null
     private var mGoogleMap: GoogleMap? = null
     private var mMarker: Marker? = null
+    private var latitude:Double = 0.0
+    private var longitude:Double=0.0
 
 
     //Calendar
@@ -92,7 +90,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
         Bt_ok.setOnClickListener {
             val Abode = re_abode.text.toString()
             val RepairList = re_joblist.text.toString()
-            val Repair = RepairRequest(userId, Abode, RepairList, mCalendar?.timeInMillis)
+            val Repair = RepairRequest(userId, Abode, RepairList, mCalendar?.timeInMillis,latitude,longitude)
             viewModel.repair(Repair)
 
 //            Toast.makeText(context, "${mCalendar?.timeInMillis}", Toast.LENGTH_SHORT).show()
@@ -111,6 +109,9 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             .setInterval(2500)
             .setFastestInterval(3000)
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+
+
     }
 
     private fun startLocationUpdate() {
@@ -148,19 +149,46 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     override fun onLocationChanged(location: Location) {
         val latLng = LatLng(location.latitude, location.longitude)
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        if (mMarker != null) {
-            mMarker!!.remove()
-        }
-        mMarker = mGoogleMap?.addMarker(
-            MarkerOptions()
-                .position(latLng)
-                .title("Dru")
-                .snippet("Dru sp" + location.longitude + " " + location.latitude)
-        )
+//        if (mMarker != null) {
+//            mMarker!!.remove()
+//        }
+//        mMarker = mGoogleMap?.addMarker(
+//            MarkerOptions()
+//                .position(latLng)
+//                .title("Dru")
+//                .snippet("Dru sp" + location.longitude + " " + location.latitude).icon(
+//                    BitmapDescriptorFactory.fromResource(R.drawable.house)
+//                )
+//        )
+        latitude=location.latitude
+        longitude=location.longitude
+
+
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
+        setMapLongClick(googleMap)
+        googleMap.isMyLocationEnabled = true
+        googleMap.setOnMyLocationButtonClickListener(this)
+        googleMap.setOnMyLocationClickListener(this)
+    }
+
+    private fun setMapLongClick(googleMap: GoogleMap) {
+        googleMap.setOnMapClickListener { latLng ->
+            val snippets= String.format(
+                Locale.getDefault(),
+                "Lat: %1$.5f, Long: %2$.5f",
+                latLng.latitude,
+                latLng.longitude
+            )
+            mMarker?.remove()
+            mMarker=googleMap.addMarker(MarkerOptions().position(latLng))
+
+
+        }
+
     }
 
     override fun onConnected(bundle: Bundle?) {
@@ -172,6 +200,22 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
+    override fun onMyLocationButtonClick(): Boolean {
+        Toast.makeText(requireContext(), "MyLocation button clicked", Toast.LENGTH_SHORT)
+            .show()
+
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false
+    }
+
+    override fun onMyLocationClick(location: Location) {
+        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
+            .show()
+        latitude=location.latitude
+        longitude=location.longitude
+
+    }
 
 
 }

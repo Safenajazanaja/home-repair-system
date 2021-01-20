@@ -102,6 +102,9 @@ object DataSource {
                 it[abode]=req.abode.toString()
                 it[repair_list]=req.repair_list
                 it[dateLong]=req.date.toString().toLong()
+                it[latitude]=req.latitudeval.toString().toDouble()
+                it[longitude]=req.longitude.toString().toDouble()
+
             }
         }
         val result = statement.resultedValues?.size == 1

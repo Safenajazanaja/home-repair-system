@@ -28,5 +28,4 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
         )
     }
 
-
 }
