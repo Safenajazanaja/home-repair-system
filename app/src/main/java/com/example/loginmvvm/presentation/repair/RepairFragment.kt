@@ -2,6 +2,7 @@ package com.example.loginmvvm.presentation.repair
 
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.widget.Toast
@@ -92,6 +93,15 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             val RepairList = re_joblist.text.toString()
             val Repair = RepairRequest(userId, Abode, RepairList, mCalendar?.timeInMillis,latitude,longitude)
             viewModel.repair(Repair)
+            val intent= Intent(context,ConfirmActivity::class.java).apply {
+                putExtra("user_id",Repair?.userid)
+                putExtra("abode",Repair?.abode)
+                putExtra("repair_list",Repair?.repair_list)
+                putExtra("date",Repair?.date)
+                putExtra("latitude",Repair?.latitudeval)
+                putExtra("longitude",Repair?.longitude)
+            }
+            startActivity(intent)
 
 //            Toast.makeText(context, "${mCalendar?.timeInMillis}", Toast.LENGTH_SHORT).show()
         }

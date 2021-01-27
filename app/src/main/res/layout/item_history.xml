@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_adode"
-            android:layout_width="wrap_content"
+            android:layout_width="165dp"
             android:layout_height="wrap_content"
             android:text="adode" />
 
@@ -44,12 +44,5 @@
             android:layout_height="wrap_content"
             android:text="Date" />
     </GridLayout>
-
-    <Button
-        android:id="@+id/bt_open"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="แสดงรายละเอียด" />
 
 </LinearLayout>
