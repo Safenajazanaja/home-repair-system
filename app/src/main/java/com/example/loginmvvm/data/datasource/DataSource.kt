@@ -4,9 +4,11 @@ package com.example.loginmvvm.data.datasource
 import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.map.*
 import com.example.loginmvvm.data.models.*
+import com.example.loginmvvm.data.request.HistoryRequest
 import com.example.loginmvvm.data.request.LoginRequest
 import com.example.loginmvvm.data.request.RepairRequest
 import com.example.loginmvvm.data.request.SingupRequest
+import com.example.loginmvvm.data.response.HistoryResponse
 import com.example.loginmvvm.data.response.LoginResponse
 import com.example.loginmvvm.data.response.RepairResponse
 import com.example.loginmvvm.data.response.SingupResponse
@@ -113,4 +115,23 @@ object DataSource {
         response.message = "Insert success"
         return response
     }
+     fun history(req:HistoryRequest):List<HistoryModel>{
+
+
+           return transaction {
+             addLogger(StdOutSqlLogger)
+             Orderl.slice(
+                 Orderl.abode,
+                 Orderl.order_id,
+                 Orderl.repair_list,
+                 Orderl.dateLong
+             )
+                 .select{Orderl.user_id eq req.id}
+                 .andWhere { Orderl.dateLong .between(req.star,req.end) }
+                 .map { HistoryMap.toHistory(it) }
+
+         }
+
+
+     }
 }

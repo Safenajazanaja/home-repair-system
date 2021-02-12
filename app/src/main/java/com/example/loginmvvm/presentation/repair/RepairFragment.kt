@@ -194,6 +194,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 latLng.longitude
             )
             mMarker?.remove()
+            mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             mMarker=googleMap.addMarker(MarkerOptions().position(latLng))
 
 

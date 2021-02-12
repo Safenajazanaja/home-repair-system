@@ -37,26 +37,38 @@
             android:textColor="#FAF6F6" />
 
         <TextView
+            android:id="@+id/endText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="ถึง"
             android:textColor="#151515"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/Bt_history_dateend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="วันที่ สิ้นสุด" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Bt_history_ok"
+            android:text="ค้นหา"
+            android:layout_marginLeft="20dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/linearlayout"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/linearlayout"
+        android:layout_marginTop="-1dp"
         android:clipToPadding="false"
         tools:listitem="@layout/item_history" />
 
