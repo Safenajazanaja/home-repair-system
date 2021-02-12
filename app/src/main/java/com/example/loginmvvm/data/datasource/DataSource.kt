@@ -134,4 +134,12 @@ object DataSource {
 
 
      }
+    fun orderlall():List<OrderModel>{
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Orderl.selectAll()
+                .map { HistoryMap.toOrder(it)}
+
+        }
+    }
 }
