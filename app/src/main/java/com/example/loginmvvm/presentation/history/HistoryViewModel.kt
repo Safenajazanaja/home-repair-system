@@ -41,7 +41,9 @@ class HistoryViewModel : ViewModel() {
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                 val result2 = result
+//                    .sortedBy { sdf.format(it.date) } //ORDER BY
                     .distinctBy { sdf.format(it.date) } // group by
+
                     .map { db ->
                         HistoryModel2(
 //                        order = db.order,
@@ -60,7 +62,7 @@ class HistoryViewModel : ViewModel() {
                                     )
                                 }
                         )
-                    }
+                    }.sortedBy { it.date }
 
                 Log.d(TAG, "repair: ${Gson().toJson(result2)}")
 
