@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.models.HistoryModel
+import com.example.loginmvvm.data.models.HistoryModel2
+import com.example.loginmvvm.data.models.OrderModeldetail
 import com.example.loginmvvm.data.request.HistoryRequest
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -28,6 +30,10 @@ class HistoryViewModel : ViewModel() {
     val history2: LiveData<List<HistoryModel2>>
         get() = _history2
 
+    private var _history3 = MutableLiveData<List<OrderModeldetail>>()
+    val history3: LiveData<List<OrderModeldetail>>
+        get() = _history3
+
     fun repair(request: HistoryRequest) {
         when {
             request.star == null -> _toast.value = "กรุณาเลือกวันที่เริ่มต้น"
@@ -41,7 +47,6 @@ class HistoryViewModel : ViewModel() {
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                 val result2 = result
-//                    .sortedBy { sdf.format(it.date) } //ORDER BY
                     .distinctBy { sdf.format(it.date) } // group by
 
                     .map { db ->
@@ -50,11 +55,12 @@ class HistoryViewModel : ViewModel() {
 //                        adode = db.adode,
 //                        repair_List = db.repair_List,
                             date = sdf.format(db.date),
+                            datelong=db.date,
                             sumOrderByDate = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                                 .count(),
                             orders = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                                 .map {
-                                    OrderModel2(
+                                    OrderModeldetail(
                                         order = it.order,
                                         adode = it.adode,
                                         repair_List = it.repair_List,
@@ -62,8 +68,21 @@ class HistoryViewModel : ViewModel() {
                                     )
                                 }
                         )
-                    }.sortedBy { it.date }
 
+
+                    }.sortedBy { it.date }
+//
+                val  request3=result
+                    .distinctBy { sdf.format(it.date) }
+                    .map {
+                   OrderModeldetail(
+                       order = it.order,
+                       adode = it.adode,
+                       repair_List = it.repair_List,
+                       date = sdf.format(it.date),
+                   )
+                }
+//
                 Log.d(TAG, "repair: ${Gson().toJson(result2)}")
 
                 _history2.value = result2
@@ -79,19 +98,19 @@ class HistoryViewModel : ViewModel() {
     }
 
 }
+//
+//data class HistoryModel2(
+////    val order: Int? = null,
+////    val adode: String? = null,
+////    val repair_List: String? = null,
+//    val date: String? = null,
+//    val sumOrderByDate: Int,
+//    val orders: List<OrderModel2>
+//)
 
-data class HistoryModel2(
+//data class OrderModel2(
 //    val order: Int? = null,
 //    val adode: String? = null,
 //    val repair_List: String? = null,
-    val date: String? = null,
-    val sumOrderByDate: Int,
-    val orders: List<OrderModel2>
-)
-
-data class OrderModel2(
-    val order: Int? = null,
-    val adode: String? = null,
-    val repair_List: String? = null,
-    val date: String? = null
-)
+//    val date: String? = null
+//)

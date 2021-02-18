@@ -1,7 +1,7 @@
 package com.example.loginmvvm.presentation.history
 
 import android.app.DatePickerDialog
-import android.location.LocationListener
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
-import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.request.HistoryRequest
-import com.example.loginmvvm.presentation.login.LoginViewModel
-import com.example.loginmvvm.presentation.repair.RepairViewModel
 import kotlinx.android.synthetic.main.frament_history.*
 import org.joda.time.DateTime
 import java.text.SimpleDateFormat
@@ -39,14 +36,33 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
         viewModel.toast.observe(this, { str ->
             Toast.makeText(requireContext(), "$str", Toast.LENGTH_SHORT).show()
         })
-
-        viewModel.history.observe(this, { histories ->
+        //recyclerView1
+        viewModel.history2.observe(this, { histories ->
             val adt = HistoryAdapter()
-            recyclerView.apply {
+            recyclerViewDetail.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = adt
+                //recyclerView2
+//                viewModel.history2.observe(this,{histories2 ->
+//                    val adt=HistoryAdapter()
+//                    recyclerView.apply {
+//                        layoutManager=LinearLayoutManager(context)
+//                        adapter= adt
+//                    }
+//                    adt.setList(histories2)
+//                })
             }
             adt.setList(histories)
+            adt.onClick={
+                val intent=Intent(context,DetailHistoryActivity::class.java).apply {
+                    val date=it.datelong
+                    putExtra("date",it.datelong)
+                    
+                }
+                startActivity(intent)
+            }
+
+
         })
 
 

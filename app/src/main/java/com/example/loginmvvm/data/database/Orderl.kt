@@ -15,7 +15,7 @@ object Orderl: Table("orderl"){
     val pay_type= integer("pay_type")
     val date=date("date")
     val dateLong=long("date_long")
-    val price=integer("pricem")
+    val price=integer("price")
     val employee_id=integer("employee_id")
     val latitude =double("latitude")
     val longitude=double("longitude")

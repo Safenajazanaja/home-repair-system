@@ -1,14 +1,13 @@
 package com.example.loginmvvm.data.datasource
 
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.map.*
 import com.example.loginmvvm.data.models.*
-import com.example.loginmvvm.data.request.HistoryRequest
-import com.example.loginmvvm.data.request.LoginRequest
-import com.example.loginmvvm.data.request.RepairRequest
-import com.example.loginmvvm.data.request.SingupRequest
-import com.example.loginmvvm.data.response.HistoryResponse
+import com.example.loginmvvm.data.request.*
 import com.example.loginmvvm.data.response.LoginResponse
 import com.example.loginmvvm.data.response.RepairResponse
 import com.example.loginmvvm.data.response.SingupResponse
@@ -140,6 +139,22 @@ object DataSource {
             Orderl.selectAll()
                 .map { HistoryMap.toOrder(it)}
 
+        }
+    }
+
+    fun HistoryDetail(req:HistoryDetailRequest):List<HistoryDetailModel>{
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Orderl.slice(
+                Orderl.order_id,
+                Orderl.date,
+                Orderl.dateLong,
+                Orderl.repair_list,
+                Orderl.abode
+            )
+                .select{Orderl.user_id eq req.id}
+                .andWhere { Orderl.dateLong eq req.date }
+                .map { HistoryMap.toOrderdetail(it) }
         }
     }
 }

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginMVVM">
-        <activity android:name=".presentation.repair.ConfirmActivity"></activity>
+        <activity android:name=".presentation.history.DetailHistoryActivity"></activity>
+        <activity android:name=".presentation.repair.ConfirmActivity" />
         <activity android:name=".presentation.repair.MapActivity" />
         <activity android:name=".presentation.sing_up.Sing_UpActivity" />
         <activity android:name=".presentation.main.MainActivity" />
