@@ -5,8 +5,10 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
@@ -121,6 +123,10 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
 
+        re_joblist.addTextChangedListener {
+            // TODO: 18/2/2564
+            Log.d("TAG", "onActivityCreated: ${it.toString()}")
+        }
 
     }
 

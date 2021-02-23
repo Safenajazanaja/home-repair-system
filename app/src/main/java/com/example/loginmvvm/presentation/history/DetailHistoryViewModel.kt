@@ -19,7 +19,10 @@ class DetailHistoryViewModel : ViewModel() {
         get() = _historysum
 
     fun historydetail(req: HistoryDetailRequest) {
-        val result = DataSource.HistoryDetail(req)
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val result = DataSource.HistoryDetail(req).filter {
+            sdf.format(it.date) == sdf.format(req.date)
+        }
 //        val sdf = SimpleDateFormat("dd/MM/yyyy")
         _historysum.value = result
 

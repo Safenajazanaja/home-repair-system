@@ -18,7 +18,11 @@ class DetailHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_history)
 
-        val userId = intent.getIntExtra("file", 0)
+//        val userId = intent.getIntExtra("file", 0)
+        val userId = getSharedPreferences(
+            "file",
+            AppCompatActivity.MODE_PRIVATE
+        )?.getInt("id", 0)?:0
         val datesum=intent.getLongExtra("date",0)
 
 

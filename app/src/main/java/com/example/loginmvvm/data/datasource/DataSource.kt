@@ -150,11 +150,13 @@ object DataSource {
                 Orderl.date,
                 Orderl.dateLong,
                 Orderl.repair_list,
-                Orderl.abode
+                Orderl.abode,
+                Orderl.price
             )
                 .select{Orderl.user_id eq req.id}
-                .andWhere { Orderl.dateLong eq req.date }
+//                .andWhere { Orderl.dateLong eq req.date }
                 .map { HistoryMap.toOrderdetail(it) }
         }
+
     }
 }
