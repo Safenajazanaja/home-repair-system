@@ -84,7 +84,7 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
                     ).show()
                     Bt_history_datestar.setText("$year/${month.plus(1)}/$dayOfMonth")
                     Bt_history_dateend.visibility = View.VISIBLE
-                    Bt_history_ok.visibility = View.VISIBLE
+
                     endText.visibility = View.VISIBLE
 
 
@@ -110,6 +110,7 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
 
         }
         Bt_history_dateend.setOnClickListener {
+
             val calendar = mCalendarend ?: Calendar.getInstance()
 
             val year = calendar[Calendar.YEAR]
@@ -126,6 +127,7 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
                         Toast.LENGTH_SHORT
                     ).show()
                     Bt_history_dateend.setText("$year/${month.plus(1)}/$dayOfMonth")
+                    Bt_history_ok.visibility = View.VISIBLE
 
 
                     val calendar = Calendar.getInstance().apply {

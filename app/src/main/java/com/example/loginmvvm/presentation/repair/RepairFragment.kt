@@ -1,6 +1,7 @@
 package com.example.loginmvvm.presentation.repair
 
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.location.Location
@@ -12,7 +13,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
+import com.example.loginmvvm.base.onItemSelected
+import com.example.loginmvvm.data.datasource.DataSource
+import com.example.loginmvvm.data.models.EngineerSeletModel
 import com.example.loginmvvm.data.request.RepairRequest
+import com.example.loginmvvm.presentation.repair.engineer.EngineerActivity
+import com.example.loginmvvm.presentation.repair.engineer.SpinnerEngineerAdapter
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
@@ -41,6 +47,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     private var mMarker: Marker? = null
     private var latitude:Double = 0.0
     private var longitude:Double=0.0
+
+    private var engineer:Int?=null
 
 
     //Calendar
@@ -73,11 +81,14 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                         "$year/${month.plus(1)}/$dayOfMonth",
                         Toast.LENGTH_SHORT
                     ).show()
+                        re_date.setText("$dayOfMonth/${month.plus(1)}/$year")
+                    Bt_engineer.isEnabled=true
 
                     val calendar = Calendar.getInstance().apply {
                         set(year, month, dayOfMonth)
                     }
                     mCalendar = calendar
+                    setSpinnerProble()
 
                 },
                 year,
@@ -89,6 +100,11 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 //                .show()
             dateDialog.show()
 
+
+        }
+        Bt_engineer.setOnClickListener {
+            val intent= Intent(context,EngineerActivity::class.java)
+            startActivity(intent)
         }
         Bt_ok.setOnClickListener {
             val Abode = re_abode.text.toString()
@@ -130,6 +146,15 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
     }
 
+    private  fun setSpinnerProble(){
+        val list =  mCalendar?.timeInMillis?.let { DataSource.SeletEngineer(it) } as MutableList<EngineerSeletModel>
+        bar_spinner_engineer.adapter= SpinnerEngineerAdapter(requireContext(),list)
+        bar_spinner_engineer.onItemSelected<EngineerSeletModel> {
+            engineer=it.technician_id
+        }
+    }
+
+    @SuppressLint("MissingPermission")
     private fun startLocationUpdate() {
         LocationServices.FusedLocationApi.requestLocationUpdates(
             mGoogleApiClient,
@@ -183,6 +208,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
         setMapLongClick(googleMap)
@@ -218,8 +244,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
     override fun onMyLocationButtonClick(): Boolean {
-        Toast.makeText(requireContext(), "MyLocation button clicked", Toast.LENGTH_SHORT)
-            .show()
+//        Toast.makeText(requireContext(), "MyLocation button clicked", Toast.LENGTH_SHORT)
+//            .show()
 
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
@@ -227,8 +253,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     }
 
     override fun onMyLocationClick(location: Location) {
-        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
-            .show()
+//        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
+//            .show()
         latitude=location.latitude
         longitude=location.longitude
 

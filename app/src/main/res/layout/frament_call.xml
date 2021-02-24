@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="15dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,7 +38,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:hint="งานที่ต้องการให้ซ่อม" />
+                        android:hint="งานที่ต้องการให้ซ่อม"
+                        android:inputType="textMultiLine" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -45,24 +47,68 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="left">
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:id="@+id/re_date"
-                        android:layout_width="match_parent"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
                         android:text="วันที่ต้องการให้ช่างซ่อม " />
 
                     <Button
                         android:id="@+id/btCalendar"
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Calendar" />
+                        android:gravity="center"
+                        android:text="ปฎิทิน" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/MatchWrap"
+                        android:layout_marginRight="30dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/MatchWrap"
+                            android:text="ช่างที่ว่าง" />
+
+                        <Spinner
+                            android:id="@+id/bar_spinner_engineer"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/re_engineer"-->
+<!--                        android:layout_width="180dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginRight="30dp"-->
+<!--                        android:text="ช่างที่ว่างงานในช่วงเวลานั้น " />-->
+
+                    <Button
+                        android:id="@+id/Bt_engineer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:text="เลือก" />
+
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,9 +127,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    >
-
+                    android:layout_gravity="center_horizontal">
 
 
                 </LinearLayout>
@@ -94,28 +138,33 @@
                     android:layout_width="300dp"
                     android:layout_height="300dp" />
 
-
-                <Button
-                    android:id="@+id/Bt_ok"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ok" />
+                    android:padding="15dp">
 
-                <Button
-                    android:id="@+id/bt_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="cancel" />
+                    <Button
+                        android:id="@+id/Bt_ok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:text="บันทึก" />
+
+                    <Button
+                        android:id="@+id/bt_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ยกเลิก" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
-
 
 
         </androidx.cardview.widget.CardView>
 
     </ScrollView>
-
-
-
 
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import com.example.loginmvvm.R
 import com.example.loginmvvm.data.request.HistoryDetailRequest
 import kotlinx.android.synthetic.main.activity_detail_history.*
 import android.content.ContentValues.TAG
+import java.text.SimpleDateFormat
 
 class DetailHistoryActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailHistoryViewModel
@@ -24,6 +25,10 @@ class DetailHistoryActivity : AppCompatActivity() {
             AppCompatActivity.MODE_PRIVATE
         )?.getInt("id", 0)?:0
         val datesum=intent.getLongExtra("date",0)
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+
+        tv_date_detail.text=sdf.format(datesum).toString()
 
 
 
