@@ -17,6 +17,9 @@ import com.example.loginmvvm.base.onItemSelected
 import com.example.loginmvvm.data.models.SeletTypejobModel
 import com.example.loginmvvm.data.request.RepairRequest
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
+import com.example.loginmvvm.utils.awaitLastLocation
+import com.example.loginmvvm.utils.getGoogleMap
+import com.example.loginmvvm.utils.locationFlow
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
@@ -28,10 +31,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.frament_call.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.util.*
 
 
+@ExperimentalCoroutinesApi
 class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
     LocationListener, GoogleMap.OnMyLocationButtonClickListener,
@@ -158,6 +166,29 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
 
         setSpinnertypejob()
+
+        MainScope().launch {
+            Log.d("###", "onActivityCreated: 1")
+            val locationProviderClient = LocationServices
+                .getFusedLocationProviderClient(requireActivity())
+
+            Log.d("###", "onActivityCreated: 2")
+            val googleMap = mapFragment?.getGoogleMap()
+
+            Log.d("###", "onActivityCreated: 3")
+            val location = locationProviderClient.awaitLastLocation()
+
+            Log.d("###", "onActivityCreated: 4")
+            latitude = location.latitude
+            longitude = location.longitude
+
+            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(latitude,longitude)))
+
+            // real time
+//            locationProviderClient.locationFlow().collect {
+//                Toast.makeText(context, "${it.latitude}, ${it.longitude}", Toast.LENGTH_SHORT).show()
+//            }
+        }
 
     }
 
