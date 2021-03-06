@@ -9,6 +9,7 @@ data class RepairRequest(
     val repair_list:String,
     val date: Long?=null,
     val latitudeval :Double?=null,
-    val longitude:Double?=null
+    val longitude:Double?=null,
+    val idtypejob:Int?=null
 
     )

@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
+import com.example.loginmvvm.data.models.OrderModeldetail
+import com.example.loginmvvm.data.models.ProfileModel
 import com.example.loginmvvm.data.models.RepairModel
+import com.example.loginmvvm.data.models.SeletTypejobModel
 import com.example.loginmvvm.data.request.RepairRequest
 
 class RepairViewModel: ViewModel() {
@@ -16,6 +19,13 @@ class RepairViewModel: ViewModel() {
     val login: LiveData<Boolean>
         get() = _repair
 
+
+    // RESPONSE
+    private var _typejob = MutableLiveData<List<SeletTypejobModel>>()
+    val typejob: LiveData<List<SeletTypejobModel>>
+        get() = _typejob
+
+    // REQUEST
     fun repair(request:RepairRequest) {
         when {
             request.abode.isBlank() -> _toast.value = "กรุณากรอกที่อยู่"
@@ -32,4 +42,15 @@ class RepairViewModel: ViewModel() {
         }
 
     }
+//    fun seletjob(request:RepairRequest?=null){
+//
+//        val a =DataSource.Selettypejob()
+//        _typejob.value=a
+//    }
+
+    init {
+//        seletjob()
+        _typejob.value=DataSource.Selettypejob()
+    }
+
 }

@@ -106,6 +106,7 @@ object DataSource {
                 it[latitude]=req.latitudeval.toString().toDouble()
                 it[longitude]=req.longitude.toString().toDouble()
                 it[id_technician]=0
+                it[type_job]=req.idtypejob.toString().toInt()
 
             }
         }
@@ -159,21 +160,12 @@ object DataSource {
         }
 
     }
-
-    fun SeletEngineer(date:Long):List<EngineerSeletModel>{
+    fun Selettypejob():List<SeletTypejobModel>{
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Orderl innerJoin Technician)
-                .slice(
-                    Technician.technician_id,
-                    Technician.fullname
-                )
-                .select{Orderl.id_technician eq Technician.technician_id}
-                .andWhere {Orderl.dateLong neq date }
-                .map { EngineerSeletMap.toEngineerSelet(it) }
-
+            Type_technician.selectAll()
+                .map { SeletTypejobMap.toSeletTypejob(it) }
         }
-
     }
 
 }

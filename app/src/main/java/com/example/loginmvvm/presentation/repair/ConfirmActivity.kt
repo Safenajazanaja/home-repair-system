@@ -25,6 +25,7 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
         val date = intent.getLongExtra("date", 0)
         val latitude = intent.getFloatExtra("latitude",0.0f)
         val longitude = intent.getFloatExtra("longitude", 0.0f)
+        val idtypejob= intent.getIntExtra("type_job",0)
 
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
         val dateString = simpleDateFormat.format(date)

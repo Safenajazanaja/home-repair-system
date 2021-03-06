@@ -14,11 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.onItemSelected
-import com.example.loginmvvm.data.datasource.DataSource
-import com.example.loginmvvm.data.models.EngineerSeletModel
+import com.example.loginmvvm.data.models.SeletTypejobModel
 import com.example.loginmvvm.data.request.RepairRequest
-import com.example.loginmvvm.presentation.repair.engineer.EngineerActivity
-import com.example.loginmvvm.presentation.repair.engineer.SpinnerEngineerAdapter
+import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
@@ -30,14 +28,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.frament_call.*
-import kotlinx.android.synthetic.main.item_map.*
+import org.joda.time.DateTime
 import java.util.*
 
 
 class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
     LocationListener, GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener{
+    GoogleMap.OnMyLocationClickListener {
 
     private lateinit var viewModel: RepairViewModel
 
@@ -45,10 +43,12 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     private var mLocationRequest: LocationRequest? = null
     private var mGoogleMap: GoogleMap? = null
     private var mMarker: Marker? = null
-    private var latitude:Double = 0.0
-    private var longitude:Double=0.0
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
 
-    private var engineer:Int?=null
+    private lateinit var type: SeletTypejobModel
+    private var name: String? = null
+    private var id: Int? = null
 
 
     //Calendar
@@ -65,6 +65,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
         viewModel.toast.observe(this, { str ->
             Toast.makeText(context, "$str", Toast.LENGTH_SHORT).show()
         })
+
         btCalendar.setOnClickListener {
             val calendar = mCalendar ?: Calendar.getInstance()
 
@@ -81,43 +82,53 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                         "$year/${month.plus(1)}/$dayOfMonth",
                         Toast.LENGTH_SHORT
                     ).show()
-                        re_date.setText("$dayOfMonth/${month.plus(1)}/$year")
-                    Bt_engineer.isEnabled=true
+                    re_date.setText("$dayOfMonth/${month.plus(1)}/$year")
+
+
 
                     val calendar = Calendar.getInstance().apply {
                         set(year, month, dayOfMonth)
+
+
                     }
                     mCalendar = calendar
-                    setSpinnerProble()
+
 
                 },
                 year,
                 month,
                 day,
             )
+
             calendar.add(Calendar.DATE, 0)
-            dateDialog.datePicker.minDate = calendar.timeInMillis
+            dateDialog.datePicker.minDate = DateTime.now().millis
 //                .show()
             dateDialog.show()
 
 
         }
-        Bt_engineer.setOnClickListener {
-            val intent= Intent(context,EngineerActivity::class.java)
-            startActivity(intent)
-        }
+
         Bt_ok.setOnClickListener {
             val Abode = re_abode.text.toString()
             val RepairList = re_joblist.text.toString()
-            val Repair = RepairRequest(userId, Abode, RepairList, mCalendar?.timeInMillis,latitude,longitude)
+            val Repair = RepairRequest(
+                userid =userId,
+                abode = Abode,
+                repair_list=RepairList,
+                date = mCalendar?.timeInMillis,
+                latitudeval = latitude,
+                longitude = longitude,
+                idtypejob = id
+            )
             viewModel.repair(Repair)
-            val intent= Intent(context,ConfirmActivity::class.java).apply {
-                putExtra("user_id",Repair?.userid)
-                putExtra("abode",Repair?.abode)
-                putExtra("repair_list",Repair?.repair_list)
-                putExtra("date",Repair?.date)
-                putExtra("latitude",Repair?.latitudeval)
-                putExtra("longitude",Repair?.longitude)
+            val intent = Intent(context, ConfirmActivity::class.java).apply {
+                putExtra("user_id", Repair?.userid)
+                putExtra("abode", Repair?.abode)
+                putExtra("repair_list", Repair?.repair_list)
+                putExtra("date", Repair?.date)
+                putExtra("latitude", Repair?.latitudeval)
+                putExtra("longitude", Repair?.longitude)
+                putExtra("type_job",id)
             }
             startActivity(intent)
 
@@ -144,14 +155,33 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             Log.d("TAG", "onActivityCreated: ${it.toString()}")
         }
 
+
+
+        setSpinnertypejob()
+
     }
 
-    private  fun setSpinnerProble(){
-        val list =  mCalendar?.timeInMillis?.let { DataSource.SeletEngineer(it) } as MutableList<EngineerSeletModel>
-        bar_spinner_engineer.adapter= SpinnerEngineerAdapter(requireContext(),list)
-        bar_spinner_engineer.onItemSelected<EngineerSeletModel> {
-            engineer=it.technician_id
-        }
+    private fun setSpinnertypejob() {
+        viewModel.typejob.observe(this,{selectjob ->
+//            val list=viewModel.seletjob()as MutableList<SeletTypejobModel>
+            bar_spinner_typejob.adapter=SpinnertypeAdapter(requireContext(),
+                selectjob as MutableList<SeletTypejobModel>
+            )
+            bar_spinner_typejob.onItemSelected<SeletTypejobModel> {
+                type=it
+                id=it.id
+                name=it.type
+            }
+        })
+//        viewModel.repair()
+    //        val list= DataSource.Selettypejob()as MutableList<SeletTypejobModel>
+//        bar_spinner_engineer.adapter=SpinnertypeAdapter(requireContext(),list)
+//        bar_spinner_engineer.onItemSelected<SeletTypejobModel> {
+//            type=it
+//            id=it.id
+//            name=it.type
+//        }
+
     }
 
     @SuppressLint("MissingPermission")
@@ -201,9 +231,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 //                    BitmapDescriptorFactory.fromResource(R.drawable.house)
 //                )
 //        )
-        latitude=location.latitude
-        longitude=location.longitude
-
+        latitude = location.latitude
+        longitude = location.longitude
 
 
     }
@@ -219,7 +248,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
     private fun setMapLongClick(googleMap: GoogleMap) {
         googleMap.setOnMapClickListener { latLng ->
-            val snippets= String.format(
+            val snippets = String.format(
                 Locale.getDefault(),
                 "Lat: %1$.5f, Long: %2$.5f",
                 latLng.latitude,
@@ -227,7 +256,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             )
             mMarker?.remove()
             mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-            mMarker=googleMap.addMarker(MarkerOptions().position(latLng))
+            mMarker = googleMap.addMarker(MarkerOptions().position(latLng))
 
 
         }
@@ -255,8 +284,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     override fun onMyLocationClick(location: Location) {
 //        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
 //            .show()
-        latitude=location.latitude
-        longitude=location.longitude
+        latitude = location.latitude
+        longitude = location.longitude
 
     }
 
