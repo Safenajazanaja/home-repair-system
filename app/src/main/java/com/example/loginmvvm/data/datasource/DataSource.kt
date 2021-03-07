@@ -102,7 +102,7 @@ object DataSource {
                 it[user_id]=req.userid.toString().toInt()
                 it[abode]=req.abode.toString()
                 it[repair_list]=req.repair_list.toString()
-                it[dateLong]=req.date.toString().toLong()
+//                it[dateLong]=req.date.toString().toLong()
                 it[latitude]=req.latitudeval.toString().toDouble()
                 it[longitude]=req.longitude.toString().toDouble()
                 it[id_technician]=0

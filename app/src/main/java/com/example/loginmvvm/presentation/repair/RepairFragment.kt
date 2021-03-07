@@ -123,19 +123,19 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 userid =userId,
                 abode = Abode,
                 repair_list=RepairList,
-                date = mCalendar?.timeInMillis,
+//                date = mCalendar?.timeInMillis,
                 latitudeval = latitude,
                 longitude = longitude,
                 idtypejob = id
             )
             viewModel.repair(Repair)
             val intent = Intent(context, ConfirmActivity::class.java).apply {
-                putExtra("user_id", Repair?.userid)
-                putExtra("abode", Repair?.abode)
-                putExtra("repair_list", Repair?.repair_list)
-                putExtra("date", Repair?.date)
-                putExtra("latitude", Repair?.latitudeval)
-                putExtra("longitude", Repair?.longitude)
+                putExtra("user_id", userId)
+                putExtra("abode", Abode)
+                putExtra("repair_list", RepairList)
+//                putExtra("date", Repair?.date)
+                putExtra("latitude", latitude)
+                putExtra("longitude", longitude)
                 putExtra("type_job",id)
             }
             startActivity(intent)
@@ -168,17 +168,17 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
         setSpinnertypejob()
 
         MainScope().launch {
-            Log.d("###", "onActivityCreated: 1")
+//            Log.d("###", "onActivityCreated: 1")
             val locationProviderClient = LocationServices
                 .getFusedLocationProviderClient(requireActivity())
 
-            Log.d("###", "onActivityCreated: 2")
+//            Log.d("###", "onActivityCreated: 2")
             val googleMap = mapFragment?.getGoogleMap()
 
-            Log.d("###", "onActivityCreated: 3")
+//            Log.d("###", "onActivityCreated: 3")
             val location = locationProviderClient.awaitLastLocation()
 
-            Log.d("###", "onActivityCreated: 4")
+//            Log.d("###", "onActivityCreated: 4")
             latitude = location.latitude
             longitude = location.longitude
 

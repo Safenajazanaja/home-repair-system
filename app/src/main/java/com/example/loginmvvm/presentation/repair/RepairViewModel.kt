@@ -10,10 +10,10 @@ import com.example.loginmvvm.data.models.RepairModel
 import com.example.loginmvvm.data.models.SeletTypejobModel
 import com.example.loginmvvm.data.request.RepairRequest
 
-class RepairViewModel: ViewModel() {
+class RepairViewModel : ViewModel() {
     private var _toast = MutableLiveData<String>()
     val toast: LiveData<String>
-    get() = _toast
+        get() = _toast
 
     private var _repair = MutableLiveData<Boolean>()
     val login: LiveData<Boolean>
@@ -26,21 +26,26 @@ class RepairViewModel: ViewModel() {
         get() = _typejob
 
     // REQUEST
-    fun repair(request:RepairRequest) {
+    fun repair(request: RepairRequest) {
         when {
             request.abode.isBlank() -> _toast.value = "กรุณากรอกที่อยู่"
             request.repair_list.isBlank() -> _toast.value = "กรุรากรอกงานที่ต้องการซ่อม"
-            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
+//            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
 
-            else -> {
-                val result = DataSource.repair(request)
-                _repair.value=result.success
-
-
-            }
+//            else -> {
+//                val result = DataSource.repair(request)
+//                _repair.value = result.success
+//
+//
+//            }
 
         }
 
+    }
+
+    fun confim(request: RepairRequest) {
+        val result = DataSource.repair(request)
+        _repair.value = result.success
     }
 //    fun seletjob(request:RepairRequest?=null){
 //
@@ -50,7 +55,7 @@ class RepairViewModel: ViewModel() {
 
     init {
 //        seletjob()
-        _typejob.value=DataSource.Selettypejob()
+        _typejob.value = DataSource.Selettypejob()
     }
 
 }
