@@ -1,0 +1,47 @@
+package com.example.easyfix.presentation.main
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.example.easyfix.R
+import com.example.easyfix.base.BaseActivity
+import com.example.easyfix.presentation.history.HistoryFragment
+//import com.example.loginmvvm.presentation.history.HistoryModel2
+import com.example.easyfix.presentation.profile.ProfileFragment
+import com.example.easyfix.presentation.repair.RepairFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : BaseActivity() {
+    private lateinit var viewModel: MainViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+//        val userId=intent.getIntExtra("id",0)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        bottom_navigationv.setOnNavigationItemSelectedListener(navListener)
+        if (savedInstanceState == null)
+            replaceFragment(RepairFragment())
+
+        ///
+
+
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            fragment
+        ).commit()
+    }
+
+    private val navListener: BottomNavigationView.OnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            val selectedFragment: Fragment = when (item.itemId) {
+                R.id.nav_home -> RepairFragment()
+                R.id.nav_history -> HistoryFragment()
+                R.id.nav_profile -> ProfileFragment()
+                else -> HistoryFragment()
+            }
+            replaceFragment(selectedFragment)
+            true
+        }
+}
