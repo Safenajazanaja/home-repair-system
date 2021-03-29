@@ -13,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.easyfix.R
 import com.example.easyfix.base.BaseFragment
 import com.example.easyfix.base.onItemSelected
+import com.example.easyfix.data.models.SeletTechnicanModel
 import com.example.easyfix.data.models.SeletTypejobModel
 import com.example.easyfix.data.request.RepairRequest
-import com.example.easyfix.presentation.repair.engineer.SpinnertypeAdapter
+import com.example.easyfix.presentation.repair.engineer.SpinnerNameTecAdapter
+import com.example.easyfix.presentation.repair.engineer.SpinnerTypejobAdapter
 import com.example.easyfix.utils.awaitLastLocation
 import com.example.easyfix.utils.getGoogleMap
 import com.example.easyfix.utils.locationFlow
@@ -29,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.frament_call.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
@@ -53,9 +56,12 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     private var longitude: Double = 0.0
 
     private lateinit var type: SeletTypejobModel
-    private var name: String? = null
-    private var id: Int? = null
+    private var type_name: String? = null
+    private var id_type: Int? = null
 
+    private lateinit var name: SeletTechnicanModel
+    private var name_tec: String? = null
+    private var id_tec: Int? = null
 
     //Calendar
     private var mCalendar: Calendar? = null
@@ -72,7 +78,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             Toast.makeText(context, "$str", Toast.LENGTH_SHORT).show()
         })
 
-//        btCalendar.setOnClickListener {
+        btCalendar.setOnClickListener {
 //            val calendar = mCalendar ?: Calendar.getInstance()
 //
 //            val year = calendar[Calendar.YEAR]
@@ -110,21 +116,43 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 //            dateDialog.datePicker.minDate = DateTime.now().millis
 ////                .show()
 //            dateDialog.show()
-//
-//
-//        }
+
+            val now = Calendar.getInstance()
+            val dpd: DatePickerDialog = DatePickerDialog.newInstance(
+                { view, year, monthOfYear, dayOfMonth ->
+                    
+                },
+                now[Calendar.YEAR],  // Initial year selection
+                now[Calendar.MONTH],  // Initial month selection
+                now[Calendar.DAY_OF_MONTH] // Inital day selection
+            )
+            dpd.show(childFragmentManager, "Datepickerdialog")
+
+//            val now = Calendar.getInstance()
+//            val dpd: DatePickerDialog = DatePickerDialog.newInstance(
+//                this@MainActivity,
+//                now[Calendar.YEAR],  // Initial year selection
+//                now[Calendar.MONTH],  // Initial month selection
+//                now[Calendar.DAY_OF_MONTH] // Inital day selection
+//            )
+//            // If you're calling this from a support Fragment
+//            // If you're calling this from a support Fragment
+//            dpd.show(getSupportFragmentManager(), "Datepickerdialog")
+//            // If you're calling this from an AppCompatActivity
+//            // dpd.show(getSupportFragmentManager(), "Datepickerdialog");
+        }
 
         Bt_ok.setOnClickListener {
             val Abode = re_abode.text.toString()
             val RepairList = re_joblist.text.toString()
             val Repair = RepairRequest(
-                userid =userId,
+                userid = userId,
                 abode = Abode,
-                repair_list=RepairList,
+                repair_list = RepairList,
 //                date = mCalendar?.timeInMillis,
                 latitudeval = latitude,
                 longitude = longitude,
-                idtypejob = id
+                idtypejob = id_type
             )
             viewModel.repair(Repair)
             val intent = Intent(context, ConfirmActivity::class.java).apply {
@@ -134,7 +162,8 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 //                putExtra("date", Repair?.date)
                 putExtra("latitude", Repair?.latitudeval)
                 putExtra("longitude", Repair?.longitude)
-                putExtra("type_job",id)
+                putExtra("type_job", id_type)
+                putExtra("type_name", type_name)
             }
             startActivity(intent)
 
@@ -164,6 +193,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
 
         setSpinnertypejob()
+        setSpinnerTec()
 
         MainScope().launch {
             Log.d("###", "onActivityCreated: 1")
@@ -179,34 +209,41 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             Log.d("###", "onActivityCreated: 4")
             latitude = location.latitude
             longitude = location.longitude
-            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude), 15f))
+            googleMap?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(latitude, longitude),
+                    15f
+                )
+            )
 
-            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(latitude,longitude)))
+            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(latitude, longitude)))
 
             // real time
             locationProviderClient.locationFlow().collect {
 
 
-                Toast.makeText(context, "${it.latitude}, ${it.longitude}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${it.latitude}, ${it.longitude}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
     }
 
     private fun setSpinnertypejob() {
-        viewModel.typejob.observe(this,{selectjob ->
+        viewModel.typejob.observe(this, { selectjob ->
 //            val list=viewModel.seletjob()as MutableList<SeletTypejobModel>
-            bar_spinner_typejob.adapter=SpinnertypeAdapter(requireContext(),
+            bar_spinner_typejob.adapter = SpinnerTypejobAdapter(
+                requireContext(),
                 selectjob as MutableList<SeletTypejobModel>
             )
             bar_spinner_typejob.onItemSelected<SeletTypejobModel> {
-                type=it
-                id=it.id
-                name=it.type
+                type = it
+                id_type = it.id
+                type_name = it.type
             }
         })
 //        viewModel.repair()
-    //        val list= DataSource.Selettypejob()as MutableList<SeletTypejobModel>
+        //        val list= DataSource.Selettypejob()as MutableList<SeletTypejobModel>
 //        bar_spinner_engineer.adapter=SpinnertypeAdapter(requireContext(),list)
 //        bar_spinner_engineer.onItemSelected<SeletTypejobModel> {
 //            type=it
@@ -214,6 +251,21 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 //            name=it.type
 //        }
 
+    }
+
+    private fun setSpinnerTec() {
+        viewModel.selettec()
+        viewModel.nametec.observe(this, { selettec ->
+            bar_spinner_nametec.adapter = SpinnerNameTecAdapter(
+                requireContext(),
+                selettec as MutableList<SeletTechnicanModel>
+            )
+            bar_spinner_nametec.onItemSelected<SeletTechnicanModel> {
+                name = it
+                id_tec = it.idtechnican
+                name_tec = it.nametechnican
+            }
+        })
     }
 
     @SuppressLint("MissingPermission")

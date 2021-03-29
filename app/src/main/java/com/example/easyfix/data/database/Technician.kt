@@ -1,6 +1,7 @@
 package com.example.easyfix.data.database
 
 
+import org.jetbrains.exposed.sql.ForeignKeyConstraint
 import org.jetbrains.exposed.sql.Table
 
 object Technician : Table("technician"){
@@ -12,4 +13,5 @@ object Technician : Table("technician"){
 
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(technician_id, name = "echnician_id_PK")
+
 }

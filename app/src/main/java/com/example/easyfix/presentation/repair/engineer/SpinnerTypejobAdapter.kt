@@ -7,9 +7,9 @@ import com.example.easyfix.base.BaseSpinner
 import com.example.easyfix.data.models.SeletTypejobModel
 import kotlinx.android.synthetic.main.item_spinner_base.view.*
 
-class SpinnertypeAdapter(context: Context,list: MutableList<SeletTypejobModel>):BaseSpinner<SeletTypejobModel>(context, list) {
+class SpinnerTypejobAdapter(context: Context, list: MutableList<SeletTypejobModel>):BaseSpinner<SeletTypejobModel>(context, list) {
     override fun getLayout(): Int = R.layout.item_spinner_base
     override fun View.onBindViewHolder(data: SeletTypejobModel) {
-        tvSpinnerBase.text=data.type
+        tvSpinnerBase.text="งาน"+data.type
     }
 }

@@ -164,5 +164,24 @@ object DataSource {
                 .map { SeletTypejobMap.toSeletTypejob(it) }
         }
     }
+    fun Selettechnician():List<SeletTechnicanModel>{
+//        return  transaction {
+//            addLogger(StdOutSqlLogger)
+//            (Technician innerJoin Type_technician)
+//                .slice(Technician.technician_id,
+//                    Technician.fullname,
+//                    Type_technician.name_engineer)
+//                .select{Technician.id_type_technician eq Type_technician.type_engineer}
+//                .map{ SeletTechnicianMap.toselettechnician(it)}
+//        }
+        return  transaction {
+            addLogger(StdOutSqlLogger)
+            Technician.slice(Technician.technician_id,
+            Technician.fullname)
+                .selectAll()
+                .map { SeletTechnicianMap.toselettechnician(it) }
+
+        }
+    }
 
 }

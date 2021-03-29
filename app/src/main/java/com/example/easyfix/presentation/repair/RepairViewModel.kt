@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.easyfix.data.datasource.DataSource
+import com.example.easyfix.data.models.SeletTechnicanModel
 import com.example.easyfix.data.models.SeletTypejobModel
 import com.example.easyfix.data.request.RepairRequest
 
@@ -22,6 +23,9 @@ class RepairViewModel : ViewModel() {
     val typejob: LiveData<List<SeletTypejobModel>>
         get() = _typejob
 
+    private var _nametec = MutableLiveData<List<SeletTechnicanModel>>()
+    val nametec: LiveData<List<SeletTechnicanModel>>
+        get() = _nametec
     // REQUEST
     fun repair(request: RepairRequest) {
         when {
@@ -42,7 +46,12 @@ class RepairViewModel : ViewModel() {
         val result = DataSource.repair(request)
         _repair.value = result.success
     }
-//    fun seletjob(request:RepairRequest?=null){
+    fun selettec(){
+
+        val result =DataSource.Selettechnician()
+        _nametec.value=result
+    }
+//    fun selettec(request:RepairRequest?=null){
 //
 //        val a =DataSource.Selettypejob()
 //        _typejob.value=a

@@ -48,6 +48,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:text="ประเภทงาน                      :"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/tv_type_jobconfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ประเภทงาน"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,8 +139,8 @@
                 <fragment
                     android:id="@+id/maps_confirm"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp" />
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" />
             </LinearLayout>
 
             <LinearLayout

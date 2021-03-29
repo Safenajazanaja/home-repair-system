@@ -34,6 +34,7 @@ class ConfirmActivity : BaseActivity(),OnMapReadyCallback {
         val latitude = intent.getDoubleExtra("latitude", 0.0)
         val longitude = intent.getDoubleExtra("longitude", 0.0)
         val idtypejob= intent.getIntExtra("type_job", 0)
+        val typename=intent.getStringExtra("type_name")
         viewModel = ViewModelProvider(this).get(RepairViewModel::class.java)
 
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -41,7 +42,7 @@ class ConfirmActivity : BaseActivity(),OnMapReadyCallback {
 
         latitudeMap=latitude.toDouble()
         longitudeMap=longitude.toDouble()
-
+        tv_type_jobconfirm.text=typename.toString()
         tv_namejob_confirm.text=repair_list.toString()
 //        tv_date_confirm.text=dateString.toString()
         tv_abode_confirm.text=abode.toString()
