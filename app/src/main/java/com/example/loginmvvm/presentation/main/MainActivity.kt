@@ -1,24 +1,15 @@
 package com.example.loginmvvm.presentation.main
 
-import android.content.ContentValues
+//import com.example.loginmvvm.presentation.history.HistoryModel2
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
-import com.example.loginmvvm.data.database.Users
-import com.example.loginmvvm.data.models.ProfileModel
 import com.example.loginmvvm.presentation.history.HistoryFragment
-//import com.example.loginmvvm.presentation.history.HistoryModel2
 import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.example.loginmvvm.presentation.repair.RepairFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class MainActivity : BaseActivity() {
     private lateinit var viewModel: MainViewModel

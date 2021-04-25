@@ -21,6 +21,7 @@ object Orderl: Table("orderl"){
     val longitude=double("longitude")
     val type_job=integer("type_job")
     val date_end=long("date_end")
+    val status=varchar("dstatus",30)
 
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(order_id, name = "order_id_PK")

@@ -60,8 +60,8 @@ class LoginActivity : BaseActivity() {
         }
 
         btSingup.setOnClickListener {
-//            val intent=Intent(baseContext,Sing_UpActivity::class.java)
-            val intent=Intent(baseContext,MapActivity::class.java)
+            val intent=Intent(baseContext,Sing_UpActivity::class.java)
+//            val intent=Intent(baseContext,MapActivity::class.java)
             startActivity(intent)
         }
 

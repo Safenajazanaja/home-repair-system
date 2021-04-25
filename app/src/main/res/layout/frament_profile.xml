@@ -25,7 +25,8 @@
 
             <ImageView
                 android:id="@+id/iv_photo"
-                style="@style/ImageViewPhoto" />
+                style="@style/ImageViewPhoto"
+                android:background="#935050" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -7,7 +7,7 @@
     <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_baseline_history_toggle_off_24"
-        android:title="ประวัติ" />
+        android:title="ติดตามงาน" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_baseline_person_24"

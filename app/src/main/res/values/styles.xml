@@ -165,7 +165,7 @@
     <style name="ImageViewPhoto">
         <item name="android:layout_width">@dimen/img_photo</item>
         <item name="android:layout_height">@dimen/img_photo</item>
-        <item name="android:src">@drawable/ic_user</item>
+<!--        <item name="android:src">@drawable/ic_user</item>-->
     </style>
 
     <style name="ImageViewPhotoSub" parent="ImageViewPhoto">

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:text="ประวัติการใช้งาน"
+            android:text="ติดตามงาน"
             android:textSize="30dp"
             android:textStyle="italic" />
 
@@ -63,14 +63,22 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDetail"
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerViewDetail"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/linearlayout"-->
+<!--        android:layout_marginTop="-1dp"-->
+<!--        android:clipToPadding="false"-->
+<!--        tools:listitem="@layout/item_history" />-->
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearlayout"
-        android:layout_marginTop="-1dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_history" />
+
+         />
 
 
 </RelativeLayout>

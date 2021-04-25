@@ -1,16 +1,16 @@
 package com.example.loginmvvm.presentation.history
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
+import com.example.loginmvvm.data.models.HistoryModel2
+import com.example.loginmvvm.data.models.OrderModeldetail
 import com.example.loginmvvm.data.request.HistoryRequest
 import kotlinx.android.synthetic.main.frament_history.*
 import org.joda.time.DateTime
@@ -22,6 +22,7 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
     private var mCalendarend: Calendar? = null
     var dateinmax: Long? = null
     private lateinit var viewModel: HistoryViewModel
+    private lateinit var mSingleItemAdapter: HistoryV2
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -38,32 +39,78 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
         })
         //recyclerView1
         viewModel.history2.observe(this, { histories ->
-            val adt = HistoryAdapter()
-            recyclerViewDetail.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = adt
-                //recyclerView2
-//                viewModel.history2.observe(this,{histories2 ->
-//                    val adt=HistoryAdapter()
-//                    recyclerView.apply {
-//                        layoutManager=LinearLayoutManager(context)
-//                        adapter= adt
-//                    }
-//                    adt.setList(histories2)
-//                })
-            }
-            adt.setList(histories)
-            adt.onClick={
-                val intent=Intent(context,DetailHistoryActivity::class.java).apply {
-                    val date=it.datelong
-                    putExtra("date",it.datelong)
-                    
-                }
-                startActivity(intent)
-            }
+//            val adt = HistoryAdapter()
+//            recyclerViewDetail.apply {
+//                layoutManager = LinearLayoutManager(context)
+//                adapter = adt
+//                //recyclerView2
+////                viewModel.history2.observe(this,{histories2 ->
+////                    val adt=HistoryAdapter()
+////                    recyclerView.apply {
+////                        layoutManager=LinearLayoutManager(context)
+////                        adapter= adt
+////                    }
+////                    adt.setList(histories2)
+////                })
+//            }
+//            adt.setList(histories)
+//            adt.onClick={
+//                val intent=Intent(context,DetailHistoryActivity::class.java).apply {
+//                    val date=it.datelong
+//                    putExtra("date",it.datelong)
+//
+//                }
+//                startActivity(intent)
+//            }
 
 
         })
+
+        mSingleItemAdapter=HistoryV2()
+
+        expandableListView.setAdapter(mSingleItemAdapter)
+
+        val list = listOf(
+            HistoryModel2(
+                0,
+                "123",
+                0,
+                listOf(
+                    OrderModeldetail(
+                        1,
+                        "",
+                        "111",
+                        "",
+                        0
+                    ),
+                )
+            ),
+            HistoryModel2(
+                1,
+                "456",
+                1,
+                listOf(
+                    OrderModeldetail(
+                        1,
+                        "",
+                        "222",
+                        "",
+                        0
+                    ),
+                    OrderModeldetail(
+                        1,
+                        "",
+                        "333",
+                        "",
+                        0
+                    ),
+                )
+            ),
+        )
+
+        mSingleItemAdapter.setList(list)
+
+
 
 
         Bt_history_datestar.setOnClickListener {
