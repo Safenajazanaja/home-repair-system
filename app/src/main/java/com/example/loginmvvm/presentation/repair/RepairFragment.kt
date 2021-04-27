@@ -42,8 +42,7 @@ import java.util.*
 @ExperimentalCoroutinesApi
 class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-    LocationListener, GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener {
+    LocationListener, GoogleMap.OnMyLocationButtonClickListener{
 
     private lateinit var viewModel: RepairViewModel
 
@@ -123,7 +122,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 userid =userId,
                 abode = Abode,
                 repair_list=RepairList,
-//                date = mCalendar?.timeInMillis,
+                date = mCalendar?.timeInMillis,
                 latitudeval = latitude,
                 longitude = longitude,
                 idtypejob = id
@@ -133,7 +132,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 putExtra("user_id", userId)
                 putExtra("abode", Abode)
                 putExtra("repair_list", RepairList)
-//                putExtra("date", Repair?.date)
+                putExtra("date", Repair?.date)
                 putExtra("latitude", latitude)
                 putExtra("longitude", longitude)
                 putExtra("type_job",id)
@@ -186,7 +185,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
             // real time
 //            locationProviderClient.locationFlow().collect {
-//                Toast.makeText(context, "${it.latitude}, ${it.longitude}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 //            }
         }
 
@@ -251,17 +250,6 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
     override fun onLocationChanged(location: Location) {
         val latLng = LatLng(location.latitude, location.longitude)
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-//        if (mMarker != null) {
-//            mMarker!!.remove()
-//        }
-//        mMarker = mGoogleMap?.addMarker(
-//            MarkerOptions()
-//                .position(latLng)
-//                .title("Dru")
-//                .snippet("Dru sp" + location.longitude + " " + location.latitude).icon(
-//                    BitmapDescriptorFactory.fromResource(R.drawable.house)
-//                )
-//        )
         latitude = location.latitude
         longitude = location.longitude
 
@@ -274,7 +262,7 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
         setMapLongClick(googleMap)
         googleMap.isMyLocationEnabled = true
         googleMap.setOnMyLocationButtonClickListener(this)
-        googleMap.setOnMyLocationClickListener(this)
+//        googleMap.setOnMyLocationClickListener(this)
     }
 
     private fun setMapLongClick(googleMap: GoogleMap) {
@@ -312,13 +300,13 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
         return false
     }
 
-    override fun onMyLocationClick(location: Location) {
-//        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
-//            .show()
-        latitude = location.latitude
-        longitude = location.longitude
-
-    }
+//    override fun onMyLocationClick(location: Location) {
+////        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
+////            .show()
+//        latitude = location.latitude
+//        longitude = location.longitude
+//
+//    }
 
 
 }

@@ -12,6 +12,7 @@ import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.data.models.HistoryModel2
 import com.example.loginmvvm.data.models.OrderModeldetail
 import com.example.loginmvvm.data.request.HistoryRequest
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frament_history.*
 import org.joda.time.DateTime
 import java.text.SimpleDateFormat
@@ -37,6 +38,8 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
         viewModel.toast.observe(this, { str ->
             Toast.makeText(requireContext(), "$str", Toast.LENGTH_SHORT).show()
         })
+
+
         //recyclerView1
         viewModel.history2.observe(this, { histories ->
 //            val adt = HistoryAdapter()
@@ -62,53 +65,54 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
 //                }
 //                startActivity(intent)
 //            }
-
+            mSingleItemAdapter=HistoryV2()
+            expandableListView.setAdapter(mSingleItemAdapter)
+            mSingleItemAdapter.setList(histories)
+            Log.d(TAG, "repair2: ${Gson().toJson(histories)}")
 
         })
 
-        mSingleItemAdapter=HistoryV2()
 
-        expandableListView.setAdapter(mSingleItemAdapter)
 
-        val list = listOf(
-            HistoryModel2(
-                0,
-                "123",
-                0,
-                listOf(
-                    OrderModeldetail(
-                        1,
-                        "",
-                        "111",
-                        "",
-                        0
-                    ),
-                )
-            ),
-            HistoryModel2(
-                1,
-                "456",
-                1,
-                listOf(
-                    OrderModeldetail(
-                        1,
-                        "",
-                        "222",
-                        "",
-                        0
-                    ),
-                    OrderModeldetail(
-                        1,
-                        "",
-                        "333",
-                        "",
-                        0
-                    ),
-                )
-            ),
-        )
+//        val list = listOf(
+//            HistoryModel2(
+//                0,
+//                "123",
+//                0,
+//                listOf(
+//                    OrderModeldetail(
+//                        1,
+//                        "",
+//                        "111",
+//                        "",
+//                        0
+//                    ),
+//                )
+//            ),
+//            HistoryModel2(
+//                1,
+//                "456",
+//                1,
+//                listOf(
+//                    OrderModeldetail(
+//                        1,
+//                        "",
+//                        "222",
+//                        "",
+//                        0
+//                    ),
+//                    OrderModeldetail(
+//                        1,
+//                        "",
+//                        "333",
+//                        "",
+//                        0
+//                    ),
+//                )
+//            ),
+//        )
 
-        mSingleItemAdapter.setList(list)
+
 
 
 

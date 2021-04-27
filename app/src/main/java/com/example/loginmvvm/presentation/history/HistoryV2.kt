@@ -16,7 +16,7 @@ class HistoryV2:SimpleExpandableListAdapter<HistoryModel2, OrderModeldetail>() {
     override fun onCreateViewHolderMain(): Int = R.layout.item_single_item_main
 
     override fun View.onBindViewHolderMain(item: HistoryModel2) {
-        tvDate.text = item.date
+        tv_date.text = item.date
     }
 
     override fun onCreateViewHolderDetail(): Int = R.layout.item_history_date

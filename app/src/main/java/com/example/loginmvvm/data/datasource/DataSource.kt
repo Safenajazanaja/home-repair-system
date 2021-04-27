@@ -1,8 +1,6 @@
 package com.example.loginmvvm.data.datasource
 
 
-import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.map.*
@@ -11,7 +9,6 @@ import com.example.loginmvvm.data.request.*
 import com.example.loginmvvm.data.response.LoginResponse
 import com.example.loginmvvm.data.response.RepairResponse
 import com.example.loginmvvm.data.response.SingupResponse
-import com.example.loginmvvm.presentation.profile.ProfileFragment
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -126,7 +123,7 @@ object DataSource {
                 it[user_id] = req.userid.toString().toInt()
                 it[abode] = req.abode.toString()
                 it[repair_list] = req.repair_list.toString()
-//                it[dateLong]=req.date.toString().toLong()
+                it[dateLong]=req.date.toString().toLong()
                 it[latitude] = req.latitudeval.toString().toDouble()
                 it[longitude] = req.longitude.toString().toDouble()
                 it[id_technician] = 0
@@ -145,52 +142,55 @@ object DataSource {
 
         return transaction {
             addLogger(StdOutSqlLogger)
-            Orderl.slice(
+            (Orderl innerJoin Status)
+                .slice(
                 Orderl.abode,
                 Orderl.order_id,
                 Orderl.repair_list,
-                Orderl.dateLong
+                Orderl.dateLong,
+                Status.status_name
             )
                 .select { Orderl.user_id eq req.id }
                 .andWhere { Orderl.dateLong.between(req.star, req.end) }
                 .map { HistoryMap.toHistory(it) }
 
+
         }
 
 
     }
 
-    fun orderlall(): List<OrderModel> {
-        return transaction {
-            addLogger(StdOutSqlLogger)
-            Orderl.selectAll()
-                .map { HistoryMap.toOrder(it) }
+//    fun orderlall(): List<OrderModel> {
+//        return transaction {
+//            addLogger(StdOutSqlLogger)
+//            Orderl.selectAll()
+//                .map { HistoryMap.toOrder(it) }
+//
+//        }
+//    }
 
-        }
-    }
-
-    fun HistoryDetail(req: HistoryDetailRequest): List<HistoryDetailModel> {
-        return transaction {
-            addLogger(StdOutSqlLogger)
-            Orderl.slice(
-                Orderl.order_id,
-                Orderl.date,
-                Orderl.dateLong,
-                Orderl.repair_list,
-                Orderl.abode,
-                Orderl.price
-            )
-                .select { Orderl.user_id eq req.id }
-//                .andWhere { Orderl.dateLong eq req.date }
-                .map { HistoryMap.toOrderdetail(it) }
-        }
-
-    }
+//    fun HistoryDetail(req: HistoryDetailRequest): List<HistoryDetailModel> {
+//        return transaction {
+//            addLogger(StdOutSqlLogger)
+//            Orderl.slice(
+//                Orderl.order_id,
+//                Orderl.date,
+//                Orderl.dateLong,
+//                Orderl.repair_list,
+//                Orderl.abode,
+//                Orderl.price
+//            )
+//                .select { Orderl.user_id eq req.id }
+////                .andWhere { Orderl.dateLong eq req.date }
+//                .map { HistoryMap.toOrderdetail(it) }
+//        }
+//
+//    }
 
     fun Selettypejob(): List<SeletTypejobModel> {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Type_technician.selectAll()
+            Type_job.selectAll()
                 .map { SeletTypejobMap.toSeletTypejob(it) }
         }
     }
