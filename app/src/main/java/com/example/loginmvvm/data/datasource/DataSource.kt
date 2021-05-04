@@ -95,21 +95,21 @@ object DataSource {
     }
 
     fun upimg(req: ImagsRequest) {
-         return transaction {
+        return transaction {
             addLogger(StdOutSqlLogger)
 //            val result = Users.update({ Users.image eq req.imags }) {
 //                it[user_id] = req.id
 //            }
 
-             val result = Users.update({Users.user_id eq req.id}){
-                 it[Users.image] = req.imags
-             }
+            val result = Users.update({ Users.user_id eq req.id }) {
+                it[Users.image] = req.imags
+            }
 
 //             Users.select {  }
 //             Users.deleteWhere { Users.user_id eq req.id }
 
-             Log.d(TAG, "upimg: $req")
-             Log.d(TAG, "upimg: $result")
+            Log.d(TAG, "upimg: $req")
+            Log.d(TAG, "upimg: $result")
 
         }
 
@@ -123,7 +123,7 @@ object DataSource {
                 it[user_id] = req.userid.toString().toInt()
                 it[abode] = req.abode.toString()
                 it[repair_list] = req.repair_list.toString()
-                it[dateLong]=req.date.toString().toLong()
+                it[dateLong] = req.date.toString().toLong()
                 it[latitude] = req.latitudeval.toString().toDouble()
                 it[longitude] = req.longitude.toString().toDouble()
                 it[id_technician] = 0
@@ -144,12 +144,13 @@ object DataSource {
             addLogger(StdOutSqlLogger)
             (Orderl innerJoin Status)
                 .slice(
-                Orderl.abode,
-                Orderl.order_id,
-                Orderl.repair_list,
-                Orderl.dateLong,
-                Status.status_name
-            )
+                    Orderl.abode,
+                    Orderl.order_id,
+                    Orderl.repair_list,
+                    Orderl.dateLong,
+                    Orderl.price, //add
+                    Status.status_name
+                )
                 .select { Orderl.user_id eq req.id }
                 .andWhere { Orderl.dateLong.between(req.star, req.end) }
                 .map { HistoryMap.toHistory(it) }
@@ -159,33 +160,6 @@ object DataSource {
 
 
     }
-
-//    fun orderlall(): List<OrderModel> {
-//        return transaction {
-//            addLogger(StdOutSqlLogger)
-//            Orderl.selectAll()
-//                .map { HistoryMap.toOrder(it) }
-//
-//        }
-//    }
-
-//    fun HistoryDetail(req: HistoryDetailRequest): List<HistoryDetailModel> {
-//        return transaction {
-//            addLogger(StdOutSqlLogger)
-//            Orderl.slice(
-//                Orderl.order_id,
-//                Orderl.date,
-//                Orderl.dateLong,
-//                Orderl.repair_list,
-//                Orderl.abode,
-//                Orderl.price
-//            )
-//                .select { Orderl.user_id eq req.id }
-////                .andWhere { Orderl.dateLong eq req.date }
-//                .map { HistoryMap.toOrderdetail(it) }
-//        }
-//
-//    }
 
     fun Selettypejob(): List<SeletTypejobModel> {
         return transaction {

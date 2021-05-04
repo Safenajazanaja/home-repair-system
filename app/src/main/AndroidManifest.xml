@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginMVVM">
-        <activity android:name=".presentation.repair.engineer.EngineerActivity"></activity>
-        <activity android:name=".presentation.history.DetailHistoryActivity" />
+        <activity android:name=".presentation.history.detail.DetailActivity"></activity>
+<!--        <activity android:name=".presentation.repair.engineer.EngineerActivity" />-->
+<!--        <activity android:name=".presentation.history.DetailHistoryActivity" />-->
         <activity android:name=".presentation.repair.ConfirmActivity" />
         <activity android:name=".presentation.repair.MapActivity" />
         <activity android:name=".presentation.sing_up.Sing_UpActivity" />
@@ -29,7 +30,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDF0Klf93qAhTuY1GTQ-HpsqQWsQYMwhao" />
+            android:value="AIzaSyDvq-pKjRjELbmEQDE2pKGYPy8p1fr6TxQ" />
     </application>
 
 </manifest>

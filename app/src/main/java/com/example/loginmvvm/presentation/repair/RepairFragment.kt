@@ -1,10 +1,8 @@
 package com.example.loginmvvm.presentation.repair
 
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -19,36 +17,25 @@ import com.example.loginmvvm.data.request.RepairRequest
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
 import com.example.loginmvvm.utils.awaitLastLocation
 import com.example.loginmvvm.utils.getGoogleMap
-import com.example.loginmvvm.utils.locationFlow
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.frament_call.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.util.*
 
 
 @ExperimentalCoroutinesApi
-class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-    LocationListener, GoogleMap.OnMyLocationButtonClickListener{
+class RepairFragment : BaseFragment(R.layout.frament_call) {
 
     private lateinit var viewModel: RepairViewModel
-
-    private var mGoogleApiClient: GoogleApiClient? = null
-    private var mLocationRequest: LocationRequest? = null
-    private var mGoogleMap: GoogleMap? = null
     private var mMarker: Marker? = null
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
@@ -144,18 +131,6 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
 
         val mapFragment = this.childFragmentManager
             .findFragmentById(R.id.maps) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
-        mGoogleApiClient = GoogleApiClient.Builder(requireActivity())
-            .addApi(LocationServices.API)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .build()
-        mGoogleApiClient?.connect()
-        mLocationRequest = LocationRequest()
-            .setInterval(2500)
-            .setFastestInterval(3000)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-
 
         re_joblist.addTextChangedListener {
             // TODO: 18/2/2564
@@ -181,12 +156,19 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
             latitude = location.latitude
             longitude = location.longitude
 
-            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(latitude,longitude)))
+            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
 
             // real time
 //            locationProviderClient.locationFlow().collect {
-                Toast.makeText(context, "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 //            }
+
+            setMapLongClick(googleMap)
+
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 15f)
+            googleMap?.animateCamera(cameraUpdate)
+            googleMap?.isMyLocationEnabled = true
+
         }
 
     }
@@ -203,70 +185,11 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 name=it.type
             }
         })
-//        viewModel.repair()
-    //        val list= DataSource.Selettypejob()as MutableList<SeletTypejobModel>
-//        bar_spinner_engineer.adapter=SpinnertypeAdapter(requireContext(),list)
-//        bar_spinner_engineer.onItemSelected<SeletTypejobModel> {
-//            type=it
-//            id=it.id
-//            name=it.type
-//        }
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun startLocationUpdate() {
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-            mGoogleApiClient,
-            mLocationRequest,
-            this
-        )
-    }
-
-    private fun stopLocationUpdate() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mGoogleApiClient?.connect()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (mGoogleApiClient?.isConnected == true) mGoogleApiClient!!.disconnect()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (mGoogleApiClient?.isConnected == true) startLocationUpdate()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (mGoogleApiClient?.isConnected == true) stopLocationUpdate()
-    }
-
-    override fun onLocationChanged(location: Location) {
-        val latLng = LatLng(location.latitude, location.longitude)
-        mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        latitude = location.latitude
-        longitude = location.longitude
-
-
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun onMapReady(googleMap: GoogleMap) {
-        mGoogleMap = googleMap
-        setMapLongClick(googleMap)
-        googleMap.isMyLocationEnabled = true
-        googleMap.setOnMyLocationButtonClickListener(this)
-//        googleMap.setOnMyLocationClickListener(this)
-    }
-
-    private fun setMapLongClick(googleMap: GoogleMap) {
-        googleMap.setOnMapClickListener { latLng ->
+    private fun setMapLongClick(googleMap: GoogleMap?) {
+        googleMap?.setOnMapClickListener { latLng ->
             val snippets = String.format(
                 Locale.getDefault(),
                 "Lat: %1$.5f, Long: %2$.5f",
@@ -274,39 +197,12 @@ class RepairFragment : BaseFragment(R.layout.frament_call), OnMapReadyCallback,
                 latLng.longitude
             )
             mMarker?.remove()
-            mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             mMarker = googleMap.addMarker(MarkerOptions().position(latLng))
 
 
         }
 
     }
-
-    override fun onConnected(bundle: Bundle?) {
-        startLocationUpdate()
-    }
-
-    override fun onConnectionSuspended(i: Int) {
-        mGoogleApiClient?.connect()
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {}
-    override fun onMyLocationButtonClick(): Boolean {
-//        Toast.makeText(requireContext(), "MyLocation button clicked", Toast.LENGTH_SHORT)
-//            .show()
-
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false
-    }
-
-//    override fun onMyLocationClick(location: Location) {
-////        Toast.makeText(requireContext(), "Current location:\n$location", Toast.LENGTH_LONG)
-////            .show()
-//        latitude = location.latitude
-//        longitude = location.longitude
-//
-//    }
-
 
 }

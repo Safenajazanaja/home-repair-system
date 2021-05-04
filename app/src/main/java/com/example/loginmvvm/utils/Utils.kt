@@ -2,9 +2,9 @@ package com.example.loginmvvm.utils
 
 import android.location.Location
 import android.os.Looper
-import com.example.loginmvvm.base.createLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -22,12 +22,12 @@ suspend fun SupportMapFragment.getGoogleMap(): GoogleMap = suspendCoroutine { co
     }
 }
 
-//fun createLocationRequest(): LocationRequest = LocationRequest.create().apply {
-//    interval = 20_000
-//    fastestInterval = 15_000
-//    priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-//}
-//
+fun createLocationRequest(): LocationRequest = LocationRequest.create().apply {
+    interval = 10_000
+    fastestInterval = 5_000
+    priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+}
+
 //fun Location.asString(format: Int = Location.FORMAT_DEGREES): String {
 //    val latitude = Location.convert(latitude, format)
 //    val longitude = Location.convert(longitude, format)

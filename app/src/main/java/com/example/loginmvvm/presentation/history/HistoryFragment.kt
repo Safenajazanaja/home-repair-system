@@ -1,6 +1,7 @@
 package com.example.loginmvvm.presentation.history
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,9 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
-import com.example.loginmvvm.data.models.HistoryModel2
-import com.example.loginmvvm.data.models.OrderModeldetail
 import com.example.loginmvvm.data.request.HistoryRequest
+import com.example.loginmvvm.presentation.history.detail.DetailActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frament_history.*
 import org.joda.time.DateTime
@@ -23,7 +23,7 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
     private var mCalendarend: Calendar? = null
     var dateinmax: Long? = null
     private lateinit var viewModel: HistoryViewModel
-    private lateinit var mSingleItemAdapter: HistoryV2
+    private lateinit var mHistoryAdapter: HistoryAdepter
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -65,12 +65,18 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
 //                }
 //                startActivity(intent)
 //            }
-            mSingleItemAdapter=HistoryV2()
-            expandableListView.setAdapter(mSingleItemAdapter)
-            mSingleItemAdapter.setList(histories)
+            mHistoryAdapter = HistoryAdepter()
+            expandableListView.setAdapter(mHistoryAdapter)
+            mHistoryAdapter.setList(histories)
             Log.d(TAG, "repair2: ${Gson().toJson(histories)}")
-
+            mHistoryAdapter.setOnClickListener {
+                val intent= Intent(context, DetailActivity::class.java).apply {
+                    putExtra("orderid", it.orderid)
+                }
+                startActivity(intent)
+            }
         })
+
 
 
 
@@ -111,10 +117,6 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
 //                )
 //            ),
 //        )
-
-
-
-
 
 
         Bt_history_datestar.setOnClickListener {

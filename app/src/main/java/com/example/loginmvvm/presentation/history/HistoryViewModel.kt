@@ -49,44 +49,29 @@ class HistoryViewModel : ViewModel() {
                 val result2 = result
                     .sortedBy { sdf.format(it.date) } //ORDER BY
                     .distinctBy { sdf.format(it.date) } // group by
-
                     .map { db ->
                         HistoryModel2(
 //                        order = db.order,
 //                        adode = db.adode,
 //                        repair_List = db.repair_List,
                             date = sdf.format(db.date),
-                            datelong=db.date,
+                            datelong = db.date,
                             sumOrderByDate = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                                 .count(),
                             orders = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                                 .map {
                                     OrderModeldetail(
-                                        order = it.order,
+                                        orderid = it.order,
                                         adode = it.adode,
                                         repair_List = it.repair_List,
                                         date = sdf.format(it.date),
+                                        price = it.price,
                                         status = it.status
                                     )
                                 }
                         )
-
-
                     }.sortedBy { it.date }
-//
-                val  request3=result
-                    .distinctBy { sdf.format(it.date) }
-                    .map {
-                   OrderModeldetail(
-                       order = it.order,
-                       adode = it.adode,
-                       repair_List = it.repair_List,
-                       date = sdf.format(it.date),
-                   )
-                }
-//
                 Log.d(TAG, "repair: ${Gson().toJson(result)}")
-
                 _history2.value = result2
 
             }
@@ -100,19 +85,3 @@ class HistoryViewModel : ViewModel() {
     }
 
 }
-//
-//data class HistoryModel2(
-////    val order: Int? = null,
-////    val adode: String? = null,
-////    val repair_List: String? = null,
-//    val date: String? = null,
-//    val sumOrderByDate: Int,
-//    val orders: List<OrderModel2>
-//)
-
-//data class OrderModel2(
-//    val order: Int? = null,
-//    val adode: String? = null,
-//    val repair_List: String? = null,
-//    val date: String? = null
-//)
