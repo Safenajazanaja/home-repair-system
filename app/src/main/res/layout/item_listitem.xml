@@ -2,19 +2,12 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="4"
-    android:rowCount="3">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_columnSpan="4"
-        android:layout_margin="4dp"
-        android:background="@color/black" />
+    android:layout_row="1"
+    android:layout_column="4">
 
     <TextView
         android:id="@+id/tv_name"
-        style="@style/Text.Title"
+        style="@style/TextColum"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -22,7 +15,7 @@
 
     <TextView
         android:id="@+id/tv_amount"
-        style="@style/Text.Title"
+        style="@style/TextColum"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -30,7 +23,7 @@
 
     <TextView
         android:id="@+id/tv_Unitprice"
-        style="@style/Text.Title"
+        style="@style/TextColum"
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -38,18 +31,10 @@
 
     <TextView
         android:id="@+id/tv_price"
-        style="@style/Text.Title"
+        style="@style/TextColum"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:text="ราคา" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_columnSpan="4"
-        android:layout_margin="4dp"
-        android:background="@color/black" />
-
 
 </GridLayout>
