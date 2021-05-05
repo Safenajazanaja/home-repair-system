@@ -9,7 +9,7 @@ object Technician : Table("technician"){
     val password = varchar("password", 20)
     val fullname = varchar("fullname", 30)
     val id_type_technician=integer("id_type_technician")
-
+    val role=integer("role")
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(technician_id, name = "echnician_id_PK")
 }

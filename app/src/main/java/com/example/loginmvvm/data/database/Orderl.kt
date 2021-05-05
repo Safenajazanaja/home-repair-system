@@ -11,7 +11,7 @@ object Orderl: Table("orderl"){
     val user_id= integer("user_id").references(Users.user_id)
     val abode= varchar("abode",100)
     val repair_list= varchar("repair_list",50)
-    val pay_type= integer("pay_type")
+    val pay_type= integer("pay_type").references(Pay.pay_id)
     val date=date("date")
     val dateLong=long("date_long")
     val price=integer("price")

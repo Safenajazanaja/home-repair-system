@@ -169,4 +169,19 @@ object DataSource {
         }
     }
 
+    fun listitem(jobid: Int): List<ListModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            (Orderl_detail innerJoin Material)
+                .slice(
+                    Material.material_name,
+                    Material.price_material,
+                    Orderl_detail.qty
+                )
+                .select { Orderl_detail.orderl_id eq jobid }
+                .map { ListMap.tolist(it) }
+        }
+
+    }
+
 }
