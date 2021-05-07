@@ -28,7 +28,7 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun chekImg(req: ImagsRequest) {
-        DataSource.upimg(req)
+        DataSource.upimgprofile(req)
 //        _profileModel.value=DataSource.profile(req.id)
 
         Log.d(TAG, "chekImg: ")

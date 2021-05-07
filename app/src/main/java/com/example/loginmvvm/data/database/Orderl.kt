@@ -21,6 +21,7 @@ object Orderl: Table("orderl"){
     val type_job=integer("type_job").references(Type_job.type_job_id)
     val date_end=long("date_end")
     val status=integer("status_id").references(Status.status_id)
+    val image = varchar("image",1000)
 
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(order_id, name = "order_id_PK")

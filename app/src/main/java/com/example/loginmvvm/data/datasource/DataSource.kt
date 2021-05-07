@@ -94,7 +94,7 @@ object DataSource {
 
     }
 
-    fun upimg(req: ImagsRequest) {
+    fun upimgprofile(req: ImagsRequest) {
         return transaction {
             addLogger(StdOutSqlLogger)
 //            val result = Users.update({ Users.image eq req.imags }) {
@@ -180,6 +180,38 @@ object DataSource {
                 )
                 .select { Orderl_detail.orderl_id eq jobid }
                 .map { ListMap.tolist(it) }
+        }
+
+    }
+
+    fun upimgpay(req: ImagsRequest) {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+//            val result = Users.update({ Users.image eq req.imags }) {
+//                it[user_id] = req.id
+//            }
+
+            val result = Orderl.update({ Orderl.order_id eq req.id }) {
+                it[Orderl.image] = req.imags
+            }
+
+//             Users.select {  }
+//             Users.deleteWhere { Users.user_id eq req.id }
+
+//            Log.d(TAG, "upimg: $req")
+            Log.d(TAG, "upimg: $result")
+
+        }
+
+    }
+
+    fun chekImage(idjob: Int): ImagModel {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Orderl.slice(Orderl.image)
+                .select { Orderl.order_id eq idjob }
+                .map { ImageMap.toImage(it) }
+                .single()
         }
 
     }
