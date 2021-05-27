@@ -6,7 +6,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,14 +65,23 @@ class DetailActivity : BaseActivity() {
         viewModel.listdetail(idjob)
         viewModel.imgprofileModel.observe(this, { Imag ->
             if (Imag.img == null) {
-                Bt_save.isEnabled=false
+
                 iv_photo_money.setImageResource(R.drawable.bank)
             } else if (Imag.img != null) {
                 val baseUrl = Imag.img.toString()
                 iv_photo_money.loadImageCircle(baseUrl)
+                iv_photo_money.isEnabled=false
+                Bt_save.isEnabled=false
             }
 
         })
+
+        viewModel.statusModel.observe(this,{
+            if(it.statusid==1){
+                layoutpay.visibility=View.GONE
+            }
+        })
+        viewModel.chekstatus(idjob)
 
         viewModel.chekImg(idjob)
 
@@ -83,6 +94,7 @@ class DetailActivity : BaseActivity() {
         }
 
         Bt_save.setOnClickListener {
+            progressBar.visibility=View.VISIBLE
             Dru.uploadImage(baseContext, baseUrl, imageName, mImageUri) {
                 // update url
 
@@ -95,6 +107,7 @@ class DetailActivity : BaseActivity() {
                 }
 
                 Toast.makeText(baseContext, "${it?.response}", Toast.LENGTH_SHORT).show()
+                progressBar.visibility=View.GONE
             }
         }
 

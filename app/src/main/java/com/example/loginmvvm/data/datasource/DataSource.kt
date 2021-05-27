@@ -216,4 +216,14 @@ object DataSource {
 
     }
 
+    fun chekStatus(jobid: Int): StatusModel {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Orderl.slice(Orderl.status)
+                .select { Orderl.order_id eq jobid }
+                .map { StatusMap.toStatus(it) }
+                .single()
+        }
+    }
+
 }

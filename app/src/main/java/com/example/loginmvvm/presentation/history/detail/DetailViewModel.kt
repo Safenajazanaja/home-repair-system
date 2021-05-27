@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.models.ImagModel
 import com.example.loginmvvm.data.models.ListModel
+import com.example.loginmvvm.data.models.StatusModel
 import com.example.loginmvvm.data.request.ImagsRequest
 
 class DetailViewModel : ViewModel() {
@@ -17,6 +18,10 @@ class DetailViewModel : ViewModel() {
     private val _imgpayModel = MutableLiveData<ImagModel>()
     val imgprofileModel: LiveData<ImagModel>
         get() = _imgpayModel
+
+    private val _statusModel = MutableLiveData<StatusModel>()
+    val statusModel: LiveData<StatusModel>
+    get()=_statusModel
 
     fun listdetail(request: Int) {
         val result = DataSource.listitem(request)
@@ -32,6 +37,10 @@ class DetailViewModel : ViewModel() {
     fun chekImg(jobid: Int) {
         _imgpayModel.value = DataSource.chekImage(jobid)
 
+    }
+
+    fun chekstatus(jobid: Int) {
+        _statusModel.value=DataSource.chekStatus(jobid)
     }
 
     companion object {
