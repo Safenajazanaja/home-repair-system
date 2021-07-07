@@ -48,18 +48,26 @@ class DetailActivity : BaseActivity() {
 
         viewModel.list.observe(this, { list ->
 
-            val adt = ConcatAdapter(
-                mColumAdapter, mList
-            )
-            recylerView.apply {
-                layoutManager = LinearLayoutManager(baseContext)
-                adapter = adt
+            if (list == null) {
+                detaillayout.visibility = View.GONE
+            }else{
+                val adt = ConcatAdapter(
+                    mColumAdapter, mList
+                )
+                recylerView.apply {
+                    layoutManager = LinearLayoutManager(baseContext)
+                    adapter = adt
+                }
+                mColumAdapter.submitData(Unit)
+                mList.submitList(list)
             }
-            mColumAdapter.submitData(Unit)
-            mList.submitList(list)
+
+
 
             Log.d(TAG, "repair2: ${Gson().toJson(list)}")
             Log.d(TAG, "repair3: ${Gson().toJson(mList.submitList(list))}")
+
+
         })
 
         viewModel.listdetail(idjob)
@@ -70,15 +78,15 @@ class DetailActivity : BaseActivity() {
             } else if (Imag.img != null) {
                 val baseUrl = Imag.img.toString()
                 iv_photo_money.loadImageCircle(baseUrl)
-                iv_photo_money.isEnabled=false
-                Bt_save.isEnabled=false
+                iv_photo_money.isEnabled = false
+                Bt_save.isEnabled = false
             }
 
         })
 
-        viewModel.statusModel.observe(this,{
-            if(it.statusid==1){
-                layoutpay.visibility=View.GONE
+        viewModel.statusModel.observe(this, {
+            if (it.statusid == 1) {
+                layoutpay.visibility = View.GONE
             }
         })
         viewModel.chekstatus(idjob)
@@ -94,7 +102,7 @@ class DetailActivity : BaseActivity() {
         }
 
         Bt_save.setOnClickListener {
-            progressBar.visibility=View.VISIBLE
+            progressBar.visibility = View.VISIBLE
             Dru.uploadImage(baseContext, baseUrl, imageName, mImageUri) {
                 // update url
 
@@ -107,7 +115,7 @@ class DetailActivity : BaseActivity() {
                 }
 
                 Toast.makeText(baseContext, "${it?.response}", Toast.LENGTH_SHORT).show()
-                progressBar.visibility=View.GONE
+                progressBar.visibility = View.GONE
             }
         }
 
