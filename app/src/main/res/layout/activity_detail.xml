@@ -17,6 +17,7 @@
         android:textColor="@color/black"
         android:textSize="30dp" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,23 +25,53 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/detaillayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="10dp"
-            app:contentPadding="16dp">
+            app:contentPadding="10dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylerView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:gravity="center"
+                android:orientation="vertical">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recylerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="visible">
+                </androidx.recyclerview.widget.RecyclerView>
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/textcomment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="อยู่ระหว่างรอช่างรับงาน"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+
+
+
+
         </androidx.cardview.widget.CardView>
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/layoutpay"

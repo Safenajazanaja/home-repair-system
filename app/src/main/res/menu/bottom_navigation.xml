@@ -5,9 +5,13 @@
         android:icon="@drawable/ic_baseline_call_24"
         android:title="แจ้งซ่อม" />
     <item
+        android:id="@+id/nav_trace"
+        android:icon="@drawable/ic_baseline_build_24"
+        android:title="ติดตามงาน" />
+    <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_baseline_history_toggle_off_24"
-        android:title="ติดตามงาน" />
+        android:title="ประวัติเรียกช่าง" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_baseline_person_24"

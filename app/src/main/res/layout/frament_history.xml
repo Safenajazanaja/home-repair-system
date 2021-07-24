@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:text="ติดตามงาน"
+            android:text="ประวัติการใข้งาน"
             android:textSize="30dp"
             android:textStyle="italic" />
 

@@ -16,7 +16,7 @@ class DetailViewModel : ViewModel() {
     val list: LiveData<List<ListModel>>
         get() = _list
     private val _imgpayModel = MutableLiveData<ImagModel>()
-    val imgprofileModel: LiveData<ImagModel>
+    val imgpayModel: LiveData<ImagModel>
         get() = _imgpayModel
 
     private val _statusModel = MutableLiveData<StatusModel>()

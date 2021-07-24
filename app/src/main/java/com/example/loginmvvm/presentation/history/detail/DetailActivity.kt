@@ -22,7 +22,7 @@ import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.frament_history.view.*
-import kotlinx.android.synthetic.main.frament_profile.*
+
 import java.util.*
 
 class DetailActivity : BaseActivity() {
@@ -47,10 +47,6 @@ class DetailActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         viewModel.list.observe(this, { list ->
-
-            if (list == null) {
-                detaillayout.visibility = View.GONE
-            }else{
                 val adt = ConcatAdapter(
                     mColumAdapter, mList
                 )
@@ -60,18 +56,19 @@ class DetailActivity : BaseActivity() {
                 }
                 mColumAdapter.submitData(Unit)
                 mList.submitList(list)
-            }
-
-
-
             Log.d(TAG, "repair2: ${Gson().toJson(list)}")
             Log.d(TAG, "repair3: ${Gson().toJson(mList.submitList(list))}")
-
+            if (list.isEmpty()){
+                textcomment.visibility=View.VISIBLE
+            }
 
         })
 
+
+
         viewModel.listdetail(idjob)
-        viewModel.imgprofileModel.observe(this, { Imag ->
+
+        viewModel.imgpayModel.observe(this, { Imag ->
             if (Imag.img == null) {
 
                 iv_photo_money.setImageResource(R.drawable.bank)

@@ -18,21 +18,21 @@ class HistoryViewModel : ViewModel() {
     val toast: LiveData<String>
         get() = _toast
 
-    private var _repair = MutableLiveData<Boolean>()
-    val repair: LiveData<Boolean>
-        get() = _repair
+//    private var _repair = MutableLiveData<Boolean>()
+//    val repair: LiveData<Boolean>
+//        get() = _repair
 
-    private var _history = MutableLiveData<List<HistoryModel>>()
-    val history: LiveData<List<HistoryModel>>
-        get() = _history
+//    private var _history = MutableLiveData<List<HistoryModel>>()
+//    val history: LiveData<List<HistoryModel>>
+//        get() = _history
 
     private var _history2 = MutableLiveData<List<HistoryModel2>>()
     val history2: LiveData<List<HistoryModel2>>
         get() = _history2
 
-    private var _history3 = MutableLiveData<List<OrderModeldetail>>()
-    val history3: LiveData<List<OrderModeldetail>>
-        get() = _history3
+//    private var _history3 = MutableLiveData<List<OrderModeldetail>>()
+//    val history3: LiveData<List<OrderModeldetail>>
+//        get() = _history3
 
     fun repair(request: HistoryRequest) {
         when {
@@ -43,7 +43,7 @@ class HistoryViewModel : ViewModel() {
             else -> {
                 // list one
                 val result = DataSource.history(request)
-                _history.value = result
+//                _history.value = result
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                 val result2 = result

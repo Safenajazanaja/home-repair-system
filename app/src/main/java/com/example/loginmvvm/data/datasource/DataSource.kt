@@ -128,6 +128,8 @@ object DataSource {
                 it[longitude] = req.longitude.toString().toDouble()
                 it[id_technician] = 0
                 it[type_job] = req.idtypejob.toString().toInt()
+                it[status]= 1
+
 
             }
         }
@@ -224,6 +226,25 @@ object DataSource {
                 .map { StatusMap.toStatus(it) }
                 .single()
         }
+    }
+
+    fun tracejob(id: Int): List<HistoryModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            (Orderl innerJoin Status)
+                .slice(
+                    Orderl.abode,
+                    Orderl.order_id,
+                    Orderl.repair_list,
+                    Orderl.dateLong,
+                    Orderl.price, //add
+                    Status.status_name
+                )
+                .select { Orderl.user_id eq id }
+                .map { HistoryMap.toHistory(it) }
+        }
+
+
     }
 
 }

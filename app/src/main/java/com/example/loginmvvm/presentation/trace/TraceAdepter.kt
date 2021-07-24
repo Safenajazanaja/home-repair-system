@@ -1,14 +1,18 @@
-package com.example.loginmvvm.presentation.history
+package com.example.loginmvvm.presentation.trace
 
+
+import android.view.OrientationEventListener
 import android.view.View
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.SimpleExpandableListAdapter
 import com.example.loginmvvm.data.models.HistoryModel2
 import com.example.loginmvvm.data.models.OrderModeldetail
 import kotlinx.android.synthetic.main.item_history_date.view.*
+import kotlinx.android.synthetic.main.item_history_date.view.tv_price
+import kotlinx.android.synthetic.main.item_listitem.view.*
 import kotlinx.android.synthetic.main.item_single_item_main.view.*
 
-class HistoryAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldetail>() {
+class TraceAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldetail>() {
     override fun getPropertyDetailList(item: HistoryModel2): List<OrderModeldetail> {
         return item.orders
     }
@@ -26,23 +30,22 @@ class HistoryAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldeta
         tv_repair_list.text = item.repair_List
         tv_adode_date.text = item.adode
         if (item.price == null) {
-            tv_price.text = "อยู่ระหว่างประเมินราคา"
+            tv_price.text = "อยู่ระหว่างการประเมิน"
         } else {
             tv_price.text = item.price.toString()
         }
-
         tv_ststa.text = item.status
-
-
         setOnClickListener {
             listener?.invoke(item)
         }
-    }
 
+    }
 
     private var listener: ((OrderModeldetail) -> Unit)? = null
 
     fun setOnClickListener(listener: (OrderModeldetail) -> Unit) {
         this.listener = listener
     }
+
+
 }

@@ -24,7 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.frament_call.*
+import kotlinx.android.synthetic.main.fragment_call.*
+
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ import java.util.*
 
 
 @ExperimentalCoroutinesApi
-class RepairFragment : BaseFragment(R.layout.frament_call) {
+class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
     private lateinit var viewModel: RepairViewModel
     private var mMarker: Marker? = null

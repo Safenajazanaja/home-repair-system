@@ -9,6 +9,7 @@ import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.presentation.history.HistoryFragment
 import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.example.loginmvvm.presentation.repair.RepairFragment
+import com.example.loginmvvm.presentation.trace.TraceFragment
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,13 +21,13 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottom_navigationv.setOnNavigationItemSelectedListener(navListener)
-        if (savedInstanceState == null)
+        if (savedInstanceState == null){
             replaceFragment(RepairFragment())
-
-        ///
+        }
 
 
     }
+
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(
@@ -41,7 +42,8 @@ class MainActivity : BaseActivity() {
                 R.id.nav_home -> RepairFragment()
                 R.id.nav_history -> HistoryFragment()
                 R.id.nav_profile -> ProfileFragment()
-                else -> HistoryFragment()
+                R.id.nav_trace -> TraceFragment()
+                else -> RepairFragment()
             }
             replaceFragment(selectedFragment)
             true

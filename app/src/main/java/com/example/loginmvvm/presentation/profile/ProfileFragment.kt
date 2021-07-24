@@ -12,17 +12,17 @@ import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.Dru
 import com.example.loginmvvm.base.Dru.loadImageCircle
 import com.example.loginmvvm.data.request.ImagsRequest
-import kotlinx.android.synthetic.main.frament_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.http.Url
 import java.util.*
 
 
-class ProfileFragment : BaseFragment(R.layout.frament_profile) {
+class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var mImageUri: Uri? = null
     private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
-    private var user: Int?=null
+    private var user: Int? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -30,7 +30,7 @@ class ProfileFragment : BaseFragment(R.layout.frament_profile) {
             "file",
             AppCompatActivity.MODE_PRIVATE
         )?.getInt("id", 0)
-        user=userId
+        user = userId
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.profile(userId)
@@ -80,8 +80,6 @@ class ProfileFragment : BaseFragment(R.layout.frament_profile) {
 
                 Toast.makeText(requireContext(), "${it?.response}", Toast.LENGTH_SHORT).show()
             }
-
-
 
 
         }

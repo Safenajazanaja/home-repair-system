@@ -70,14 +70,12 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
             mHistoryAdapter.setList(histories)
             Log.d(TAG, "repair2: ${Gson().toJson(histories)}")
             mHistoryAdapter.setOnClickListener {
-                val intent= Intent(context, DetailActivity::class.java).apply {
+                val intent = Intent(context, DetailActivity::class.java).apply {
                     putExtra("orderid", it.orderid)
                 }
                 startActivity(intent)
             }
         })
-
-
 
 
 //        val list = listOf(

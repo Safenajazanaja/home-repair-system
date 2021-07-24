@@ -65,16 +65,16 @@ abstract class SimpleRecyclerView<T : Any> :
     inner class SimpleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         init {
-            itemView.setOnClickListener {
-                val entity = list[absoluteAdapterPosition]
-                onClick?.invoke(entity)
-            }
-
-            itemView.setOnLongClickListener {
-                val entity = list[absoluteAdapterPosition]
-                onLongClick?.invoke(entity)
-                true
-            }
+//            itemView.setOnClickListener {
+//                val entity = list[absoluteAdapterPosition]
+//                onClick?.invoke(entity)
+//            }
+//
+//            itemView.setOnLongClickListener {
+//                val entity = list[absoluteAdapterPosition]
+//                onLongClick?.invoke(entity)
+//                true
+//            }
         }
 
     }
