@@ -13,7 +13,9 @@ import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.onItemSelected
 import com.example.loginmvvm.data.models.SeletTypejobModel
+import com.example.loginmvvm.data.models.TimeJobModel
 import com.example.loginmvvm.data.request.RepairRequest
+import com.example.loginmvvm.presentation.repair.engineer.SpinnertimeAdapyer
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
 import com.example.loginmvvm.utils.awaitLastLocation
 import com.example.loginmvvm.utils.getGoogleMap
@@ -38,12 +40,16 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
     private lateinit var viewModel: RepairViewModel
     private var mMarker: Marker? = null
-    private var latitude: Double = 0.0
-    private var longitude: Double = 0.0
+    private var latitude: Double? = 0.0
+    private var longitude: Double? = 0.0
 
     private lateinit var type: SeletTypejobModel
-    private var name: String? = null
-    private var id: Int? = null
+    private var nametype: String? = null
+    private var idtype: Int? = null
+
+    private lateinit var timejobzone: TimeJobModel
+    private var nametime: String? = null
+    private var idtime: Int? = null
 
 
     //Calendar
@@ -60,6 +66,9 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
         viewModel.toast.observe(this, { str ->
             Toast.makeText(context, "$str", Toast.LENGTH_SHORT).show()
         })
+
+
+        re_abode.setText("90/2")
 
         btCalendar.setOnClickListener {
             val calendar = mCalendar ?: Calendar.getInstance()
@@ -104,7 +113,9 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
         }
 
         Bt_ok.setOnClickListener {
+            Log.d(TAG, "onActivityCreated: ${mCalendar?.timeInMillis}")
             val Abode = re_abode.text.toString()
+
             val RepairList = re_joblist.text.toString()
             val Repair = RepairRequest(
                 userid =userId,
@@ -113,7 +124,9 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                 date = mCalendar?.timeInMillis,
                 latitudeval = latitude,
                 longitude = longitude,
-                idtypejob = id
+                idtypejob = idtype,
+                idtime=idtime,
+                timezone = nametime
             )
             viewModel.repair(Repair)
             val intent = Intent(context, ConfirmActivity::class.java).apply {
@@ -123,7 +136,9 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                 putExtra("date", Repair?.date)
                 putExtra("latitude", latitude)
                 putExtra("longitude", longitude)
-                putExtra("type_job",id)
+                putExtra("type_job",idtype)
+                putExtra("timejob",idtime)
+                putExtra("timezone",nametime)
             }
             startActivity(intent)
 
@@ -141,6 +156,7 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
 
         setSpinnertypejob()
+        setSpinnerdatejob()
 
         MainScope().launch {
 //            Log.d("###", "onActivityCreated: 1")
@@ -154,21 +170,23 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
             val location = locationProviderClient.awaitLastLocation()
 
 //            Log.d("###", "onActivityCreated: 4")
-            latitude = location.latitude
-            longitude = location.longitude
 
-            mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
+//            if (location!=null){
+                latitude = location.latitude
+                longitude = location.longitude
+                mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
+                setMapLongClick(googleMap)
 
+                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 15f)
+                googleMap?.animateCamera(cameraUpdate)
+                googleMap?.isMyLocationEnabled = true
+//            }
             // real time
 //            locationProviderClient.locationFlow().collect {
-            Toast.makeText(context, "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 //            }
 
-            setMapLongClick(googleMap)
 
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 15f)
-            googleMap?.animateCamera(cameraUpdate)
-            googleMap?.isMyLocationEnabled = true
 
         }
 
@@ -182,10 +200,27 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
             )
             bar_spinner_typejob.onItemSelected<SeletTypejobModel> {
                 type=it
-                id=it.id
-                name=it.type
+                idtype=it.id
+                nametype=it.type
             }
         })
+
+    }
+
+    private fun setSpinnerdatejob() {
+        viewModel.timejob.observe(this,{timejob ->
+            bar_spinner_datejob.adapter=SpinnertimeAdapyer(requireContext(),
+            timejob as MutableList<TimeJobModel>)
+
+            bar_spinner_datejob.onItemSelected<TimeJobModel> {
+                timejobzone=it
+                idtime=it.id
+                nametime=it.time
+
+            }
+
+        })
+
 
     }
 
@@ -206,4 +241,8 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
     }
 
+
+    companion object {
+        private const val TAG = "HistoryFragment"
+    }
 }

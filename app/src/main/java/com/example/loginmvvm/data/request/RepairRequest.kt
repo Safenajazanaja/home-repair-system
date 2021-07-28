@@ -10,6 +10,8 @@ data class RepairRequest(
     val date: Long?=null,
     val latitudeval :Double?=null,
     val longitude:Double?=null,
-    val idtypejob:Int?=null
+    val idtypejob:Int?=null,
+    val idtime:Int?=null,
+    val timezone:String?=null
 
     )

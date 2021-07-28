@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
-import com.example.loginmvvm.data.models.OrderModeldetail
-import com.example.loginmvvm.data.models.ProfileModel
-import com.example.loginmvvm.data.models.RepairModel
-import com.example.loginmvvm.data.models.SeletTypejobModel
+import com.example.loginmvvm.data.models.*
 import com.example.loginmvvm.data.request.RepairRequest
 
 class RepairViewModel : ViewModel() {
@@ -25,12 +22,17 @@ class RepairViewModel : ViewModel() {
     val typejob: LiveData<List<SeletTypejobModel>>
         get() = _typejob
 
+
+    private var _timejob = MutableLiveData<List<TimeJobModel>>()
+    val timejob: LiveData<List<TimeJobModel>>
+        get() = _timejob
+
     // REQUEST
     fun repair(request: RepairRequest) {
         when {
             request.abode.isBlank() -> _toast.value = "กรุณากรอกที่อยู่"
             request.repair_list.isBlank() -> _toast.value = "กรุรากรอกงานที่ต้องการซ่อม"
-//            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
+            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
 
 //            else -> {
 //                val result = DataSource.repair(request)
@@ -56,6 +58,8 @@ class RepairViewModel : ViewModel() {
     init {
 //        seletjob()
         _typejob.value = DataSource.Selettypejob()
+        _timejob.value=DataSource.Timejob()
+
     }
 
 }

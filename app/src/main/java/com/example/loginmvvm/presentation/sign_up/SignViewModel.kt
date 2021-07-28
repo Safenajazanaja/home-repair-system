@@ -1,5 +1,6 @@
-package com.example.loginmvvm.presentation.sing_up
+package com.example.loginmvvm.presentation.sign_up
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,7 @@ import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.request.SingupRequest
 import com.example.loginmvvm.data.response.SingupResponse
 
-class SingViewModel : ViewModel() {
+class SignViewModel : ViewModel() {
 
     private lateinit var viewModelRes: SingupResponse
 
@@ -27,6 +28,7 @@ class SingViewModel : ViewModel() {
             request.phone.isBlank()-> _toast.value = "Phone blank"
             request.password.isBlank()-> _toast.value = "Password blank"
             request.repassword.isBlank()-> _toast.value = "Re PassWord blank"
+//            Patterns.EMAIL_ADDRESS.matcher(request.username).matches() -> _toast.value="กรุณาตรวจสอบอีกครั้ง"
 
 
 //            request.password.length <6 ->  _toast.value="Passwordต้องมากกว่า7ตัว"

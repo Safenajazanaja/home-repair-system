@@ -13,12 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginMVVM">
-        <activity android:name=".presentation.trace.TraceFragment"></activity>
+
         <activity android:name=".presentation.history.detail.DetailActivity" /> <!-- <activity android:name=".presentation.repair.engineer.EngineerActivity" /> -->
         <!-- <activity android:name=".presentation.history.DetailHistoryActivity" /> -->
+        <activity android:name=".presentation.trace.TraceFragment" />
         <activity android:name=".presentation.repair.ConfirmActivity" />
         <activity android:name=".presentation.repair.MapActivity" />
-        <activity android:name=".presentation.sing_up.Sing_UpActivity" />
+        <activity android:name=".presentation.sign_up.Sign_UpActivity" />
         <activity android:name=".presentation.main.MainActivity" />
         <activity android:name=".presentation.login.LoginActivity">
             <intent-filter>

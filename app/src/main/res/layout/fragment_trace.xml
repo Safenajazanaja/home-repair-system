@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
-
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="15dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,16 +25,19 @@
             android:layout_gravity="center"
             android:text="ติดตามงาน"
             android:textSize="30dp"
-            android:textStyle="italic" />
+            android:textColor="@color/black" />
+    </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
+
+
 
 
     <ExpandableListView
+        android:layout_margin="10dp"
         android:id="@+id/expandableListViewtrace"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_below="@+id/Layout"
         android:layout_marginTop="26dp"
 
         />

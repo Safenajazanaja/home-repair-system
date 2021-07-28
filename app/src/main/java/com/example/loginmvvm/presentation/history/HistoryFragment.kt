@@ -193,8 +193,8 @@ class HistoryFragment : BaseFragment(R.layout.frament_history) {
             )
 
             calendar.add(Calendar.DATE, 0)
-            dateDialog.datePicker.maxDate = DateTime.now().millis
-            dateDialog.datePicker.minDate = dateinmax!!.toLong()
+//            dateDialog.datePicker.maxDate = DateTime.now().millis
+//            dateDialog.datePicker.minDate = dateinmax!!.toLong()
 
 //                .show()
             dateDialog.show()

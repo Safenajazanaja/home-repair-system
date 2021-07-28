@@ -20,7 +20,7 @@ import java.util.*
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var mImageUri: Uri? = null
-    private var mImageUrl: Url? = null
+//    private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
     private var user: Int? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {

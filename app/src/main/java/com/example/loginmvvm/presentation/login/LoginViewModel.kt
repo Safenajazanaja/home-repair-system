@@ -1,5 +1,6 @@
 package com.example.loginmvvm.presentation.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ class LoginViewModel : ViewModel() {
     private var _toast = MutableLiveData<String>()
     val toast: LiveData<String>
         get() = _toast
+
     private var _login = MutableLiveData<Boolean>()
     val login: LiveData<Boolean>
         get() = _login
@@ -25,10 +27,11 @@ class LoginViewModel : ViewModel() {
         val response=LoginResponse()
 
         when {
-            request.username.isBlank() -> _toast.value = "Username blank"
-            request.password.isBlank() -> _toast.value = "Password blank"
+            request.username.isBlank() -> _toast.value = "กรุณาตรวจสอบอีกครั้ง"
+            request.password.isBlank() -> _toast.value = "กรุณาตรวจสอบอีกครั้ง"
             request.username.length < 4 -> _toast.value = "Username <4"
             request.password.length < 4 -> _toast.value = "Password <4"
+//            Patterns.EMAIL_ADDRESS.matcher(request.username).matches() -> _toast.value="กรุณาตรวจสอบอีกครั้ง"
             else -> {
 
                 val result = DataSource.login(request)
@@ -46,3 +49,7 @@ class LoginViewModel : ViewModel() {
 
 
 }
+
+//if (request.username.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(request.username).matches()){
+//
+//}

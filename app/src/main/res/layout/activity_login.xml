@@ -7,14 +7,14 @@
     android:background="#FFFFFF"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:padding="10dp"
     tools:context=".presentation.login.LoginActivity">
+
 
     <ImageView
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:src="@drawable/main" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
+            android:textSize="20dp"
             android:hint="Username" />
 
 
@@ -43,6 +44,7 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:hint="Password"
+            android:textSize="20dp"
             android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -54,16 +56,16 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:hint="Login"
-        android:textColorHint="#000000"
-        app:backgroundTint="#8BC34A" />
+        android:textColorHint="#FAF7F7"
+        />
 
     <Button
-        android:id="@+id/btSingup"
+        android:id="@+id/btSignup"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:hint="Sing up"
-        android:textColorHint="#000000"
-        app:backgroundTint="#8BC34A" />
+        android:hint="Sign up"
+        android:textColorHint="#FFFFFF"
+        />
 
 
 </LinearLayout>

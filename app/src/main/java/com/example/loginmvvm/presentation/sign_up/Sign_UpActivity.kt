@@ -1,4 +1,4 @@
-package com.example.loginmvvm.presentation.sing_up
+package com.example.loginmvvm.presentation.sign_up
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,17 +8,15 @@ import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.SingupRequest
 import com.example.loginmvvm.presentation.login.LoginActivity
-import com.example.loginmvvm.presentation.main.MainActivity
-import kotlinx.android.synthetic.main.activity_login.etUsername
 import kotlinx.android.synthetic.main.activity_sing__up.*
 
-class Sing_UpActivity : BaseActivity() {
-    private lateinit var viewModel: SingViewModel
+class Sign_UpActivity : BaseActivity() {
+    private lateinit var viewModel: SignViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sing__up)
 
-        viewModel = ViewModelProvider(this).get(SingViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SignViewModel::class.java)
         viewModel.toast.observe(this, { str ->
             Toast.makeText(baseContext, "$str", Toast.LENGTH_SHORT).show()
         })

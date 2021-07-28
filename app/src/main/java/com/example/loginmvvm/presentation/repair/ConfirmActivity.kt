@@ -45,6 +45,8 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
         val latitude = intent.getDoubleExtra("latitude", 0.0)
         val longitude = intent.getDoubleExtra("longitude", 0.0)
         val idtypejob = intent.getIntExtra("type_job", 0)
+        val idtime=intent.getIntExtra("timejob",0)
+        val timezone=intent.getStringExtra("timezone")
 
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
         val dateString = simpleDateFormat.format(date)
@@ -55,6 +57,7 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
         tv_namejob_confirm.text = repair_list.toString()
         tv_date_confirm.text = dateString.toString()
         tv_abode_confirm.text = abode.toString()
+        tv_time_confirm.text=timezone.toString()
 
         bt_cancel_confirm.setOnClickListener {
 //            val intent = Intent(baseContext, MainActivity::class.java).putExtra("id", userId)
@@ -71,7 +74,9 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
                 latitudeval = latitude.toDouble(),
                 longitude = longitude.toDouble(),
                 idtypejob = idtypejob,
-                date = date
+                date = date,
+                idtime = idtime,
+                timezone = timezone
             )
             viewModel.confim(Repair)
             val intent = Intent(baseContext, MainActivity::class.java)

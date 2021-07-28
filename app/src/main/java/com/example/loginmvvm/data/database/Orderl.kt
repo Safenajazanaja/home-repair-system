@@ -22,6 +22,7 @@ object Orderl: Table("orderl"){
     val date_end=long("date_end")
     val status=integer("status_id").references(Status.status_id)
     val image = varchar("image",1000)
+    val idtime=integer("id_time").references(Time.id_time)
 
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(order_id, name = "order_id_PK")
