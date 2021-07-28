@@ -86,10 +86,22 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Users.slice(Users.username, Users.fullname, Users.phone, Users.image)
+            Users.slice(Users.username, Users.fullname, Users.phone, Users.image,Users.abode)
                 .select { Users.user_id eq userId }
                 .map { ProfileMap.toProfile(it) }
                 .single()
+        }
+
+    }
+
+    fun abode(req: HomeRequest) {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Users.update ({ Users.user_id eq req.id!!.toInt() }){
+                it[Users.abode]=req.home.toString()
+            }
+
+
         }
 
     }

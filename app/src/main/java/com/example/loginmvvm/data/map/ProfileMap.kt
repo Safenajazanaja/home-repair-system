@@ -10,6 +10,7 @@ object ProfileMap {
         username = row[Users.username],
         name = row[Users.fullname],
         telephone = row[Users.phone],
-        img = row[Users.image]
+        img = row[Users.image],
+        abode=row[Users.abode]
     )
 }

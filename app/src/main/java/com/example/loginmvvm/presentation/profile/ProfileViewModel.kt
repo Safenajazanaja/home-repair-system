@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
+import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.models.ProfileModel
 import com.example.loginmvvm.data.request.ImagsRequest
 
@@ -23,6 +24,12 @@ class ProfileViewModel : ViewModel() {
         userId?.let {
             _profileModel.value = DataSource.profile(it)
         }
+
+
+    }
+
+    fun uphome(req: HomeRequest){
+        DataSource.abode(req)
 
 
     }

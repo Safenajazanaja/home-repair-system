@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:padding="25dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView"
@@ -15,6 +15,7 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:contentPadding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
                 android:id="@+id/iv_photo"
                 style="@style/ImageViewPhoto"
                 android:background="#935050" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -39,10 +41,10 @@
                 <TextView
                     android:id="@+id/tv_username"
                     style="@style/TextViewLargeApplicationSub"
-                    android:layout_marginTop="@dimen/base_zero"
-                    />
+                    android:layout_marginTop="@dimen/base_zero" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -57,6 +59,7 @@
                     style="@style/TextViewLargeApplicationSub" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -71,6 +74,37 @@
                     style="@style/TextViewLargeApplicationSub" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextViewLargeApplicationSub"
+                    android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
+                    android:text="ที่อยู่" />
+
+                <TextView
+                    android:id="@+id/tv_home"
+                    style="@style/TextViewLargeApplicationSub"
+                    android:maxLines="2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/textButton"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="แก้ไขที่อยู่" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

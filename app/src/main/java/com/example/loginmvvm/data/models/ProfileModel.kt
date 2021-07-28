@@ -4,5 +4,6 @@ package com.example.loginmvvm.data.models
      val username:String,
      val name: String,
      val telephone:String,
-     val img:String?=null
+     val img:String?=null,
+     val abode:String?=null
  )

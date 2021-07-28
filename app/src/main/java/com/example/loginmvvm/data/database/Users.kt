@@ -9,6 +9,7 @@ object Users : Table("user") {
     val fullname = varchar("fullname", 30)
     val phone = varchar("phone", 10)
     val image =varchar("image",1000)
+    val abode=varchar("abode",50)
 
 
     override val primaryKey: PrimaryKey?

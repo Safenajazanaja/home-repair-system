@@ -4,23 +4,27 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.Dru
 import com.example.loginmvvm.base.Dru.loadImageCircle
+import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.request.ImagsRequest
 import kotlinx.android.synthetic.main.fragment_profile.*
-import retrofit2.http.Url
+import kotlinx.android.synthetic.main.home_dialog.view.*
 import java.util.*
 
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var mImageUri: Uri? = null
-//    private var mImageUrl: Url? = null
+
+    //    private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
     private var user: Int? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -39,6 +43,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tv_username.text = profile.name.toString()
             tv_full_name.text = profile?.name.toString()
             tv_phone.text = profile?.telephone.toString()
+            tv_home.text=profile.abode.toString()
+
             if (profile.img == null) {
                 iv_photo.setImageResource(R.drawable.ic_user)
             } else if (profile.img != null) {
@@ -46,6 +52,40 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 iv_photo.loadImageCircle(baseUrl)
             }
         })
+
+        textButton.setOnClickListener {
+            //Inflate the dialog with custom view
+            val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
+            //AlertDialogBuilder
+            val mBuilder = AlertDialog.Builder(requireContext())
+                .setView(mDialogView)
+                .setTitle("แก้ไขที่อยู่")
+            //show dialog
+            val  mAlertDialog = mBuilder.show()
+            //login button click of custom layout
+            mDialogView.dialogLoginBtn.setOnClickListener {
+                //dismiss dialog
+                mAlertDialog.dismiss()
+                //get text from EditTexts of custom layout
+                val home = mDialogView.dialog_text.text.toString()
+
+                //set the input text in TextView
+                tv_home.setText("$home")
+                val  req= HomeRequest(
+                    id=userId,
+                    home = home
+                )
+                viewModel.uphome(req)
+            }
+            //cancel button click of custom layout
+            mDialogView.dialogCancelBtn.setOnClickListener {
+                //dismiss dialog
+                mAlertDialog.dismiss()
+            }
+
+
+
+        }
 
 
         iv_photo.setOnClickListener {
@@ -58,6 +98,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
 
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
