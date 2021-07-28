@@ -286,4 +286,16 @@ object DataSource {
 
     }
 
+    fun abodesettext(userId: Int): AbodeModel {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Users.slice(Users.abode)
+                .select { Users.user_id eq userId }
+                .map { AbodeMap.toAbode(it) }
+                .single()
+
+        }
+
+    }
+
 }

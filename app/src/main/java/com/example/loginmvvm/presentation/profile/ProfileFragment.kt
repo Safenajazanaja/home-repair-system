@@ -53,7 +53,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
         })
 
-        textButton.setOnClickListener {
+        edithomeButton.setOnClickListener {
             //Inflate the dialog with custom view
             val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
             //AlertDialogBuilder

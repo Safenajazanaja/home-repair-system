@@ -81,7 +81,7 @@
 
                 <TextView
                     style="@style/TextViewLargeApplicationSub"
-                    android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
+                    android:drawableStart="@drawable/ic_baseline_home_24"
                     android:text="ที่อยู่" />
 
                 <TextView
@@ -92,19 +92,23 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right">
+                    android:gravity="right"
+                    >
 
                     <Button
-                        android:id="@+id/textButton"
+                        android:id="@+id/edithomeButton"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:textStyle="normal"
+                        android:layout_marginStart="8dp"
                         android:text="แก้ไขที่อยู่" />
                 </LinearLayout>
 
 
             </LinearLayout>
-            
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

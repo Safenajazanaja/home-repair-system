@@ -27,6 +27,10 @@ class RepairViewModel : ViewModel() {
     val timejob: LiveData<List<TimeJobModel>>
         get() = _timejob
 
+    private var _abode = MutableLiveData<AbodeModel>()
+    val abode: LiveData<AbodeModel>
+        get() = _abode
+
     // REQUEST
     fun repair(request: RepairRequest) {
         when {
@@ -44,6 +48,9 @@ class RepairViewModel : ViewModel() {
         }
 
     }
+    fun settextabode(id:Int){
+        _abode.value=DataSource.abodesettext(id)
+    }
 
     fun confim(request: RepairRequest) {
         val result = DataSource.repair(request)
@@ -59,6 +66,10 @@ class RepairViewModel : ViewModel() {
 //        seletjob()
         _typejob.value = DataSource.Selettypejob()
         _timejob.value=DataSource.Timejob()
+
+
+
+
 
     }
 

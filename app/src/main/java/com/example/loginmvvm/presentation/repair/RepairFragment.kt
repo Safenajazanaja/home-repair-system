@@ -67,8 +67,13 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
             Toast.makeText(context, "$str", Toast.LENGTH_SHORT).show()
         })
 
+        userId?.let { viewModel.settextabode(it) }
 
-        re_abode.setText("90/2")
+        viewModel.abode.observe(this,{home ->
+            re_abode.setText("${home.abode}")
+        })
+
+
 
         btCalendar.setOnClickListener {
             val calendar = mCalendar ?: Calendar.getInstance()
