@@ -26,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_call.*
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -69,7 +70,7 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
         userId?.let { viewModel.settextabode(it) }
 
-        viewModel.abode.observe(this,{home ->
+        viewModel.abode.observe(this, { home ->
             re_abode.setText("${home.abode}")
         })
 
@@ -92,7 +93,6 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                         Toast.LENGTH_SHORT
                     ).show()
                     re_date.setText("$dayOfMonth/${month.plus(1)}/$year")
-
 
 
                     val calendar = Calendar.getInstance().apply {
@@ -123,29 +123,44 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
             val RepairList = re_joblist.text.toString()
             val Repair = RepairRequest(
-                userid =userId,
+                userid = userId,
                 abode = Abode,
-                repair_list=RepairList,
+                repair_list = RepairList,
                 date = mCalendar?.timeInMillis,
                 latitudeval = latitude,
                 longitude = longitude,
                 idtypejob = idtype,
-                idtime=idtime,
+                idtime = idtime,
                 timezone = nametime
             )
-            viewModel.repair(Repair)
-            val intent = Intent(context, ConfirmActivity::class.java).apply {
-                putExtra("user_id", userId)
-                putExtra("abode", Abode)
-                putExtra("repair_list", RepairList)
-                putExtra("date", Repair?.date)
-                putExtra("latitude", latitude)
-                putExtra("longitude", longitude)
-                putExtra("type_job",idtype)
-                putExtra("timejob",idtime)
-                putExtra("timezone",nametime)
+
+            Toasty.Config.getInstance().setTextSize(30)
+            when {
+
+                Repair.abode.isBlank() -> Toasty.warning(requireContext(), "กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show()
+                Repair.abode.isBlank() -> Toasty.warning(requireContext(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show()
+                Repair.repair_list.isBlank() -> Toasty.warning(requireContext(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show()
+                Repair.date == null -> Toasty.warning(requireContext(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show()
+
+                else ->{
+                    viewModel.repair(Repair)
+                    val intent = Intent(context, ConfirmActivity::class.java).apply {
+                        putExtra("user_id", userId)
+                        putExtra("abode", Abode)
+                        putExtra("repair_list", RepairList)
+                        putExtra("date", Repair?.date)
+                        putExtra("latitude", latitude)
+                        putExtra("longitude", longitude)
+                        putExtra("type_job", idtype)
+                        putExtra("timejob", idtime)
+                        putExtra("timezone", nametime)
+                    }
+                    startActivity(intent)
+                }
             }
-            startActivity(intent)
+
+
+
 
 //            Toast.makeText(context, "${mCalendar?.timeInMillis}", Toast.LENGTH_SHORT).show()
         }
@@ -177,14 +192,24 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 //            Log.d("###", "onActivityCreated: 4")
 
 //            if (location!=null){
-                latitude = location.latitude
-                longitude = location.longitude
-                mMarker = googleMap?.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
-                setMapLongClick(googleMap)
+            latitude = location.latitude
+            longitude = location.longitude
+            mMarker = googleMap?.addMarker(
+                MarkerOptions().position(
+                    LatLng(
+                        location.latitude,
+                        location.longitude
+                    )
+                )
+            )
+            setMapLongClick(googleMap)
 
-                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 15f)
-                googleMap?.animateCamera(cameraUpdate)
-                googleMap?.isMyLocationEnabled = true
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                LatLng(location.latitude, location.longitude),
+                15f
+            )
+            googleMap?.animateCamera(cameraUpdate)
+            googleMap?.isMyLocationEnabled = true
 //            }
             // real time
 //            locationProviderClient.locationFlow().collect {
@@ -192,35 +217,37 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 //            }
 
 
-
         }
 
     }
 
     private fun setSpinnertypejob() {
-        viewModel.typejob.observe(this,{selectjob ->
+        viewModel.typejob.observe(this, { selectjob ->
 //            val list=viewModel.seletjob()as MutableList<SeletTypejobModel>
-            bar_spinner_typejob.adapter=SpinnertypeAdapter(requireContext(),
+            bar_spinner_typejob.adapter = SpinnertypeAdapter(
+                requireContext(),
                 selectjob as MutableList<SeletTypejobModel>
             )
             bar_spinner_typejob.onItemSelected<SeletTypejobModel> {
-                type=it
-                idtype=it.id
-                nametype=it.type
+                type = it
+                idtype = it.id
+                nametype = it.type
             }
         })
 
     }
 
     private fun setSpinnerdatejob() {
-        viewModel.timejob.observe(this,{timejob ->
-            bar_spinner_datejob.adapter=SpinnertimeAdapyer(requireContext(),
-            timejob as MutableList<TimeJobModel>)
+        viewModel.timejob.observe(this, { timejob ->
+            bar_spinner_datejob.adapter = SpinnertimeAdapyer(
+                requireContext(),
+                timejob as MutableList<TimeJobModel>
+            )
 
             bar_spinner_datejob.onItemSelected<TimeJobModel> {
-                timejobzone=it
-                idtime=it.id
-                nametime=it.time
+                timejobzone = it
+                idtime = it.id
+                nametime = it.time
 
             }
 

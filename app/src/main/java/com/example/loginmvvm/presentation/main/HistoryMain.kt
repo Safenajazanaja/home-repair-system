@@ -1,7 +1,5 @@
 package com.example.loginmvvm.presentation.main
 
-//import com.example.loginmvvm.presentation.history.HistoryModel2
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.loginmvvm.R
@@ -10,11 +8,10 @@ import com.example.loginmvvm.presentation.history.HistoryFragment
 import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.example.loginmvvm.presentation.repair.RepairFragment
 import com.example.loginmvvm.presentation.trace.TraceFragment
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class HistoryMain: BaseActivity() {
     private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
 //        val userId=intent.getIntExtra("id",0)
@@ -22,7 +19,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         bottom_navigationv.setOnNavigationItemSelectedListener(navListener)
         if (savedInstanceState == null){
-            replaceFragment(ProfileFragment())
+            replaceFragment(HistoryFragment())
         }
 
 
@@ -43,7 +40,7 @@ class MainActivity : BaseActivity() {
                 R.id.nav_home -> RepairFragment()
                 R.id.nav_history -> HistoryFragment()
                 R.id.nav_trace -> TraceFragment()
-                else -> ProfileFragment()
+                else -> HistoryFragment()
             }
             replaceFragment(selectedFragment)
             true
