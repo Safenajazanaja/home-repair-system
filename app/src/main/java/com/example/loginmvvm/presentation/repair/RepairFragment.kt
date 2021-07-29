@@ -15,6 +15,7 @@ import com.example.loginmvvm.base.onItemSelected
 import com.example.loginmvvm.data.models.SeletTypejobModel
 import com.example.loginmvvm.data.models.TimeJobModel
 import com.example.loginmvvm.data.request.RepairRequest
+import com.example.loginmvvm.presentation.homepage.HomepageFragment
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertimeAdapyer
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
 import com.example.loginmvvm.utils.awaitLastLocation
@@ -115,6 +116,11 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
             dateDialog.show()
 
 
+        }
+
+        bt_cancel.setOnClickListener {
+            val intent = Intent(requireContext(), HomepageFragment::class.java).putExtra("id", userId)
+            startActivity(intent)
         }
 
         Bt_ok.setOnClickListener {

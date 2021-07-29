@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.LoginRequest
+import com.example.loginmvvm.presentation.homepage.HomepageFragment
 import com.example.loginmvvm.presentation.main.MainActivity
 import com.example.loginmvvm.presentation.sign_up.Sign_UpActivity
 import es.dmoral.toasty.Toasty
@@ -44,7 +45,7 @@ class LoginActivity : BaseActivity() {
                     viewModel.id.let { preferences.edit().putInt("id", a).apply() }
                     Toasty.Config.getInstance().setTextSize(30)
                     Toasty.success(baseContext,"เข้าสู่ระบบสำเร็จ",Toast.LENGTH_SHORT).show()
-                    val intent = Intent(baseContext, MainActivity::class.java).putExtra("id", a)
+                    val intent = Intent(baseContext, HomepageFragment::class.java).putExtra("id", a)
                     startActivity(intent)
 
                 })
