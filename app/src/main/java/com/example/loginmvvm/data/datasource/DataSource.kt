@@ -312,7 +312,13 @@ object DataSource {
                 .map { it[Orderl.price] }
                 .single()
         }
-        response.price=result
+
+        if (result==null){
+            response.price=0
+        }else{
+            response.price=result
+        }
+
         return response
     }
 }

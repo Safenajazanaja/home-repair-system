@@ -72,20 +72,31 @@ class DetailActivity : BaseActivity() {
             Log.d(TAG, "repair3: ${Gson().toJson(mList.submitList(list))}")
             if (list.isEmpty()) {
                 textcomment.visibility = View.VISIBLE
+                tv_tec.visibility=View.GONE
+                tv_sum.visibility=View.GONE
+            }else {
+
+            }
+
+        })
+        viewModel.chekpricetec(idjob)
+
+        viewModel.pricetec.observe(this,{
+
+            if (it!=0){
+                tv_tec.text="ค่าบริการ : "+df.format(it)
+                all =it
+            }else{
+                tv_tec.visibility=View.GONE
             }
 
         })
 
-        viewModel.pricetec.observe(this,{
-            tv_tec.text="ค่าบริการ : "+df.format(it)
-            all =it
-        })
 
 
 
 
 
-        viewModel.chekpricetec(idjob)
         viewModel.listdetail(idjob)
 
         viewModel.imgpayModel.observe(this, { Imag ->
@@ -112,10 +123,13 @@ class DetailActivity : BaseActivity() {
 
 
         viewModel.sumprice.observe(this, { list ->
+            if (list!=null){
+                val sum: Int = list.sumOf { it.sum!! }
+                val sum2:Int=sum.toInt()+ all
+                tv_sum.text = "ราคารวม : " + df.format(sum2)
+            }
 
-            val sum: Int = list.sumOf { it.sum!! }
-            val sum2:Int=sum.toInt()+ all
-            tv_sum.text = "ราคารวม : " + df.format(sum2)
+
 
 
         })
