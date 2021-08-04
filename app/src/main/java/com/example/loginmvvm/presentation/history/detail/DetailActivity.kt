@@ -22,6 +22,8 @@ import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.frament_history.view.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 import java.util.*
 
@@ -31,6 +33,7 @@ class DetailActivity : BaseActivity() {
     private val mColumAdapter = ColumAdapter()
     private val mList = ListAdapter()
     private var jobid: Int? = null
+
 
     private lateinit var viewModel: DetailViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,29 +46,46 @@ class DetailActivity : BaseActivity() {
         val idjob = intent.getIntExtra("orderid", 0)
         jobid = idjob
 
+        val df = DecimalFormat("###,###.00")
+        df.roundingMode = RoundingMode.CEILING
+
+        var all:Int=0
+
+
+
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
+
+
         viewModel.list.observe(this, { list ->
-                val adt = ConcatAdapter(
-                    mColumAdapter, mList
-                )
-                recylerView.apply {
-                    layoutManager = LinearLayoutManager(baseContext)
-                    adapter = adt
-                }
-                mColumAdapter.submitData(Unit)
-                mList.submitList(list)
+            val adt = ConcatAdapter(
+                mColumAdapter, mList
+            )
+            recylerView.apply {
+                layoutManager = LinearLayoutManager(baseContext)
+                adapter = adt
+            }
+            mColumAdapter.submitData(Unit)
+            mList.submitList(list)
             Log.d(TAG, "repair2: ${Gson().toJson(list)}")
             Log.d(TAG, "repair3: ${Gson().toJson(mList.submitList(list))}")
-            if (list.isEmpty()){
-                textcomment.visibility=View.VISIBLE
+            if (list.isEmpty()) {
+                textcomment.visibility = View.VISIBLE
             }
 
         })
 
+        viewModel.pricetec.observe(this,{
+            tv_tec.text="ค่าบริการ : "+df.format(it)
+            all =it
+        })
 
 
+
+
+
+        viewModel.chekpricetec(idjob)
         viewModel.listdetail(idjob)
 
         viewModel.imgpayModel.observe(this, { Imag ->
@@ -89,6 +109,16 @@ class DetailActivity : BaseActivity() {
         viewModel.chekstatus(idjob)
 
         viewModel.chekImg(idjob)
+
+
+        viewModel.sumprice.observe(this, { list ->
+
+            val sum: Int = list.sumOf { it.sum!! }
+            val sum2:Int=sum.toInt()+ all
+            tv_sum.text = "ราคารวม : " + df.format(sum2)
+
+
+        })
 
         iv_photo_money.setOnClickListener {
             Log.d(TAG, "uri")
@@ -115,6 +145,7 @@ class DetailActivity : BaseActivity() {
                 progressBar.visibility = View.GONE
             }
         }
+
 
 
     }

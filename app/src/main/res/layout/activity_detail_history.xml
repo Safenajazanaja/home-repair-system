@@ -4,31 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".presentation.history.DetailHistoryActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#0E0E0E"
-            android:textSize="30sp"
-            android:text="วันที่" />
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_date_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#0E0E0E"
-            android:textSize="30sp"
-            android:text="Date" />
+            android:gravity="center">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0E0E0E"
+                android:textSize="30sp"
+                android:text="วันที่" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_date_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0E0E0E"
+                android:textSize="30sp"
+                android:text="Date" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 
 
     <androidx.recyclerview.widget.RecyclerView

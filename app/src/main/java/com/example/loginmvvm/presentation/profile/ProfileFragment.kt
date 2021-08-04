@@ -13,9 +13,17 @@ import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.Dru
 import com.example.loginmvvm.base.Dru.loadImageCircle
+import com.example.loginmvvm.base.onItemSelected
+import com.example.loginmvvm.data.models.ProvincesModel
+import com.example.loginmvvm.data.models.SeletTypejobModel
+import com.example.loginmvvm.data.models.TimeJobModel
 import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.request.ImagsRequest
+import com.example.loginmvvm.presentation.repair.engineer.SpinnertimeAdapyer
+import kotlinx.android.synthetic.main.fragment_call.*
+import kotlinx.android.synthetic.main.fragment_call.bar_spinner_datejob
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.home_dialog.*
 import kotlinx.android.synthetic.main.home_dialog.view.*
 import java.util.*
 
@@ -23,6 +31,10 @@ import java.util.*
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var mImageUri: Uri? = null
+
+    private lateinit var type: ProvincesModel
+    private var name: String? = null
+    private var id: Int? = null
 
     //    private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
@@ -39,11 +51,12 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.profile(userId)
 
+
         viewModel.profileModel.observe(this, { profile ->
             tv_username.text = profile.name.toString()
             tv_full_name.text = profile?.name.toString()
             tv_phone.text = profile?.telephone.toString()
-            tv_home.text=profile.abode.toString()
+            tv_home.text = profile.abode.toString()
 
             if (profile.img == null) {
                 iv_photo.setImageResource(R.drawable.ic_user)
@@ -55,13 +68,27 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         edithomeButton.setOnClickListener {
             //Inflate the dialog with custom view
-            val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
+            val mDialogView =
+                LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
             //AlertDialogBuilder
             val mBuilder = AlertDialog.Builder(requireContext())
                 .setView(mDialogView)
                 .setTitle("แก้ไขที่อยู่")
             //show dialog
-            val  mAlertDialog = mBuilder.show()
+            val mAlertDialog = mBuilder.show()
+            viewModel.provinces.observe(this, { provinces ->
+                mAlertDialog.bar_spinner_provinces.adapter = SpinnerprovincesAdapyer(
+                    requireContext(),
+                    provinces as MutableList<ProvincesModel>
+                )
+                mAlertDialog.bar_spinner_provinces.onItemSelected<ProvincesModel> {
+                    type = it
+                    id = it.id
+                    name = it.name
+                }
+            })
+
+
             //login button click of custom layout
             mDialogView.dialogLoginBtn.setOnClickListener {
                 //dismiss dialog
@@ -71,8 +98,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                 //set the input text in TextView
                 tv_home.setText("$home")
-                val  req= HomeRequest(
-                    id=userId,
+                val req = HomeRequest(
+                    id = userId,
                     home = home
                 )
                 viewModel.uphome(req)
@@ -82,7 +109,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 //dismiss dialog
                 mAlertDialog.dismiss()
             }
-
 
 
         }
@@ -98,7 +124,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
 
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -120,12 +145,31 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     viewModel.chekImg(upimags)
                 }
 
-                Toast.makeText(requireContext(), "${it?.response}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "${it?.response}", Toast.LENGTH_SHORT).show()
             }
 
 
         }
     }
+
+
+//    private fun setSpinnerprovinces() {
+//
+//        viewModel.provinces.observe(this,{provinces ->
+//            bar_spinner_provinces.adapter=SpinnerprovincesAdapyer(
+//                requireContext(),
+//                provinces as MutableList<ProvincesModel>
+//            )
+//            bar_spinner_provinces.onItemSelected<ProvincesModel> {
+//                type=it
+//                id=it.id
+//                name=it.name
+//            }
+//
+//        })
+//
+//
+//    }
 
     companion object {
         private const val TAG = "MainActivity"

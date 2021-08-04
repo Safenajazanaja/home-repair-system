@@ -12,7 +12,7 @@ object Orderl: Table("orderl"){
     val abode= varchar("abode",100)
     val repair_list= varchar("repair_list",50)
     val pay_type= integer("pay_type").references(Pay.pay_id)
-    val date=date("date")
+//    val pricetec=integer("pricetec")
     val dateLong=long("date_long")
     val price=integer("price")
     val id_technician=integer("id_technician").references(Technician.technician_id)

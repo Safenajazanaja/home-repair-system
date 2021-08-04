@@ -24,6 +24,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
 
+        val preferences = getSharedPreferences("file", Context.MODE_PRIVATE)
 
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -32,6 +33,7 @@ class LoginActivity : BaseActivity() {
 
             Toasty.Config.getInstance().setTextSize(30)
             Toasty.warning(baseContext,"กรุณาตรวจสอบอีกครั้ง",Toast.LENGTH_SHORT).show()
+            preferences.edit().clear()
 
         })
 
@@ -39,7 +41,8 @@ class LoginActivity : BaseActivity() {
             if (b) {
                 viewModel.id.observe(this, { a ->
 
-                    val preferences = getSharedPreferences("file", Context.MODE_PRIVATE)
+//                    val preferences = getSharedPreferences("file", Context.MODE_PRIVATE)
+
 
 
                     viewModel.id.let { preferences.edit().putInt("id", a).apply() }

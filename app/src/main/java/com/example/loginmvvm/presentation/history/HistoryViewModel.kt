@@ -56,8 +56,7 @@ class HistoryViewModel : ViewModel() {
 //                        repair_List = db.repair_List,
                             date = sdf.format(db.date),
                             datelong = db.date,
-                            sumOrderByDate = result.filter { sdf.format(it.date) == sdf.format(db.date) }
-                                .count(),
+                            sumOrderByDate = result.filter { sdf.format(it.date) == sdf.format(db.date) }.count(),
                             orders = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                                 .map {
                                     OrderModeldetail(

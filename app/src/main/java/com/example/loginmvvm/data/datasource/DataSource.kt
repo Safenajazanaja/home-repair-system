@@ -6,6 +6,7 @@ import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.map.*
 import com.example.loginmvvm.data.models.*
 import com.example.loginmvvm.data.request.*
+import com.example.loginmvvm.data.response.ChekpricetecResponse
 import com.example.loginmvvm.data.response.LoginResponse
 import com.example.loginmvvm.data.response.RepairResponse
 import com.example.loginmvvm.data.response.SingupResponse
@@ -86,7 +87,7 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Users.slice(Users.username, Users.fullname, Users.phone, Users.image,Users.abode)
+            Users.slice(Users.username, Users.fullname, Users.phone, Users.image, Users.abode)
                 .select { Users.user_id eq userId }
                 .map { ProfileMap.toProfile(it) }
                 .single()
@@ -97,8 +98,8 @@ object DataSource {
     fun abode(req: HomeRequest) {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Users.update ({ Users.user_id eq req.id!!.toInt() }){
-                it[Users.abode]=req.home.toString()
+            Users.update({ Users.user_id eq req.id!!.toInt() }) {
+                it[Users.abode] = req.home.toString()
             }
 
 
@@ -141,7 +142,7 @@ object DataSource {
                 it[id_technician] = 0
                 it[type_job] = req.idtypejob.toString().toInt()
                 it[status] = 1
-                it[idtime]=req.idtime.toString().toInt()
+                it[idtime] = req.idtime.toString().toInt()
 
 
             }
@@ -215,6 +216,7 @@ object DataSource {
             addLogger(StdOutSqlLogger)
             (Orderl_detail innerJoin Material)
                 .slice(
+                    Material.material_id,
                     Material.material_name,
                     Material.price_material,
                     Orderl_detail.qty
@@ -228,18 +230,10 @@ object DataSource {
     fun upimgpay(req: ImagsRequest) {
         return transaction {
             addLogger(StdOutSqlLogger)
-//            val result = Users.update({ Users.image eq req.imags }) {
-//                it[user_id] = req.id
-//            }
-
             val result = Orderl.update({ Orderl.order_id eq req.id }) {
                 it[Orderl.image] = req.imags
             }
 
-//             Users.select {  }
-//             Users.deleteWhere { Users.user_id eq req.id }
-
-//            Log.d(TAG, "upimg: $req")
             Log.d(TAG, "upimg: $result")
 
         }
@@ -298,4 +292,27 @@ object DataSource {
 
     }
 
+    fun provinces(): List<ProvincesModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Provinces
+                .slice(Provinces.id_provinces, Provinces.name)
+                .selectAll()
+                .map { ProvincesMap.toProvinces(it) }
+        }
+    }
+
+
+    fun chekpricetec(idjob: Int): ChekpricetecResponse {
+        val response = ChekpricetecResponse()
+        val result = transaction {
+
+            Orderl.slice(Orderl.price)
+                .select { Orderl.order_id eq idjob }
+                .map { it[Orderl.price] }
+                .single()
+        }
+        response.price=result
+        return response
+    }
 }

@@ -31,7 +31,7 @@ class LoginViewModel : ViewModel() {
             request.password.isBlank() -> _toast.value = "กรุณาตรวจสอบอีกครั้ง"
             request.username.length < 4 -> _toast.value = "Username <4"
             request.password.length < 4 -> _toast.value = "Password <4"
-//            Patterns.EMAIL_ADDRESS.matcher(request.username).matches() -> _toast.value="กรุณาตรวจสอบอีกครั้ง"
+            !Patterns.EMAIL_ADDRESS.matcher(request.username).matches() -> _toast.value="กรุณาตรวจสอบอีกครั้ง"
             else -> {
 
                 val result = DataSource.login(request)
@@ -46,6 +46,8 @@ class LoginViewModel : ViewModel() {
 
 
     }
+
+
 
 
 }

@@ -239,6 +239,7 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                 idtype = it.id
                 nametype = it.type
             }
+
         })
 
     }
@@ -255,7 +256,9 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                 idtime = it.id
                 nametime = it.time
 
+
             }
+
 
         })
 

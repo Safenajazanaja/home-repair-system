@@ -8,7 +8,9 @@ import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.models.ImagModel
 import com.example.loginmvvm.data.models.ListModel
 import com.example.loginmvvm.data.models.StatusModel
+import com.example.loginmvvm.data.models.SumpriceModel
 import com.example.loginmvvm.data.request.ImagsRequest
+import com.google.gson.Gson
 
 class DetailViewModel : ViewModel() {
 
@@ -21,11 +23,35 @@ class DetailViewModel : ViewModel() {
 
     private val _statusModel = MutableLiveData<StatusModel>()
     val statusModel: LiveData<StatusModel>
-    get()=_statusModel
+        get() = _statusModel
+
+    private val _sumprice=MutableLiveData<List<SumpriceModel>>()
+    val sumprice:LiveData<List<SumpriceModel>>
+    get() = _sumprice
+    private var _pricetec = MutableLiveData<Int>()
+    val pricetec: LiveData<Int>
+        get() = _pricetec
 
     fun listdetail(request: Int) {
         val result = DataSource.listitem(request)
+
+        val sss= result.map {db->
+            SumpriceModel(
+                sum = db.qty!! * db.Unitprice!!
+            )
+
+        }
+
+        Log.d(TAG, "ssss: ${Gson().toJson(sss)}")
+        _sumprice.value=sss
         _list.value = result
+    }
+
+    fun chekpricetec(idjob:Int){
+        val result=DataSource.chekpricetec(idjob)
+        _pricetec.value=result.price
+
+
     }
 
     fun upImg(req: ImagsRequest) {
@@ -40,7 +66,7 @@ class DetailViewModel : ViewModel() {
     }
 
     fun chekstatus(jobid: Int) {
-        _statusModel.value=DataSource.chekStatus(jobid)
+        _statusModel.value = DataSource.chekStatus(jobid)
     }
 
     companion object {

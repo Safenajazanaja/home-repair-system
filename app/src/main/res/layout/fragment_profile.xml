@@ -4,114 +4,128 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:padding="25dp">
+    android:padding="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/CardView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
-        app:contentPadding="10dp">
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            style="@style/ImageViewPhoto"
+            android:background="#935050" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="15dp">
 
+            <TextView
+                style="@style/TextViewLargeApplicationSub"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:text="รหัสสมาชิก     :   " />
 
-            <ImageView
-                android:id="@+id/iv_photo"
-                style="@style/ImageViewPhoto"
-                android:background="#935050" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewLargeApplicationSub"
-                    android:drawableStart="@drawable/ic_baseline_email_24"
-                    android:text="รหัสสมาชิก" />
-
-                <TextView
-                    android:id="@+id/tv_username"
-                    style="@style/TextViewLargeApplicationSub"
-                    android:layout_marginTop="@dimen/base_zero" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewLargeApplicationSub"
-                    android:drawableStart="@drawable/ic_baseline_person_24"
-                    android:text="ชื่อ-นาสกุล" />
-
-                <TextView
-                    android:id="@+id/tv_full_name"
-                    style="@style/TextViewLargeApplicationSub" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewLargeApplicationSub"
-                    android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
-                    android:text="เบอร์" />
-
-                <TextView
-                    android:id="@+id/tv_phone"
-                    style="@style/TextViewLargeApplicationSub" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextViewLargeApplicationSub"
-                    android:drawableStart="@drawable/ic_baseline_home_24"
-                    android:text="ที่อยู่" />
-
-                <TextView
-                    android:id="@+id/tv_home"
-                    style="@style/TextViewLargeApplicationSub"
-                    android:maxLines="2" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    >
-
-                    <Button
-                        android:id="@+id/edithomeButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textStyle="normal"
-                        android:layout_marginStart="8dp"
-                        android:text="แก้ไขที่อยู่" />
-                </LinearLayout>
-
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
 
+            <TextView
+                style="@style/TextViewLargeApplicationSub"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:text="ชื่อ-นาสกุล      :   " />
 
+            <TextView
+                android:id="@+id/tv_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                style="@style/TextViewLargeApplicationSub"
+                android:drawableStart="@drawable/ic_baseline_phone_iphone_24"
+                android:text="เบอร์โทรศัพท์ :   " />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                style="@style/TextViewLargeApplicationSub"
+                android:drawableStart="@drawable/ic_baseline_home_24"
+                android:text="ที่อยู่                 :   " />
+
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:maxLines="3"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                >
+
+                <Button
+                    android:id="@+id/edithomeButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="แก้ไขที่อยู่"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

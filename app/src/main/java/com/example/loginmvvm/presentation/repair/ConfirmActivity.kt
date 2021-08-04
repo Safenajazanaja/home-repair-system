@@ -11,6 +11,7 @@ import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.RepairRequest
 import com.example.loginmvvm.presentation.main.MainActivity
 import com.example.loginmvvm.presentation.main.MainViewModel
+import com.example.loginmvvm.presentation.main.RepairMain
 import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -79,7 +80,7 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
                 timezone = timezone
             )
             viewModel.confim(Repair)
-            val intent = Intent(baseContext, MainActivity::class.java)
+            val intent = Intent(baseContext, RepairMain::class.java)
             startActivity(intent)
         }
 

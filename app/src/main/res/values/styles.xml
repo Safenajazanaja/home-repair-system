@@ -73,7 +73,7 @@
     </style>
 
     <style name="TextViewLargeApplication" parent="WrapWrap">
-        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textSize">@dimen/text_medium</item>
         <!--        <item name="android:textColor">@color/colorGray</item>-->
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_horizontal</item>

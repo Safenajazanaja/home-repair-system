@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.models.ProfileModel
+import com.example.loginmvvm.data.models.ProvincesModel
 import com.example.loginmvvm.data.request.ImagsRequest
 
 class ProfileViewModel : ViewModel() {
@@ -19,6 +20,15 @@ class ProfileViewModel : ViewModel() {
     private val _imgprofileModel = MutableLiveData<ProfileModel>()
     val imgprofileModel: LiveData<ProfileModel>
         get() = _imgprofileModel
+
+    private val _provinces = MutableLiveData<List<ProvincesModel>>()
+    val provinces: LiveData<List<ProvincesModel>>
+        get() = _provinces
+
+
+//    fun provinces(){
+//        _provinces.value=DataSource.provinces()
+//    }
 
     fun profile(userId: Int?) {
         userId?.let {
@@ -41,6 +51,11 @@ class ProfileViewModel : ViewModel() {
         Log.d(TAG, "chekImg: ")
 
     }
+    init {
+        _provinces.value=DataSource.provinces()
+    }
+
+
 
     companion object{
         private const val TAG = "####"
