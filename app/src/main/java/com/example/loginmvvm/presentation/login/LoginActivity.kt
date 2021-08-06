@@ -54,7 +54,7 @@ class LoginActivity : BaseActivity() {
                 })
 
             } else {
-
+                preferences.edit().clear()
                 Toasty.Config.getInstance().setTextSize(30)
                 Toasty.warning(baseContext,"กรุณาตรวจสอบอีกครั้ง",Toast.LENGTH_SHORT).show()
             }

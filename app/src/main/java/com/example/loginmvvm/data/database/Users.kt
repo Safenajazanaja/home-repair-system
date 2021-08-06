@@ -10,6 +10,7 @@ object Users : Table("user") {
     val phone = varchar("phone", 10)
     val image =varchar("image",1000)
     val abode=varchar("abode",50)
+    val id_provinces=integer("id_provinces").references(Provinces.province_id)
 
 
     override val primaryKey: PrimaryKey?

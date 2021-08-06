@@ -49,7 +49,7 @@ class DetailActivity : BaseActivity() {
         val df = DecimalFormat("###,###.00")
         df.roundingMode = RoundingMode.CEILING
 
-        var all:Int=0
+        var all: Int = 0
 
 
 
@@ -72,30 +72,27 @@ class DetailActivity : BaseActivity() {
             Log.d(TAG, "repair3: ${Gson().toJson(mList.submitList(list))}")
             if (list.isEmpty()) {
                 textcomment.visibility = View.VISIBLE
-                tv_tec.visibility=View.GONE
-                tv_sum.visibility=View.GONE
-            }else {
+                tv_tec.visibility = View.GONE
+                tv_sum.visibility = View.GONE
+            } else {
+                viewModel.chekpricetec(idjob)
+                viewModel.pricetec.observe(this, {
+                        tv_tec.text = "ค่าบริการ : " + df.format(it)
+                        all = it
+                })
+                viewModel.sumprice.observe(this, { list ->
+                    if (list != null) {
+                        val sum: Int = list.sumOf { it.sum!! }
+                        val sum2: Int = sum.toInt() + all
+                        tv_sum.text = "ราคารวม : " + df.format(sum2)
+                    }
+
+
+                })
 
             }
 
         })
-        viewModel.chekpricetec(idjob)
-
-        viewModel.pricetec.observe(this,{
-
-            if (it!=0){
-                tv_tec.text="ค่าบริการ : "+df.format(it)
-                all =it
-            }else{
-                tv_tec.visibility=View.GONE
-            }
-
-        })
-
-
-
-
-
 
         viewModel.listdetail(idjob)
 
@@ -122,17 +119,7 @@ class DetailActivity : BaseActivity() {
         viewModel.chekImg(idjob)
 
 
-        viewModel.sumprice.observe(this, { list ->
-            if (list!=null){
-                val sum: Int = list.sumOf { it.sum!! }
-                val sum2:Int=sum.toInt()+ all
-                tv_sum.text = "ราคารวม : " + df.format(sum2)
-            }
 
-
-
-
-        })
 
         iv_photo_money.setOnClickListener {
             Log.d(TAG, "uri")
@@ -159,7 +146,6 @@ class DetailActivity : BaseActivity() {
                 progressBar.visibility = View.GONE
             }
         }
-
 
 
     }

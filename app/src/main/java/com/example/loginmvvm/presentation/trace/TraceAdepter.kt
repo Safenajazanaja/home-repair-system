@@ -8,7 +8,7 @@ import com.example.loginmvvm.base.SimpleExpandableListAdapter
 import com.example.loginmvvm.data.models.HistoryModel2
 import com.example.loginmvvm.data.models.OrderModeldetail
 import kotlinx.android.synthetic.main.item_history_date.view.*
-import kotlinx.android.synthetic.main.item_history_date.view.tv_price
+
 import kotlinx.android.synthetic.main.item_listitem.view.*
 import kotlinx.android.synthetic.main.item_single_item_main.view.*
 import java.math.RoundingMode
@@ -31,16 +31,13 @@ class TraceAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldetail
     override fun View.onBindViewHolderDetail(item: OrderModeldetail) {
         tv_repair_list.text =  "ลักษณะงาน : "+item.repair_List
         tv_adode_date.text = "ที่อยู่ : "+item.adode
-        if (item.price == null) {
-            tv_price.text = "ราคา : อยู่ระหว่างการประเมิน"
-        } else {
-            val df = DecimalFormat("###,###.00")
-            df.roundingMode = RoundingMode.CEILING
-
-
-
-            tv_price.text =  "ราคา : "+ df.format(item.price)
-        }
+//        if (item.price == null) {
+//            tv_price.text = "ราคา : อยู่ระหว่างการประเมิน"
+//        } else {
+//            val df = DecimalFormat("###,###.00")
+//            df.roundingMode = RoundingMode.CEILING
+//            tv_price.text =  "ราคา : "+ df.format(item.price)
+//        }
         tv_ststa.text ="สถานะ : "+ item.status
         setOnClickListener {
             listener?.invoke(item)

@@ -87,7 +87,7 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Users.slice(Users.username, Users.fullname, Users.phone, Users.image, Users.abode)
+            (Users innerJoin  Provinces).slice(Users.username, Users.fullname, Users.phone, Users.image, Users.abode,Users.id_provinces,Provinces.province_name)
                 .select { Users.user_id eq userId }
                 .map { ProfileMap.toProfile(it) }
                 .single()
@@ -296,7 +296,7 @@ object DataSource {
         return transaction {
             addLogger(StdOutSqlLogger)
             Provinces
-                .slice(Provinces.id_provinces, Provinces.name)
+                .slice(Provinces.province_id, Provinces.province_name)
                 .selectAll()
                 .map { ProvincesMap.toProvinces(it) }
         }
@@ -313,12 +313,37 @@ object DataSource {
                 .single()
         }
 
-        if (result==null){
-            response.price=0
-        }else{
-            response.price=result
-        }
+        response.price = result
+        return response
+    }
 
+    fun login2(jobid: Int): ChekpricetecResponse {
+        val response = ChekpricetecResponse()
+        val result = transaction {
+            addLogger(StdOutSqlLogger)
+            (Orderl_detail innerJoin Material)
+                .slice(
+                    Material.material_id,
+                    Material.material_name,
+                    Material.price_material,
+                    Orderl_detail.qty
+                )
+                .select { Orderl_detail.orderl_id eq jobid }
+                .count()
+                .toInt()
+
+        }
+        if (result == 1) {
+            val result2 = transaction {
+
+                Orderl.slice(Orderl.price)
+                    .select { Orderl.order_id eq jobid }
+                    .map { it[Orderl.price] }
+                    .single()
+            }
+            response.price=result2
+
+        }
         return response
     }
 }

@@ -27,13 +27,13 @@ class HistoryAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldeta
     override fun View.onBindViewHolderDetail(item: OrderModeldetail) {
         tv_repair_list.text = "ลักษณะงาน : "+item.repair_List
         tv_adode_date.text = "ที่อยู่ : "+item.adode
-        if (item.price == null) {
-            tv_price.text = "ราคา : อยู่ระหว่างประเมินราคา"
-        } else {
-            val df = DecimalFormat("###,###.00")
-            df.roundingMode = RoundingMode.CEILING
-            tv_price.text = "ราคา : "+ df.format(+item.price)
-        }
+//        if (item.price == null) {
+//            tv_price.text = "ราคา : อยู่ระหว่างประเมินราคา"
+//        } else {
+//            val df = DecimalFormat("###,###.00")
+//            df.roundingMode = RoundingMode.CEILING
+//            tv_price.text = "ราคา : "+ df.format(+item.price)
+//        }
 
         tv_ststa.text ="สถานะ : "+ item.status
 

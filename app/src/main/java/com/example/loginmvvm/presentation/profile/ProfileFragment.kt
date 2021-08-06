@@ -36,6 +36,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private var name: String? = null
     private var id: Int? = null
 
+
     //    private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
     private var user: Int? = null
@@ -48,6 +49,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         )?.getInt("id", 0)
         user = userId
 
+        val idprovinces:Int?=null
+
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.profile(userId)
 
@@ -57,6 +60,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tv_full_name.text = profile?.name.toString()
             tv_phone.text = profile?.telephone.toString()
             tv_home.text = profile.abode.toString()
+//            profile.id_provinces=idprovinces
 
             if (profile.img == null) {
                 iv_photo.setImageResource(R.drawable.ic_user)
@@ -76,17 +80,23 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 .setTitle("แก้ไขที่อยู่")
             //show dialog
             val mAlertDialog = mBuilder.show()
-            viewModel.provinces.observe(this, { provinces ->
+//            viewModel.provinces.observe(this, { provinces ->
+//                val pos=provinces
+
                 mAlertDialog.bar_spinner_provinces.adapter = SpinnerprovincesAdapyer(
                     requireContext(),
-                    provinces as MutableList<ProvincesModel>
+                    viewModel.provinces.value as MutableList<ProvincesModel>
                 )
                 mAlertDialog.bar_spinner_provinces.onItemSelected<ProvincesModel> {
                     type = it
                     id = it.id
                     name = it.name
+
+
                 }
-            })
+            val provincesId = (viewModel.profileModel.value?.id_provinces?:1)-1
+                mAlertDialog.bar_spinner_provinces.setSelection(provincesId)
+//            })
 
 
             //login button click of custom layout
