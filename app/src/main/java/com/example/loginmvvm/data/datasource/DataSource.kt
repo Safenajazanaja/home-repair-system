@@ -87,8 +87,26 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Users innerJoin  Provinces).slice(Users.username, Users.fullname, Users.phone, Users.image, Users.abode,Users.id_provinces,Provinces.province_name)
+            (Users  innerJoin Province innerJoin  Amphur innerJoin District)
+                .slice(
+                    Users.username,
+                    Users.fullname,
+                    Users.phone,
+                    Users.image,
+                    Users.abode,
+//                    Users.geo_id,
+//                    Geography.geo_name,
+                    Users.province_id,
+                    Province.province_name,
+                    Users.amphur_id,
+                    Amphur.amphur_name,
+                    Users.district_id,
+                    District.district_name,
+                )
                 .select { Users.user_id eq userId }
+                .andWhere { Users.amphur_id eq Amphur.amphur_id }
+                .andWhere { Users.district_id eq District.district_id }
+                .andWhere { Users.province_id eq Province.province_id }
                 .map { ProfileMap.toProfile(it) }
                 .single()
         }
@@ -295,8 +313,8 @@ object DataSource {
     fun provinces(): List<ProvincesModel> {
         return transaction {
             addLogger(StdOutSqlLogger)
-            Provinces
-                .slice(Provinces.province_id, Provinces.province_name)
+            Province
+                .slice(Province.province_id, Province.province_name)
                 .selectAll()
                 .map { ProvincesMap.toProvinces(it) }
         }
@@ -341,7 +359,7 @@ object DataSource {
                     .map { it[Orderl.price] }
                     .single()
             }
-            response.price=result2
+            response.price = result2
 
         }
         return response

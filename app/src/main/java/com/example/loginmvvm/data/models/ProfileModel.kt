@@ -6,6 +6,12 @@ package com.example.loginmvvm.data.models
      val telephone:String,
      val img:String?=null,
      val abode:String?=null,
-     var id_provinces:Int?=null,
-     val nameprovinces:String?=null
+//     var geo_id:Int?=null,
+//     val geo_name:String?=null,
+     var province_id:Int?=null,
+     val province_name:String?=null,
+     var amphur_id:Int?=null,
+     val amphur_name:String?=null,
+     var district_id:Int?=null,
+     val district_name:String?=null
  )

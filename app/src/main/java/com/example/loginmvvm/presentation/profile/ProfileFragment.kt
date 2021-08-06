@@ -94,7 +94,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
 
                 }
-            val provincesId = (viewModel.profileModel.value?.id_provinces?:1)-1
+            val provincesId = (viewModel.profileModel.value?.province_id?:1)-1
                 mAlertDialog.bar_spinner_provinces.setSelection(provincesId)
 //            })
 
