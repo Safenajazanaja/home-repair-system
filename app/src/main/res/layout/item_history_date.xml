@@ -11,7 +11,7 @@
         >
 
         <LinearLayout
-            android:background="#00BCD4"
+            android:background="#84898A"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -24,19 +24,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textSize="15dp"
-                    android:textColor="@color/black"
                     android:id="@+id/tv_repair_list"
-                    android:layout_width="200dp"
+                    android:layout_width="167dp"
                     android:layout_height="wrap_content"
-                    android:text="Repair List" />
+                    android:text="Repair List"
+                    android:textColor="@color/color_text"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:textSize="15dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_text"
                     android:id="@+id/tv_adode_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="2"
                     android:text="adode" />
             </LinearLayout>
 
@@ -49,12 +50,12 @@
 
 
                 <TextView
-                    android:textSize="15dp"
-                    android:textColor="@color/black"
                     android:id="@+id/tv_ststa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ststa" />
+                    android:text="ststa"
+                    android:textColor="@color/color_text"
+                    android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
 

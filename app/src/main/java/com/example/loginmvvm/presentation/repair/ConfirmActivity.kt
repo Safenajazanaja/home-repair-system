@@ -1,21 +1,15 @@
 package com.example.loginmvvm.presentation.repair
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.RepairRequest
-import com.example.loginmvvm.presentation.main.MainActivity
-import com.example.loginmvvm.presentation.main.MainViewModel
 import com.example.loginmvvm.presentation.main.RepairMain
-import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_confirm.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -35,7 +30,6 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
     private var mMarker: Marker? = null
     private var latitudeMap: Double = 0.0
     private var longitudeMap: Double = 0.0
-    private lateinit var viewModel2: MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm)
@@ -49,6 +43,14 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
         val idtime=intent.getIntExtra("timejob",0)
         val timezone=intent.getStringExtra("timezone")
 
+        val provinces=intent.getIntExtra("provinces",0)
+        val provincesname=intent.getStringExtra("provincesname")
+        val amphur=intent.getIntExtra("amphur",0)
+        val amphurname=intent.getStringExtra("amphurname")
+        val districts=intent.getIntExtra("districts",0)
+        val districtsname=intent.getStringExtra("districtsname")
+        val typejob=intent.getStringExtra("typejob")
+
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
         val dateString = simpleDateFormat.format(date)
         viewModel = ViewModelProvider(this).get(RepairViewModel::class.java)
@@ -57,13 +59,14 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
 
         tv_namejob_confirm.text = repair_list.toString()
         tv_date_confirm.text = dateString.toString()
-        tv_abode_confirm.text = abode.toString()
+        tv_abode_confirm.text = abode.toString()+ "ต. " + districtsname.toString()+ "\nอ. " + amphurname.toString() + "\nจ. " +provincesname.toString()
         tv_time_confirm.text=timezone.toString()
+        tv_type_confirm.text=typejob.toString()
 
         bt_cancel_confirm.setOnClickListener {
-//            val intent = Intent(baseContext, MainActivity::class.java).putExtra("id", userId)
-//            startActivity(intent)
-            fragment_container
+            val intent = Intent(baseContext, RepairMain::class.java).putExtra("id", userId)
+            startActivity(intent)
+//            fragment_container
 
         }
 
@@ -77,9 +80,13 @@ class ConfirmActivity : BaseActivity(), OnMapReadyCallback {
                 idtypejob = idtypejob,
                 date = date,
                 idtime = idtime,
-                timezone = timezone
+                timezone = timezone,
+                amphurId =amphur,
+                provincesId = provinces,
+                districtId = districts
             )
             viewModel.confim(Repair)
+            Toasty.success(baseContext,"บันทึกสำเร็จ", Toast.LENGTH_SHORT).show()
             val intent = Intent(baseContext, RepairMain::class.java)
             startActivity(intent)
         }

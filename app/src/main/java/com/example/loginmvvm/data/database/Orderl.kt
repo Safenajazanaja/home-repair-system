@@ -1,5 +1,6 @@
 package com.example.loginmvvm.data.database
 
+import com.example.loginmvvm.data.database.Users.references
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.jodatime.date
 
@@ -23,6 +24,9 @@ object Orderl: Table("orderl"){
     val status=integer("status_id").references(Status.status_id)
     val image = varchar("image",1000)
     val idtime=integer("id_time").references(Time.id_time)
+    val province_id= integer("province_id").references(Province.province_id)
+    val amphur_id= integer("amphur_id").references(Amphur.amphur_id)
+    val district_id= integer("district_id").references(District.district_id)
 
     override val primaryKey: PrimaryKey?
         get() = PrimaryKey(order_id, name = "order_id_PK")

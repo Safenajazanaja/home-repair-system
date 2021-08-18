@@ -3,16 +3,13 @@ package com.example.loginmvvm.presentation.homepage
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Trace
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
-import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.presentation.main.HistoryMain
 import com.example.loginmvvm.presentation.main.ProfileMain
 import com.example.loginmvvm.presentation.main.RepairMain
 import com.example.loginmvvm.presentation.main.TraceMain
-import com.example.loginmvvm.presentation.profile.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_homepage.*
 
 class HomepageFragment : BaseActivity() {

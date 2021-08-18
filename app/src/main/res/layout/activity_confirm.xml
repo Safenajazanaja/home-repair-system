@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".presentation.repair.ConfirmActivity">
 
@@ -36,11 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        app:contentPadding="15dp">
+        app:contentPadding="5dp">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -48,6 +47,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:text="ประเภทงาน            :"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_type_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="time"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +80,8 @@
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:text="งานที่ต้องการซ่อม  :"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tv_namejob_confirm"
@@ -80,34 +102,15 @@
                 <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="วันที่                         :"
-                    android:textSize="20sp" />
+                    android:text="วันที่                        :"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tv_date_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="วันที่"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="170dp"
-                    android:layout_height="match_parent"
-                    android:text="ที่อยู่                        :"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_abode_confirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ที่อยู่"
                     android:textSize="20sp" />
             </LinearLayout>
             <LinearLayout
@@ -120,13 +123,35 @@
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:text="ช่วงเวลา                 :"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tv_time_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="time"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:text="ที่อยู่                       :"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_abode_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ที่อยู่"
                     android:textSize="20sp" />
             </LinearLayout>
 

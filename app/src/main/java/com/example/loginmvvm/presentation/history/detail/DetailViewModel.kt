@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.loginmvvm.data.datasource.DataSource
-import com.example.loginmvvm.data.models.ImagModel
-import com.example.loginmvvm.data.models.ListModel
-import com.example.loginmvvm.data.models.StatusModel
-import com.example.loginmvvm.data.models.SumpriceModel
+import com.example.loginmvvm.data.models.*
 import com.example.loginmvvm.data.request.ImagsRequest
 import com.google.gson.Gson
 
@@ -31,6 +28,11 @@ class DetailViewModel : ViewModel() {
     private var _pricetec = MutableLiveData<Int>()
     val pricetec: LiveData<Int>
         get() = _pricetec
+
+
+    private var _workjob = MutableLiveData<ManageModel>()
+    val workjob: LiveData<ManageModel>
+        get() = _workjob
 
     fun listdetail(request: Int) {
         val result = DataSource.listitem(request)
@@ -67,6 +69,9 @@ class DetailViewModel : ViewModel() {
 
     fun chekstatus(jobid: Int) {
         _statusModel.value = DataSource.chekStatus(jobid)
+    }
+    fun mana(idjob: Int) {
+        _workjob.value = DataSource.manage(idjob)
     }
 
     companion object {

@@ -40,7 +40,10 @@ class TraceViewModel : ViewModel() {
                                 repair_List = it.repair_List,
                                 date = sdf.format(it.date),
                                 price = it.price,
-                                status = it.status
+                                status = it.status,
+                                province = it.province,
+                                amphur = it.amphur,
+                                district = it.district
                             )
                         }
                 )

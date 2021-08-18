@@ -26,7 +26,7 @@ class HistoryAdepter : SimpleExpandableListAdapter<HistoryModel2, OrderModeldeta
 
     override fun View.onBindViewHolderDetail(item: OrderModeldetail) {
         tv_repair_list.text = "ลักษณะงาน : "+item.repair_List
-        tv_adode_date.text = "ที่อยู่ : "+item.adode
+        tv_adode_date.text = "ที่อยู่ : "+item.adode +"ต."+ item.district + "อ." + item.amphur + "จ." +item.province
 //        if (item.price == null) {
 //            tv_price.text = "ราคา : อยู่ระหว่างประเมินราคา"
 //        } else {

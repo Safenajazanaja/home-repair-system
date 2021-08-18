@@ -1,6 +1,5 @@
 package com.example.loginmvvm.presentation.history.detail
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +15,11 @@ import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.base.Dru
 import com.example.loginmvvm.base.Dru.loadImageCircle
 import com.example.loginmvvm.data.request.ImagsRequest
-import com.example.loginmvvm.presentation.history.HistoryFragment
-import com.example.loginmvvm.presentation.profile.ProfileFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.frament_history.view.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 
 import java.util.*
 
@@ -51,7 +47,7 @@ class DetailActivity : BaseActivity() {
 
         var all: Int = 0
 
-
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
@@ -74,17 +70,20 @@ class DetailActivity : BaseActivity() {
                 textcomment.visibility = View.VISIBLE
                 tv_tec.visibility = View.GONE
                 tv_sum.visibility = View.GONE
+                tv_mat.visibility = View.GONE
             } else {
                 viewModel.chekpricetec(idjob)
                 viewModel.pricetec.observe(this, {
-                        tv_tec.text = "ค่าบริการ : " + df.format(it)
+                        tv_tec.text = "ค่าบริการ   : " + df.format(it)
                         all = it
                 })
                 viewModel.sumprice.observe(this, { list ->
                     if (list != null) {
                         val sum: Int = list.sumOf { it.sum!! }
                         val sum2: Int = sum.toInt() + all
-                        tv_sum.text = "ราคารวม : " + df.format(sum2)
+                        tv_sum.text = "ราคารวม   : " + df.format(sum2)
+                        tv_mat.text="รวมค่าวัสดุ : "+df.format(sum)
+//                        tv_sum_mat.text="จำนวนรายการวัสดุ : "+ list.count().toString()+" รายการ"
                     }
 
 
@@ -98,7 +97,6 @@ class DetailActivity : BaseActivity() {
 
         viewModel.imgpayModel.observe(this, { Imag ->
             if (Imag.img == null) {
-
                 iv_photo_money.setImageResource(R.drawable.bank)
             } else if (Imag.img != null) {
                 val baseUrl = Imag.img.toString()
@@ -110,14 +108,29 @@ class DetailActivity : BaseActivity() {
         })
 
         viewModel.statusModel.observe(this, {
-            if (it.statusid == 1) {
-                layoutpay.visibility = View.GONE
+            if (it.statusid == 3 ) {
+                layoutpay.visibility = View.VISIBLE
             }
         })
         viewModel.chekstatus(idjob)
 
         viewModel.chekImg(idjob)
+        viewModel.mana(idjob)
 
+        viewModel.workjob.observe(this, {db->
+            val dateString = simpleDateFormat.format(db.date)
+            tv_namejob_manage.text=db.typejob
+            tv_date_manage.text=dateString
+            tv_abode_manage.text=db.abode
+            tv_time_manage.text=db.timezone
+            tv_repairlist_manage.text=db.repair_list
+            tv_statusjob_manage.text=db.status
+//            longitudeMap= db.longitude!!
+//            latitudeMap= db.latitudeval!!
+//            val req=ChekTec2(date = db.date!!,id_time = db.idtime!!)
+//            viewModel.chek(req)
+
+        })
 
 
 

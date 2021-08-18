@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,14 +13,12 @@ import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.Dru
 import com.example.loginmvvm.base.Dru.loadImageCircle
 import com.example.loginmvvm.base.onItemSelected
+import com.example.loginmvvm.data.models.AmphurModel
+import com.example.loginmvvm.data.models.DistrictModel
 import com.example.loginmvvm.data.models.ProvincesModel
-import com.example.loginmvvm.data.models.SeletTypejobModel
-import com.example.loginmvvm.data.models.TimeJobModel
 import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.request.ImagsRequest
-import com.example.loginmvvm.presentation.repair.engineer.SpinnertimeAdapyer
-import kotlinx.android.synthetic.main.fragment_call.*
-import kotlinx.android.synthetic.main.fragment_call.bar_spinner_datejob
+import com.example.loginmvvm.presentation.main.ProfileMain
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.home_dialog.*
 import kotlinx.android.synthetic.main.home_dialog.view.*
@@ -36,6 +33,14 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private var name: String? = null
     private var id: Int? = null
 
+    private lateinit var type2: AmphurModel
+    private var name2: String? = null
+    private var id2: Int? = null
+
+    private lateinit var type3: DistrictModel
+    private var name3: String? = null
+    private var id3: Int? = null
+
 
     //    private var mImageUrl: Url? = null
     private lateinit var viewModel: ProfileViewModel
@@ -49,7 +54,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         )?.getInt("id", 0)
         user = userId
 
-        val idprovinces:Int?=null
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.profile(userId)
@@ -59,7 +63,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tv_username.text = profile.name.toString()
             tv_full_name.text = profile?.name.toString()
             tv_phone.text = profile?.telephone.toString()
-            tv_home.text = profile.abode.toString()
+            tv_home.text = profile.abode.toString() + "ต. " + profile.district_name.toString()+ "\nอ. " + profile.amphur_name.toString() + "\nจ. " +profile.province_name.toString()
 //            profile.id_provinces=idprovinces
 
             if (profile.img == null) {
@@ -70,39 +74,87 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
         })
 
+
         edithomeButton.setOnClickListener {
             //Inflate the dialog with custom view
-            val mDialogView =
-                LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
+            val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.home_dialog, null)
             //AlertDialogBuilder
-            val mBuilder = AlertDialog.Builder(requireContext())
-                .setView(mDialogView)
-                .setTitle("แก้ไขที่อยู่")
+            val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView).setTitle("แก้ไขที่อยู่")
             //show dialog
             val mAlertDialog = mBuilder.show()
 //            viewModel.provinces.observe(this, { provinces ->
 //                val pos=provinces
-
-                mAlertDialog.bar_spinner_provinces.adapter = SpinnerprovincesAdapyer(
+            mAlertDialog.bar_spinner_provinces.adapter = SpinnerprovincesAdapter(
+                requireContext(),
+                viewModel.provinces.value as MutableList<ProvincesModel>
+            )
+            mAlertDialog.bar_spinner_provinces.onItemSelected<ProvincesModel> {
+                type = it
+                id = it.id
+                name = it.name
+                viewModel.amphurselect(it.id)
+                mAlertDialog.bar_spinner_amphur.adapter = SpinneramphurAdapter(
                     requireContext(),
-                    viewModel.provinces.value as MutableList<ProvincesModel>
+                    viewModel.amphur.value as MutableList<AmphurModel>
                 )
-                mAlertDialog.bar_spinner_provinces.onItemSelected<ProvincesModel> {
-                    type = it
-                    id = it.id
-                    name = it.name
+                mAlertDialog.bar_spinner_amphur.onItemSelected<AmphurModel> {
+                    type2 = it
+                    id2 = it.id
+                    name2 = it.name
 
-
+                    viewModel.districtselet(it.id)
+                    mAlertDialog.bar_spinner_districts.adapter = SpinnerdistrictAdapter(
+                        requireContext(),
+                        viewModel.district.value as MutableList<DistrictModel>
+                    )
+                    mAlertDialog.bar_spinner_districts.onItemSelected<DistrictModel> {
+                        type3 = it
+                        id3 = it.id
+                        name3 = it.name
+                    }
                 }
-            val provincesId = (viewModel.profileModel.value?.province_id?:1)-1
-                mAlertDialog.bar_spinner_provinces.setSelection(provincesId)
+            }
+
+            mAlertDialog.bar_spinner_amphur.adapter = SpinneramphurAdapter(
+                requireContext(),
+                viewModel.amphur.value as MutableList<AmphurModel>
+            )
+            mAlertDialog.bar_spinner_amphur.onItemSelected<AmphurModel> {
+                type2 = it
+                id2 = it.id
+                name2 = it.name
+            }
+
+            mAlertDialog.bar_spinner_districts.adapter = SpinnerdistrictAdapter(
+                requireContext(),
+                viewModel.district.value as MutableList<DistrictModel>
+
+            )
+            mAlertDialog.bar_spinner_districts.onItemSelected<DistrictModel> {
+                type3 = it
+                id3 = it.id
+                name3 = it.name
+            }
+            val amphurId = (viewModel.profileModel.value?.amphur_id ?: 1) - 1
+            val provincesId = (viewModel.profileModel.value?.province_id ?: 1) - 1
+
+
+            val districtId = (viewModel.profileModel.value?.district_id ?: 1) - 1
+
+            Log.d(TAG, "chekImg: {$districtId}")
+
+            mAlertDialog.bar_spinner_provinces.setSelection(provincesId)
+            mAlertDialog.bar_spinner_amphur.setSelection(amphurId)
+            mAlertDialog.bar_spinner_districts.setSelection(districtId)
 //            })
 
 
             //login button click of custom layout
             mDialogView.dialogLoginBtn.setOnClickListener {
                 //dismiss dialog
-                mAlertDialog.dismiss()
+//                mAlertDialog.dismiss()
+
+
                 //get text from EditTexts of custom layout
                 val home = mDialogView.dialog_text.text.toString()
 
@@ -110,14 +162,26 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 tv_home.setText("$home")
                 val req = HomeRequest(
                     id = userId,
-                    home = home
+                    home = home,
+                    amphurId = type2.id,
+                    provincesId = type.id,
+                    districtId = type3.id
                 )
                 viewModel.uphome(req)
+
+                val intent =
+                    Intent(requireContext(), ProfileMain::class.java).putExtra("id", userId)
+                startActivity(intent)
             }
             //cancel button click of custom layout
             mDialogView.dialogCancelBtn.setOnClickListener {
                 //dismiss dialog
-                mAlertDialog.dismiss()
+//                mAlertDialog.dismiss()
+                val intent =
+                    Intent(requireContext(), ProfileMain::class.java).putExtra("id", userId)
+                startActivity(intent)
+
+
             }
 
 
@@ -154,32 +218,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     Log.d(TAG, "onActivityResult: $upimags")
                     viewModel.chekImg(upimags)
                 }
-
 //                Toast.makeText(requireContext(), "${it?.response}", Toast.LENGTH_SHORT).show()
             }
-
-
         }
     }
 
-
-//    private fun setSpinnerprovinces() {
-//
-//        viewModel.provinces.observe(this,{provinces ->
-//            bar_spinner_provinces.adapter=SpinnerprovincesAdapyer(
-//                requireContext(),
-//                provinces as MutableList<ProvincesModel>
-//            )
-//            bar_spinner_provinces.onItemSelected<ProvincesModel> {
-//                type=it
-//                id=it.id
-//                name=it.name
-//            }
-//
-//        })
-//
-//
-//    }
 
     companion object {
         private const val TAG = "MainActivity"

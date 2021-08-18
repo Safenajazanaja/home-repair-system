@@ -87,7 +87,7 @@ object DataSource {
     fun profile(userId: Int): ProfileModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Users  innerJoin Province innerJoin  Amphur innerJoin District)
+            (Users innerJoin Province innerJoin Amphur innerJoin District)
                 .slice(
                     Users.username,
                     Users.fullname,
@@ -118,6 +118,9 @@ object DataSource {
             addLogger(StdOutSqlLogger)
             Users.update({ Users.user_id eq req.id!!.toInt() }) {
                 it[Users.abode] = req.home.toString()
+                it[Users.province_id] = req.provincesId!!.toInt()
+                it[Users.amphur_id] = req.amphurId!!.toInt()
+                it[Users.district_id] = req.districtId!!.toInt()
             }
 
 
@@ -161,8 +164,9 @@ object DataSource {
                 it[type_job] = req.idtypejob.toString().toInt()
                 it[status] = 1
                 it[idtime] = req.idtime.toString().toInt()
-
-
+                it[province_id] = req.provincesId!!.toInt()
+                it[amphur_id] = req.amphurId!!.toInt()
+                it[district_id] = req.districtId!!.toInt()
             }
         }
         val result = statement.resultedValues?.size == 1
@@ -176,23 +180,25 @@ object DataSource {
 
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Orderl innerJoin Status)
+            (Orderl innerJoin Status innerJoin Province innerJoin Amphur innerJoin District)
                 .slice(
                     Orderl.abode,
                     Orderl.order_id,
                     Orderl.repair_list,
                     Orderl.dateLong,
                     Orderl.price, //add
-                    Status.status_name
+                    Status.status_name,
+                    Province.province_name,
+                    Amphur.amphur_name,
+                    District.district_name
                 )
                 .select { Orderl.user_id eq req.id }
                 .andWhere { Orderl.dateLong.between(req.star, req.end) }
+                .andWhere { Orderl.province_id eq Province.province_id }
+                .andWhere { Orderl.amphur_id eq Amphur.amphur_id }
+                .andWhere { Orderl.district_id eq District.district_id }
                 .map { HistoryMap.toHistory(it) }
-
-
         }
-
-
     }
 //    fun tracejob(id: Int): List<HistoryModel> {
 //        return transaction {
@@ -282,16 +288,23 @@ object DataSource {
     fun tracejob(id: Int): List<HistoryModel> {
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Orderl innerJoin Status)
+            (Orderl innerJoin Status innerJoin Province innerJoin Amphur innerJoin District)
                 .slice(
                     Orderl.abode,
                     Orderl.order_id,
                     Orderl.repair_list,
                     Orderl.dateLong,
                     Orderl.price, //add
-                    Status.status_name
+                    Status.status_name,
+                    Province.province_name,
+                    Amphur.amphur_name,
+                    District.district_name
                 )
                 .select { Orderl.user_id eq id }
+                .andWhere { Orderl.status neq 5 }
+                .andWhere { Orderl.province_id eq Province.province_id }
+                .andWhere { Orderl.amphur_id eq Amphur.amphur_id }
+                .andWhere { Orderl.district_id eq District.district_id }
                 .map { HistoryMap.toHistory(it) }
         }
 
@@ -321,6 +334,47 @@ object DataSource {
     }
 
 
+    fun amphur(): List<AmphurModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Amphur
+                .slice(Amphur.amphur_id, Amphur.amphur_name)
+                .selectAll()
+                .map { AmphurMap.toAmphur(it) }
+        }
+    }
+
+
+    fun amphurselect(provincesId: Int): List<AmphurModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            Amphur
+                .slice(Amphur.amphur_id, Amphur.amphur_name)
+                .select { Amphur.province_id eq provincesId }
+                .map { AmphurMap.toAmphur(it) }
+        }
+    }
+
+    fun district(): List<DistrictModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            District.slice(District.district_id, District.district_name)
+                .selectAll()
+                .map { DistrictMap.toDistrict(it) }
+        }
+    }
+
+    fun districtselect(amphurid: Int): List<DistrictModel> {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            District
+                .slice(District.district_id, District.district_name)
+                .select { District.amphur_id eq amphurid }
+                .map { DistrictMap.toDistrict(it) }
+        }
+    }
+
+
     fun chekpricetec(idjob: Int): ChekpricetecResponse {
         val response = ChekpricetecResponse()
         val result = transaction {
@@ -335,33 +389,57 @@ object DataSource {
         return response
     }
 
-    fun login2(jobid: Int): ChekpricetecResponse {
-        val response = ChekpricetecResponse()
-        val result = transaction {
+    fun manage(idjob: Int): ManageModel {
+        return transaction {
             addLogger(StdOutSqlLogger)
-            (Orderl_detail innerJoin Material)
+            (Orderl innerJoin Time innerJoin Type_job innerJoin Status)
                 .slice(
-                    Material.material_id,
-                    Material.material_name,
-                    Material.price_material,
-                    Orderl_detail.qty
+                    Orderl.order_id,
+                    Orderl.abode,
+                    Orderl.repair_list,
+                    Orderl.dateLong,
+                    Orderl.latitude,
+                    Orderl.longitude,
+                    Type_job.namejob,
+                    Time.time,
+                    Orderl.idtime,
+                    Status.status_name
                 )
-                .select { Orderl_detail.orderl_id eq jobid }
-                .count()
-                .toInt()
+                .select { Orderl.order_id eq idjob }
+                .andWhere { Orderl.status eq Status.status_id }
+                .map { ManageMap.toManageMap(it) }
+                .single()
 
         }
-        if (result == 1) {
-            val result2 = transaction {
-
-                Orderl.slice(Orderl.price)
-                    .select { Orderl.order_id eq jobid }
-                    .map { it[Orderl.price] }
-                    .single()
-            }
-            response.price = result2
-
-        }
-        return response
     }
+
+//    fun login2(jobid: Int): ChekpricetecResponse {
+//        val response = ChekpricetecResponse()
+//        val result = transaction {
+//            addLogger(StdOutSqlLogger)
+//            (Orderl_detail innerJoin Material)
+//                .slice(
+//                    Material.material_id,
+//                    Material.material_name,
+//                    Material.price_material,
+//                    Orderl_detail.qty
+//                )
+//                .select { Orderl_detail.orderl_id eq jobid }
+//                .count()
+//                .toInt()
+//
+//        }
+//        if (result == 1) {
+//            val result2 = transaction {
+//
+//                Orderl.slice(Orderl.price)
+//                    .select { Orderl.order_id eq jobid }
+//                    .map { it[Orderl.price] }
+//                    .single()
+//            }
+//            response.price = result2
+//
+//        }
+//        return response
+//    }
 }

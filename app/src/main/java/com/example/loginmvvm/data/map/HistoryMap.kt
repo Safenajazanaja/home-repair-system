@@ -1,7 +1,6 @@
 package com.example.loginmvvm.data.map
 
-import com.example.loginmvvm.data.database.Orderl
-import com.example.loginmvvm.data.database.Status
+import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.models.HistoryDetailModel
 import com.example.loginmvvm.data.models.HistoryModel
 import com.example.loginmvvm.data.models.OrderModel
@@ -14,7 +13,10 @@ object HistoryMap {
         repair_List = row[Orderl.repair_list],
         date = row[Orderl.dateLong],
         price = row[Orderl.price],
-        status = row[Status.status_name]
+        status = row[Status.status_name],
+        province = row[Province.province_name],
+        amphur = row[Amphur.amphur_name],
+        district = row[District.district_name]
     )
 //    fun toOrder(row: ResultRow)=OrderModel(
 //        order = row[Orderl.order_id],

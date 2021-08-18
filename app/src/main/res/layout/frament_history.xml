@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearlayout"
-        android:divider="#000000"
+        android:divider="#BDB8B8"
         android:dividerHeight="5dp"
         >
     </ExpandableListView>

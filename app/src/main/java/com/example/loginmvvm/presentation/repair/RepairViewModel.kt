@@ -31,12 +31,39 @@ class RepairViewModel : ViewModel() {
     val abode: LiveData<AbodeModel>
         get() = _abode
 
+
+    private val _provinces = MutableLiveData<List<ProvincesModel>>()
+    val provinces: LiveData<List<ProvincesModel>>
+        get() = _provinces
+
+
+    private val _amphur = MutableLiveData<List<AmphurModel>>()
+    val amphur: LiveData<List<AmphurModel>>
+        get() = _amphur
+
+    private val _district = MutableLiveData<List<DistrictModel>>()
+    val district: LiveData<List<DistrictModel>>
+        get() = _district
+
+
+    private val _profileModel = MutableLiveData<ProfileModel>()
+    val profileModel: LiveData<ProfileModel>
+        get() = _profileModel
+
     // REQUEST
+
+    fun profile(userId: Int?) {
+        userId?.let {
+            _profileModel.value = DataSource.profile(it)
+        }
+
+
+    }
     fun repair(request: RepairRequest) {
         when {
             request.abode.isBlank() -> _toast.value = "กรุณากรอกที่อยู่"
             request.repair_list.isBlank() -> _toast.value = "กรุรากรอกงานที่ต้องการซ่อม"
-            request.date==null -> _toast.value="กรุณาเลือกวันที่ต้องการ"
+            request.date == null -> _toast.value = "กรุณาเลือกวันที่ต้องการ"
 
 //            else -> {
 //                val result = DataSource.repair(request)
@@ -48,8 +75,17 @@ class RepairViewModel : ViewModel() {
         }
 
     }
-    fun settextabode(id:Int){
-        _abode.value=DataSource.abodesettext(id)
+
+    fun amphurselect(amphurid:Int){
+        _amphur.value=DataSource.amphurselect(amphurid)
+
+    }
+    fun districtselet(districtid:Int){
+        _district.value=DataSource.districtselect(districtid)
+    }
+
+    fun settextabode(id: Int) {
+        _abode.value = DataSource.abodesettext(id)
     }
 
     fun confim(request: RepairRequest) {
@@ -65,10 +101,10 @@ class RepairViewModel : ViewModel() {
     init {
 //        seletjob()
         _typejob.value = DataSource.Selettypejob()
-        _timejob.value=DataSource.Timejob()
-
-
-
+        _timejob.value = DataSource.Timejob()
+        _provinces.value = DataSource.provinces()
+        _amphur.value = DataSource.amphur()
+        _district.value = DataSource.district()
 
 
     }

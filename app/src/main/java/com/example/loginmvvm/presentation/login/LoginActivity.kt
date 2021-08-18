@@ -9,7 +9,6 @@ import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseActivity
 import com.example.loginmvvm.data.request.LoginRequest
 import com.example.loginmvvm.presentation.homepage.HomepageFragment
-import com.example.loginmvvm.presentation.main.MainActivity
 import com.example.loginmvvm.presentation.sign_up.Sign_UpActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_login.*
@@ -33,7 +32,7 @@ class LoginActivity : BaseActivity() {
 
             Toasty.Config.getInstance().setTextSize(30)
             Toasty.warning(baseContext,"กรุณาตรวจสอบอีกครั้ง",Toast.LENGTH_SHORT).show()
-            preferences.edit().clear()
+//            preferences.edit().clear()
 
         })
 
@@ -43,7 +42,7 @@ class LoginActivity : BaseActivity() {
 
 //                    val preferences = getSharedPreferences("file", Context.MODE_PRIVATE)
 
-
+//                    preferences.edit().clear()
 
                     viewModel.id.let { preferences.edit().putInt("id", a).apply() }
                     Toasty.Config.getInstance().setTextSize(30)
@@ -54,7 +53,7 @@ class LoginActivity : BaseActivity() {
                 })
 
             } else {
-                preferences.edit().clear()
+//                preferences.edit().clear()
                 Toasty.Config.getInstance().setTextSize(30)
                 Toasty.warning(baseContext,"กรุณาตรวจสอบอีกครั้ง",Toast.LENGTH_SHORT).show()
             }

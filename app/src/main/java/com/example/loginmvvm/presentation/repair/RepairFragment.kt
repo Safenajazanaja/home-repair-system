@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.loginmvvm.R
 import com.example.loginmvvm.base.BaseFragment
 import com.example.loginmvvm.base.onItemSelected
-import com.example.loginmvvm.data.models.SeletTypejobModel
-import com.example.loginmvvm.data.models.TimeJobModel
+import com.example.loginmvvm.data.models.*
 import com.example.loginmvvm.data.request.RepairRequest
+import com.example.loginmvvm.presentation.profile.SpinneramphurAdapter
+import com.example.loginmvvm.presentation.profile.SpinnerdistrictAdapter
+import com.example.loginmvvm.presentation.profile.SpinnerprovincesAdapter
 import com.example.loginmvvm.presentation.homepage.HomepageFragment
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertimeAdapyer
 import com.example.loginmvvm.presentation.repair.engineer.SpinnertypeAdapter
@@ -54,6 +56,20 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
     private var idtime: Int? = null
 
 
+    private lateinit var type2: ProvincesModel
+    private var name2: String? = null
+    private var id2: Int? = null
+
+    private lateinit var type3: AmphurModel
+    private var name3: String? = null
+    private var id3: Int? = null
+
+    private lateinit var type4: DistrictModel
+    private var name4: String? = null
+    private var id4: Int? = null
+
+
+
     //Calendar
     private var mCalendar: Calendar? = null
 
@@ -66,10 +82,11 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
         viewModel = ViewModelProvider(this).get(RepairViewModel::class.java)
 //        viewModel.repair()
         viewModel.toast.observe(this, { str ->
-            Toast.makeText(context, "$str", Toast.LENGTH_SHORT).show()
+            Toasty.error(requireContext(),"กรุณากรอกข้อมูลให้ครบถ้าน",Toast.LENGTH_SHORT).show()
         })
 
         userId?.let { viewModel.settextabode(it) }
+        viewModel.profile(userId)
 
         viewModel.abode.observe(this, { home ->
             re_abode.setText("${home.abode}")
@@ -160,6 +177,13 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
                         putExtra("type_job", idtype)
                         putExtra("timejob", idtime)
                         putExtra("timezone", nametime)
+                        putExtra("provinces",type2.id)
+                        putExtra("amphur",type3.id)
+                        putExtra("districts",type4.id)
+                        putExtra("provincesname",type2.name)
+                        putExtra("amphurname",type3.name)
+                        putExtra("districtsname",type4.name)
+                        putExtra("typejob",nametype)
                     }
                     startActivity(intent)
                 }
@@ -224,6 +248,69 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
 
         }
+
+
+
+
+        bar_provinces.adapter = SpinnerprovincesAdapter(
+            requireContext(),
+            viewModel.provinces.value as MutableList<ProvincesModel>
+        )
+        bar_provinces.onItemSelected<ProvincesModel> {
+            type2 = it
+            id2 = it.id
+            name2 = it.name
+            viewModel.amphurselect(it.id)
+            bar_amphur.adapter = SpinneramphurAdapter(
+                requireContext(),
+                viewModel.amphur.value as MutableList<AmphurModel>
+            )
+            bar_amphur.onItemSelected<AmphurModel> {
+                type3 = it
+                id3 = it.id
+                name3 = it.name
+
+                viewModel.districtselet(it.id)
+                bar_districts.adapter = SpinnerdistrictAdapter(
+                    requireContext(),
+                    viewModel.district.value as MutableList<DistrictModel>
+                )
+                bar_districts.onItemSelected<DistrictModel> {
+                    type4 = it
+                    id4 = it.id
+                    name4 = it.name
+                }
+            }
+        }
+
+        bar_amphur.adapter = SpinneramphurAdapter(
+            requireContext(),
+            viewModel.amphur.value as MutableList<AmphurModel>
+        )
+        bar_amphur.onItemSelected<AmphurModel> {
+            type3 = it
+            id3 = it.id
+            name3 = it.name
+        }
+
+        bar_districts.adapter = SpinnerdistrictAdapter(
+            requireContext(),
+            viewModel.district.value as MutableList<DistrictModel>
+
+        )
+        bar_districts.onItemSelected<DistrictModel> {
+            type4 = it
+            id4 = it.id
+            name4 = it.name
+        }
+        val amphurId = (viewModel.profileModel.value?.amphur_id ?: 1) - 1
+        val provincesId = (viewModel.profileModel.value?.province_id ?: 1) - 1
+        val districtId = (viewModel.profileModel.value?.district_id ?: 1) - 1
+
+
+        bar_provinces.setSelection(provincesId)
+        bar_amphur.setSelection(amphurId)
+        bar_districts.setSelection(districtId)
 
     }
 
