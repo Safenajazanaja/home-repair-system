@@ -19,9 +19,19 @@ import com.example.loginmvvm.data.models.ProvincesModel
 import com.example.loginmvvm.data.request.HomeRequest
 import com.example.loginmvvm.data.request.ImagsRequest
 import com.example.loginmvvm.presentation.main.ProfileMain
+import com.example.loginmvvm.utils.awaitLastLocation
+import com.example.loginmvvm.utils.getGoogleMap
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.home_dialog.*
 import kotlinx.android.synthetic.main.home_dialog.view.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -40,6 +50,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private lateinit var type3: DistrictModel
     private var name3: String? = null
     private var id3: Int? = null
+
+    private var mMarker: Marker? = null
+    private var latitude: Double? = 0.0
+    private var longitude: Double? = 0.0
 
 
     //    private var mImageUrl: Url? = null
@@ -195,8 +209,33 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, 123)
         }
+        val mapFragment = this.childFragmentManager
+            .findFragmentById(R.id.maps_profile) as SupportMapFragment?
 
+        MainScope().launch {
+            val locationProviderClient = LocationServices
+                .getFusedLocationProviderClient(requireActivity())
+            val googleMap = mapFragment?.getGoogleMap()
 
+            val location = locationProviderClient.awaitLastLocation()
+
+            latitude = location.latitude
+            longitude = location.longitude
+            mMarker = googleMap?.addMarker(
+                MarkerOptions().position(
+                    LatLng(
+                        location.latitude,
+                        location.longitude
+                    )
+                )
+            )
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                LatLng(location.latitude, location.longitude),
+                15f
+            )
+            googleMap?.animateCamera(cameraUpdate)
+            googleMap?.isMyLocationEnabled = true
+        }
     }
 
 

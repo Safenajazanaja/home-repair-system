@@ -97,7 +97,7 @@ class DetailActivity : BaseActivity() {
 
         viewModel.imgpayModel.observe(this, { Imag ->
             if (Imag.img == null) {
-                iv_photo_money.setImageResource(R.drawable.bank)
+                iv_photo_money.setImageResource(R.drawable.save_money)
             } else if (Imag.img != null) {
                 val baseUrl = Imag.img.toString()
                 iv_photo_money.loadImageCircle(baseUrl)

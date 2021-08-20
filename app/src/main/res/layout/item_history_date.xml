@@ -11,7 +11,7 @@
         >
 
         <LinearLayout
-            android:background="#84898A"
+            android:background="#E8F3F6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -28,12 +28,12 @@
                     android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:text="Repair List"
-                    android:textColor="@color/color_text"
+                    android:textColor="@color/black"
                     android:textSize="15dp" />
 
                 <TextView
                     android:textSize="15dp"
-                    android:textColor="@color/color_text"
+                    android:textColor="@color/black"
                     android:id="@+id/tv_adode_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ststa"
-                    android:textColor="@color/color_text"
+                    android:textColor="@color/black"
                     android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
