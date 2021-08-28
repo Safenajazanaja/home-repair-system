@@ -77,7 +77,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tv_username.text = profile.name.toString()
             tv_full_name.text = profile?.name.toString()
             tv_phone.text = profile?.telephone.toString()
-            tv_home.text = profile.abode.toString() + "ต. " + profile.district_name.toString()+ "\nอ. " + profile.amphur_name.toString() + "\nจ. " +profile.province_name.toString()
+            tv_home.text = profile.abode.toString() + "\nต. " + profile.district_name.toString()+ "\nอ. " + profile.amphur_name.toString() + "\nจ. " +profile.province_name.toString()
 //            profile.id_provinces=idprovinces
 
             if (profile.img == null) {

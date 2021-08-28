@@ -167,6 +167,8 @@ object DataSource {
                 it[province_id] = req.provincesId!!.toInt()
                 it[amphur_id] = req.amphurId!!.toInt()
                 it[district_id] = req.districtId!!.toInt()
+                it[price]=0
+                it[pay_type]=0
             }
         }
         val result = statement.resultedValues?.size == 1
@@ -255,7 +257,8 @@ object DataSource {
         return transaction {
             addLogger(StdOutSqlLogger)
             val result = Orderl.update({ Orderl.order_id eq req.id }) {
-                it[Orderl.image] = req.imags
+                it[image] = req.imags
+                it[pay_type]=1
             }
 
             Log.d(TAG, "upimg: $result")
@@ -305,6 +308,7 @@ object DataSource {
                 .andWhere { Orderl.province_id eq Province.province_id }
                 .andWhere { Orderl.amphur_id eq Amphur.amphur_id }
                 .andWhere { Orderl.district_id eq District.district_id }
+                .orderBy(Orderl.dateLong to SortOrder.ASC)
                 .map { HistoryMap.toHistory(it) }
         }
 

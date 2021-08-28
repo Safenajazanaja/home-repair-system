@@ -1,8 +1,6 @@
 package com.example.loginmvvm.data.database
 
-import com.example.loginmvvm.data.database.Users.references
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.jodatime.date
 
 
 object Orderl: Table("orderl"){

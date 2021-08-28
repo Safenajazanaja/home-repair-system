@@ -1,6 +1,5 @@
 package com.example.loginmvvm.data.database
 
-import com.example.loginmvvm.data.database.Technician.autoIncrement
 import org.jetbrains.exposed.sql.Table
 
 object Technician_detail:Table("technician_detail") {

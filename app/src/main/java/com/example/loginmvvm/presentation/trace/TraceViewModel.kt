@@ -8,6 +8,7 @@ import com.example.loginmvvm.data.datasource.DataSource
 import com.example.loginmvvm.data.models.HistoryModel2
 import com.example.loginmvvm.data.models.OrderModeldetail
 import com.google.gson.Gson
+import org.jetbrains.exposed.sql.SortOrder
 import java.text.SimpleDateFormat
 
 class TraceViewModel : ViewModel() {
@@ -47,7 +48,7 @@ class TraceViewModel : ViewModel() {
                             )
                         }
                 )
-            }.sortedBy { it.date }
+            }.sortedBy { it.datelong}
             .distinctBy { it.date }
         Log.d(TAG,"trace: ${Gson().toJson(date)}")
 
