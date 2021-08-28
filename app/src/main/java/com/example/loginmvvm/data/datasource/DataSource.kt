@@ -278,6 +278,18 @@ object DataSource {
 
     }
 
+    fun chekPay(idjob: Int): PayModel {
+        return transaction {
+            addLogger(StdOutSqlLogger)
+            (Orderl innerJoin Pay).slice(Pay.pay_type)
+                .select { Orderl.order_id eq idjob }
+                .andWhere { Orderl.pay_type eq Pay.pay_id }
+                .map { PayMap.toPay(it)}
+                .single()
+        }
+
+    }
+
     fun chekStatus(jobid: Int): StatusModel {
         return transaction {
             addLogger(StdOutSqlLogger)

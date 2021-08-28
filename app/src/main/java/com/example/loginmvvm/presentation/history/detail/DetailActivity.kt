@@ -98,8 +98,12 @@ class DetailActivity : BaseActivity() {
         viewModel.imgpayModel.observe(this, { Imag ->
             if (Imag.img == null) {
                 iv_photo_money.setImageResource(R.drawable.save_money)
+                chekpay.visibility=View.GONE
+                chekpay2.visibility=View.GONE
             } else if (Imag.img != null) {
                 val baseUrl = Imag.img.toString()
+                chekpay.visibility=View.VISIBLE
+                chekpay.text= viewModel.payModel.value!!.pay
                 iv_photo_money.loadImageCircle(baseUrl)
                 iv_photo_money.isEnabled = false
                 Bt_save.isEnabled = false

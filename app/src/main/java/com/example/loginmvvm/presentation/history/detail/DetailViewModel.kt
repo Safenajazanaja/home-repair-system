@@ -18,6 +18,10 @@ class DetailViewModel : ViewModel() {
     val imgpayModel: LiveData<ImagModel>
         get() = _imgpayModel
 
+    private val _payModel = MutableLiveData<PayModel>()
+    val payModel: LiveData<PayModel>
+        get() = _payModel
+
     private val _statusModel = MutableLiveData<StatusModel>()
     val statusModel: LiveData<StatusModel>
         get() = _statusModel
@@ -64,6 +68,7 @@ class DetailViewModel : ViewModel() {
 
     fun chekImg(jobid: Int) {
         _imgpayModel.value = DataSource.chekImage(jobid)
+        _payModel.value=DataSource.chekPay(jobid)
 
     }
 
