@@ -9,5 +9,5 @@ data class HistoryModel(
     val status: String? =null,
     val province: String? =null,
     val amphur: String? =null,
-    val district: String? =null
+    val district: String? =null,
 )

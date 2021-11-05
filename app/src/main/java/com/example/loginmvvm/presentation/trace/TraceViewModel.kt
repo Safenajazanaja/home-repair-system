@@ -24,6 +24,7 @@ class TraceViewModel : ViewModel() {
     fun tracejob(id: Int) {
         val result = DataSource.tracejob(id)
         val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val test=result
         val date = result
 //            .sortedBy { sdf.format(it.date) }
 //            .distinctBy { sdf.format(it.date) }
@@ -33,19 +34,19 @@ class TraceViewModel : ViewModel() {
                     datelong = db.date,
                     sumOrderByDate = result.filter { sdf.format(it.date) == sdf.format(db.date) }
                         .count(),
-                    orders = result.filter { sdf.format(it.date) == sdf.format(db.date) }
+                    orders = result.filter {( sdf.format(it.date) == sdf.format(db.date) )}
                         .map {
-                            OrderModeldetail(
-                                orderid = it.order,
-                                adode = it.adode,
-                                repair_List = it.repair_List,
-                                date = sdf.format(it.date),
-                                price = it.price,
-                                status = it.status,
-                                province = it.province,
-                                amphur = it.amphur,
-                                district = it.district
-                            )
+                                OrderModeldetail(
+                                    orderid = it.order,
+                                    adode = it.adode,
+                                    repair_List = it.repair_List,
+                                    date = sdf.format(it.date),
+                                    price = it.price,
+                                    status = it.status,
+                                    province = it.province,
+                                    amphur = it.amphur,
+                                    district = it.district
+                                )
                         }
                 )
             }.sortedBy { it.datelong}

@@ -1,9 +1,6 @@
 package com.example.loginmvvm.data.map
 
-import com.example.loginmvvm.data.database.Orderl
-import com.example.loginmvvm.data.database.Status
-import com.example.loginmvvm.data.database.Time
-import com.example.loginmvvm.data.database.Type_job
+import com.example.loginmvvm.data.database.*
 import com.example.loginmvvm.data.models.ManageModel
 import org.jetbrains.exposed.sql.ResultRow
 
@@ -19,6 +16,9 @@ object ManageMap {
         typejob = row[Type_job.namejob],
         timezone = row[Time.time],
         idtime = row[Orderl.idtime],
-        status = row[Status.status_name]
+        status = row[Status.status_name],
+        province_name = row[Province.province_name],
+        amphur_name = row[Amphur.amphur_name],
+        district_name = row[District.district_name],
         )
 }

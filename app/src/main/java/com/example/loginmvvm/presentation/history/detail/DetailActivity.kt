@@ -112,7 +112,7 @@ class DetailActivity : BaseActivity() {
         })
 
         viewModel.statusModel.observe(this, {
-            if (it.statusid == 3 ) {
+            if (it.statusid == 2 ) {
                 layoutpay.visibility = View.VISIBLE
             }
         })
@@ -125,7 +125,7 @@ class DetailActivity : BaseActivity() {
             val dateString = simpleDateFormat.format(db.date)
             tv_namejob_manage.text=db.typejob
             tv_date_manage.text=dateString
-            tv_abode_manage.text=db.abode
+            tv_abode_manage.text=db.abode+ "\nต. "+db.district_name+"\nอ. "+db.amphur_name+ "\nจ. "+db.province_name
             tv_time_manage.text=db.timezone
             tv_repairlist_manage.text=db.repair_list
             tv_statusjob_manage.text=db.status

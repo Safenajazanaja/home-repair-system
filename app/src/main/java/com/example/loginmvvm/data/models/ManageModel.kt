@@ -10,5 +10,8 @@ data class ManageModel (
     val typejob:String?=null,
     val timezone:String?=null,
     val idtime:Int?=null,
-    val status:String?=null
+    val status:String?=null,
+    val province_name:String?=null,
+    val amphur_name:String?=null,
+    val district_name:String?=null
 )

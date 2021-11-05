@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,18 +59,18 @@
 
                 <Button
                     android:id="@+id/bt_call"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:drawableTop="@drawable/ic"
+                    android:drawableLeft="@drawable/ic"
                     android:text="ใช้บริการEasy fix" />
 
                 <Button
                     android:id="@+id/bt_his"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:drawableTop="@drawable/clock"
+                    android:drawableLeft="@drawable/clock"
                     android:text="ประวิติการใช้งาน" />
 
             </LinearLayout>
@@ -83,18 +83,18 @@
 
                 <Button
                     android:id="@+id/bt_trace"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:drawableTop="@drawable/build"
+                    android:drawableLeft="@drawable/build"
                     android:text="ติดตามงานซ่อม" />
 
                 <Button
                     android:id="@+id/bt_profile"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:drawableTop="@drawable/person"
+                    android:drawableLeft="@drawable/person"
                     android:text="ประวัติส่วนตัว" />
 
             </LinearLayout>

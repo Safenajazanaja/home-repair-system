@@ -313,10 +313,12 @@ object DataSource {
                     Status.status_name,
                     Province.province_name,
                     Amphur.amphur_name,
-                    District.district_name
+                    District.district_name,
                 )
                 .select { Orderl.user_id eq id }
-                .andWhere { Orderl.status neq 5 }
+                .andWhere {Orderl.status neq 5  }
+                .andWhere { Orderl.status neq 4 }
+//                .andWhere { Orderl.pay_type neq 2 }
                 .andWhere { Orderl.province_id eq Province.province_id }
                 .andWhere { Orderl.amphur_id eq Amphur.amphur_id }
                 .andWhere { Orderl.district_id eq District.district_id }
@@ -408,7 +410,7 @@ object DataSource {
     fun manage(idjob: Int): ManageModel {
         return transaction {
             addLogger(StdOutSqlLogger)
-            (Orderl innerJoin Time innerJoin Type_job innerJoin Status)
+            (Orderl innerJoin Time innerJoin Type_job innerJoin Status innerJoin Province innerJoin Amphur innerJoin District)
                 .slice(
                     Orderl.order_id,
                     Orderl.abode,
@@ -419,10 +421,16 @@ object DataSource {
                     Type_job.namejob,
                     Time.time,
                     Orderl.idtime,
-                    Status.status_name
+                    Status.status_name,
+                    Province.province_name,
+                    Amphur.amphur_name,
+                    District.district_name,
                 )
                 .select { Orderl.order_id eq idjob }
                 .andWhere { Orderl.status eq Status.status_id }
+                .andWhere { Orderl.province_id eq  Province.province_id }
+                .andWhere { Orderl.district_id eq District.district_id }
+                .andWhere { Orderl.amphur_id eq Amphur.amphur_id }
                 .map { ManageMap.toManageMap(it) }
                 .single()
 

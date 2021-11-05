@@ -255,7 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardCornerRadius="10dp"
                 app:contentPadding="16dp">
 
