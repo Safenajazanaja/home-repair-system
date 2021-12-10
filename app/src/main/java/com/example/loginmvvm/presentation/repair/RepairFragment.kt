@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_call.*
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.util.*
@@ -207,6 +208,7 @@ class RepairFragment : BaseFragment(R.layout.fragment_call) {
 
         setSpinnertypejob()
         setSpinnerdatejob()
+
 
         MainScope().launch {
 //            Log.d("###", "onActivityCreated: 1")

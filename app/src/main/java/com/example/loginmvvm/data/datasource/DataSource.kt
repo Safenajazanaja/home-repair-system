@@ -73,6 +73,11 @@ object DataSource {
                     it[fullname] = request.fullname
                     it[phone] = request.phone
                     it[password] = request.password
+                    it[province_id]=request.provincesId
+                    it[district_id]=request.districtId
+                    it[amphur_id]=request.amphurId
+                    it[abode]=request.home
+
                 }
             }
             response.success = true
@@ -169,6 +174,7 @@ object DataSource {
                 it[district_id] = req.districtId!!.toInt()
                 it[price]=0
                 it[pay_type]=0
+                it[period]=0
             }
         }
         val result = statement.resultedValues?.size == 1
